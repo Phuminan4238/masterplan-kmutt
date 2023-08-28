@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { useLocation } from "react-router";
+import { Container } from "@mui/system";
+import { LanguageProvider } from "./Components/LanguageContext";
+// Pages
+import Home from "./Pages/Home";
+import Publication from "./Pages/Publications";
+import Guidelines from "./Pages/Guidelines";
+import Journal from "./Pages/Journal";
+import AboutUs from "./Pages/About us";
+// Components
+import HomeNav from "./Components/HomeNav";
+import AllNav from "./Components/AllNav";
+import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer.jsx";
 
 function App() {
+  const location = useLocation();
+  const nav = location.pathname === "/" ? <Navbar /> : <Navbar />;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LanguageProvider>
+      <div className="app">
+        {nav}
+        <Routes>
+          <Route path="" element={<Home />} />
+          <Route path="/Publications" element={<Publication />} />
+          <Route path="/Guidelines" element={<Guidelines />} />
+          <Route path="/Journal" element={<Journal />} />
+          <Route path="/About-us" element={<AboutUs />} />
+        </Routes>
+        <Footer />
+      </div>
+    </LanguageProvider>
   );
 }
 
