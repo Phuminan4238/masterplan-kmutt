@@ -72,7 +72,7 @@ function HomeDesktop() {
 
   const secondContainerStyle = {
     position: "absolute",
-    top: "62%",
+    top: "70%",
     left: "54%",
     transform: "translate(-50%, -50%)", // Center both horizontally and vertically
     zIndex: 1,
@@ -155,7 +155,7 @@ function HomeDesktop() {
                         KMUTT Research
                       </p> */}
                       <p
-                        className="pb-2 text-white"
+                        className="m-0 py-3 text-white"
                         style={{
                           fontSize: "1.2rem",
                           fontFamily: "FontMediumTH",
@@ -177,7 +177,7 @@ function HomeDesktop() {
                         className="text-white mb-0"
                         style={{
                           fontSize: "1.5rem",
-                          fontFamily: "FontRegular",
+                          fontFamily: "FontMedium",
                         }}
                       >
                         {/* Volumn 46 No. 2 */}
@@ -189,7 +189,7 @@ function HomeDesktop() {
                         className="text-white"
                         style={{
                           fontSize: "1.5rem",
-                          fontFamily: "FontRegular",
+                          fontFamily: "FontMedium",
                         }}
                       >
                         <p>
@@ -582,7 +582,7 @@ function HomeMobile() {
     useContext(LanguageContext);
 
   return (
-    <div className="App">
+    <div className="App pt-2">
       {/* <Container
         maxWidth="xl"
         disableGutters={true}
@@ -610,10 +610,10 @@ function HomeMobile() {
                 gap: "1rem",
               }}
             >
-              <MDBCol>
+              <MDBCol className="p-0">
                 <div>
                   <p
-                    className="font-bold mb-2 px-2 py-1 xs:text-sm md:text-sm w-fit uppercase"
+                    className="font-bold mb-2 px-2 py-1 xs:text-lg w-fit uppercase"
                     style={{
                       fontFamily: "FontMediumTH",
                       backgroundColor: "white",
@@ -627,7 +627,7 @@ function HomeMobile() {
                 </div>
               </MDBCol>
               {publications.map((publication) => (
-                <MDBCol md="4" key={publication.id}>
+                <MDBCol md="4" key={publication.id} className="p-0">
                   <img
                     // src={journalimage}
                     src={
@@ -641,13 +641,13 @@ function HomeMobile() {
                 </MDBCol>
               ))}
               {publications.map((publication) => (
-                <MDBCol md="7" key={publication.id}>
+                <MDBCol md="7" key={publication.id} className="p-0">
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex flex-column mt-auto">
                       <p
-                        className="pb-2 text-white"
+                        className=" text-white"
                         style={{
-                          fontSize: "1.2rem",
+                          fontSize: "1.4rem",
                           fontFamily: "FontMediumTH",
                           maxWidth: "80%", // Set a maximum width for the title
                           overflowWrap: "break-word", // Allow word wrapping within the title
@@ -656,7 +656,10 @@ function HomeMobile() {
                         {/* {selectedLanguage === "en"
                           ? `${publication.attributes.journal[0]?.title}`
                           : `${publication.attributes.journal[0]?.title_th}`} */}
-                        KMUTT Research and Development Journal
+                        KMUTT Research
+                        <br /> {/* Add a line break here */}
+                        and Development <br />
+                        Journal
                       </p>
                       {/* <p
                         className="pb-2 text-white"
@@ -762,7 +765,7 @@ function HomeMobile() {
             justifyContent: "center",
           }}
         >
-          <MDBContainer className={`fluid py-5 px-4 ${containerStyle["6xl"]}`}>
+          <MDBContainer className={`fluid py-5 px-3 ${containerStyle["6xl"]}`}>
             <MDBRow
               className="justify-content-center"
               style={{
@@ -894,10 +897,10 @@ function HomeMobile() {
             <MDBCol
               md="6"
               order="1"
-              className={"d-flex p-6"}
+              className={"d-flex p-5"}
               style={{ backgroundColor: "#474747", height: "inherit" }}
             >
-              <div className="d-flex flex-col justify-content-between align-items-end w-100 gap-4">
+              <div className="d-flex flex-col justify-content-between align-items-end w-100 gap-5">
                 <span style={{ fontSize: "1.5rem", color: "white" }}>
                   <MDBIcon fas icon="chevron-right" />
                 </span>
@@ -914,7 +917,7 @@ function HomeMobile() {
                     style={{ fontFamily: "FontSemiBold" }}
                   >
                     {selectedLanguage === "en"
-                      ? "Our Publications"
+                      ? "Our Publication"
                       : "งานตีพิมพ์ของเรา"}
                   </p>
                 </Link>
@@ -923,30 +926,23 @@ function HomeMobile() {
             <MDBCol
               md="6"
               order="1"
-              className="d-flex flex-col"
-              style={{ height: "inherit" }}
+              className={"d-flex p-5"}
+              style={{ backgroundColor: "#000", height: "inherit" }}
             >
-              <div
-                className="d-flex flex-col justify-content-between align-items-end w-100  p-6"
-                style={{ backgroundColor: "#000", height: "70%" }}
-              >
-                <span style={{ fontSize: "1.5rem" }}>
-                  <MDBIcon
-                    fas
-                    icon="chevron-right"
-                    style={{ color: "white" }}
-                  />
+              <div className="d-flex flex-col justify-content-between align-items-end w-100 gap-5">
+                <span style={{ fontSize: "1.5rem", color: "white" }}>
+                  <MDBIcon fas icon="chevron-right" />
                 </span>
                 <Link
                   to={`/guidelines`}
                   onClick={() => {
                     window.scrollTo(0, 0);
-                    window.location.replace(`guidelines`);
+                    window.location.replace(`publications`);
                   }}
                   className="flex items-center text-white"
                 >
                   <p
-                    className="text-white mb-0 xs:text-3xl "
+                    className="text-white mb-0 xs:text-3xl"
                     style={{ fontFamily: "FontSemiBold" }}
                   >
                     {selectedLanguage === "en"
@@ -955,27 +951,27 @@ function HomeMobile() {
                   </p>
                 </Link>
               </div>
-              </MDBCol>
-              <MDBCol
+            </MDBCol>
+            <MDBCol
               md="6"
               order="1"
-              className={"d-flex p-6"}
-              style={{ backgroundColor: "#474747", height: "inherit" }}
+              className={"d-flex p-5"}
+              style={{ backgroundColor: "#EB562E", height: "inherit" }}
             >
-              <div
-                className="d-flex flex-row flex-wrap justify-content-between align-items-start w-100 gap-4 p-6"
-                style={{ backgroundColor: "#EB562E", height: "30%" }}
-              >
+              <div className="d-flex flex-col justify-content-between align-items-end w-100 gap-5">
+                <span style={{ fontSize: "1.5rem", color: "white" }}>
+                  <MDBIcon fas icon="chevron-right" />
+                </span>
                 <Link
                   to={`/journal`}
                   onClick={() => {
                     window.scrollTo(0, 0);
-                    window.location.replace(`journal`);
+                    window.location.replace(`publications`);
                   }}
                   className="flex items-center text-white"
                 >
                   <p
-                    className="text-white mb-0 xs:text-xl md:text-2xl"
+                    className="text-white mb-0 xs:text-3xl"
                     style={{ fontFamily: "FontSemiBold" }}
                   >
                     {selectedLanguage === "en"
@@ -983,13 +979,6 @@ function HomeMobile() {
                       : "วารสารเพิ่มเติม"}
                   </p>
                 </Link>
-                <span style={{ fontSize: "1.5rem" }}>
-                  <MDBIcon
-                    fas
-                    icon="chevron-right"
-                    style={{ color: "white" }}
-                  />
-                </span>
               </div>
             </MDBCol>
           </MDBRow>

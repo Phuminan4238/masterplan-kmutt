@@ -711,10 +711,10 @@ function GuidelinesMobile() {
   };
 
   return (
-    <div className="App">
+    <div className="App pt-2">
       <section>
         <MDBContainer
-          className="fluid p-5"
+          className="fluid px-5 pt-5 pb-3"
           id="cluster-container"
           style={{ backgroundColor: "#EDEDED" }}
         >
@@ -724,13 +724,14 @@ function GuidelinesMobile() {
               borderLeft: "0.4rem solid  #EB562E ",
               display: "flex",
               alignItems: "center",
-              fontFamily: "FontSemiBold",
+              fontFamily: "FontBold",
+              color: "#474747",
             }}
           >
             <p className="m-0 text-2xl">Latest Journal</p>
           </MDBRow>
-          <MDBRow>
-            <MDBCol className="py-2 d-flex flex-col col-4">
+          <MDBRow className="py-2">
+            <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
               <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
                 {/* style={{ height: "508px", width: "412px" }} */}
                 <img
@@ -746,25 +747,26 @@ function GuidelinesMobile() {
               </MDBCol>
             </MDBCol>
             <MDBCol
-              className="justify-content-center py-2"
-              style={{
-                alignItems: "center",
-              }}
+              className="d-flex flex-col justify-content-between py-2"
+              style={{}}
             >
               <p
-                className="m-0 text-md px-1"
-                style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+                className="m-0 text-xl px-1"
+                style={{ color: "#EB562E", fontFamily: "FontBold" }}
               >
                 KMUTT Research and Development Journal
               </p>
-              <p className="m-0 text-xs px-1 pt-2">Volume 46 No. 2</p>
-              <p className="m-0 text-xs px-1 ">April - June</p>
+              <span>
+                <p className="m-0 text-sm px-1 ">Volume 46 No. 2</p>
+                <p className="m-0 text-sm px-1 ">April - June</p>{" "}
+              </span>
             </MDBCol>
           </MDBRow>
         </MDBContainer>
 
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>
           <MDBRow className="d-flex justify-content-between px-5 py-6 fluid">
+            {/* Middle  */}
             <MDBCol md="8">
               {/* Publication Policy  */}
               <MDBRow className="justify-content-center ">
@@ -780,16 +782,15 @@ function GuidelinesMobile() {
                 className="d-flex justify-content-between fluid py-3"
               >
                 <MDBCol
-                  className=""
+                  className="col-2"
                   style={{
                     borderTop: "1px solid black ",
                     marginTop: "1rem",
                   }}
                 ></MDBCol>
                 <MDBCol
-                  md="2"
-                  className="text-2xl w-fit ps-4 text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  className="text-xl w-fit  text-black"
+                  style={{ fontFamily: "FontSemiBold" }}
                 >
                   Manuscript Preparation Guidelines
                 </MDBCol>
@@ -797,7 +798,7 @@ function GuidelinesMobile() {
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-md px-0 text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+                  style={{ fontFamily: "FontMedium" }}
                 >
                   Authors of a manuscript should adhere to the following
                   Guidelines
@@ -806,7 +807,7 @@ function GuidelinesMobile() {
 
               <MDBRow className="pt-0 pb-4">
                 <table style={tableStyle}>
-                  <tbody>
+                  <tbody className="text-sm">
                     <tr style={tableRowStyle}>
                       <td>
                         <div style={cellContentStyle}>Title</div>
@@ -978,24 +979,24 @@ function GuidelinesMobile() {
                     The authors should also ensure that the following important
                     points have been taken into account:
                   </p>
-                  <ul className="list-decimal text-md mb-0">
-                    <li className="text-md">
+                  <ul className="list-decimal text-sm mb-0 ps-3">
+                    <li className="text-sm">
                       The submission has not been previously published, nor it
                       is under consideration by any other journal.
                     </li>
-                    <li className="text-md">
+                    <li className="text-sm">
                       The submission file should be in OpenOffice, Microsoft
                       Word, RTF, or WordPerfect document file format.
                     </li>
-                    <li className="text-md">
+                    <li className="text-sm">
                       Where applicable, URLs for the references have been
                       provided.
                     </li>
-                    <li className="text-md">
+                    <li className="text-sm">
                       Thai manuscript and English manuscript should be prepared
                       using TH Sarabun New size 16 pt.
                     </li>
-                    <li className="text-md">
+                    <li className="text-sm">
                       The text adheres to the stylistic and bibliographic
                       requirements of the Journal.
                     </li>
@@ -1010,7 +1011,7 @@ function GuidelinesMobile() {
               >
                 <MDBCol
                   md="6"
-                  className="text-2xl w-fit px-0 pe-4 text-black"
+                  className="text-xl w-fit px-0 pe-4 text-black"
                   style={{ fontFamily: "FontBold" }}
                 >
                   Manuscript Template
@@ -1024,31 +1025,35 @@ function GuidelinesMobile() {
                 ></MDBCol>
               </MDBRow>
               <MDBRow>
-                <div className="d-flex mt-1 text-red px-0">
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "#EB562E",
-                      color: "white",
-                      backgroundColor: "#EB562E",
-                    }}
-                    className="me-3 text-sm px-3 capitalize font-bold rounded-0"
-                    size="sm"
-                  >
-                    Download Word File
-                  </MDBBtn>
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "white",
-                      color: "#EB562E",
-                      backgroundColor: "white",
-                    }}
-                    className="text-sm py-1 px-2 capitalize font-bold rounded-0"
-                    size="sm"
-                  >
-                    Download PDF File
-                  </MDBBtn>
+                <div className="d-flex flex-col justify-between gap-3 mt-1 text-red px-0">
+                  <MDBCol>
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                      }}
+                      className="me-3 text-sm px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                      size="sm"
+                    >
+                      Download Word File
+                    </MDBBtn>
+                  </MDBCol>
+                  <MDBCol>
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                      }}
+                      className="text-sm px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                      size="sm"
+                    >
+                      Download PDF File
+                    </MDBBtn>
+                  </MDBCol>
                 </div>
               </MDBRow>
               {/* ******************* */}
@@ -1060,7 +1065,7 @@ function GuidelinesMobile() {
               >
                 <MDBCol
                   md="6"
-                  className="text-2xl w-fit px-0 pe-4 text-black"
+                  className="text-xl w-fit px-0 pe-4 text-black"
                   style={{ fontFamily: "FontBold" }}
                 >
                   Manuscript Submission
@@ -1075,12 +1080,12 @@ function GuidelinesMobile() {
               </MDBRow>
               <MDBRow>
                 <ul className="list-decimal text-md ms-2 mb-0">
-                  <li className="text-md">
+                  <li className="text-sm pb-2">
                     Send a manuscript file to journal@kmutt.ac.th. Please also
                     suggest 3 possible reviewers, with full names and e-mail
                     addresses, who can serve as reviewers of the manuscript.
                   </li>
-                  <li className="text-md">
+                  <li className="text-sm">
                     Manuscript review and publication of an accepted article are
                     free of charge. No article processing charge needs to be
                     paid. Subscription to the journal prior to manuscript
@@ -1096,38 +1101,42 @@ function GuidelinesMobile() {
                 className="d-flex justify-content-between fluid py-3"
               >
                 <MDBCol
-                  className="text-2xl w-fit px-0 pe-4 text-black"
+                  className="text-xl w-fit px-0 pe-4 text-black"
                   style={{ fontFamily: "FontBold" }}
                 >
                   Instructions on the Use of Editorial Manager
                 </MDBCol>
               </MDBRow>
               <MDBRow>
-                <div className="d-flex mt-1 text-red px-0">
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "#EB562E",
-                      color: "white",
-                      backgroundColor: "#EB562E",
-                    }}
-                    className="me-3 text-sm px-3 capitalize font-bold rounded-0"
-                    size="sm"
-                  >
-                    Instructions for Authors
-                  </MDBBtn>
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "white",
-                      color: "#EB562E",
-                      backgroundColor: "white",
-                    }}
-                    className="text-sm py-1 px-2 capitalize font-bold rounded-0"
-                    size="sm"
-                  >
-                    Instructions for Reviewers
-                  </MDBBtn>
+                <div className="d-flex flex-col justify-between gap-3 mt-1 text-red px-0">
+                  <MDBCol>
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                      }}
+                      className="me-3 text-sm px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                      size="sm"
+                    >
+                      Instructions for Authors
+                    </MDBBtn>
+                  </MDBCol>
+                  <MDBCol>
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                      }}
+                      className="text-sm px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                      size="sm"
+                    >
+                      Instructions for Reviewers
+                    </MDBBtn>
+                  </MDBCol>
                 </div>
               </MDBRow>
             </MDBCol>

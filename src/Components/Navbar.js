@@ -185,6 +185,19 @@ export default function Navbar(props) {
 
     return (
       <div>
+        <MDBNavbar
+          className="justify-content-center"
+          style={{
+            backgroundColor: "#EB562E",
+            fontFamily: "FontSemiBold",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          {" "}
+          King Mongkut’s University of Technology Thonburi (KMUTT)
+        </MDBNavbar>
+
         <MDBNavbar style={navbarStyle}>
           <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
             <MDBNavbarBrand href="/">
@@ -257,17 +270,29 @@ export default function Navbar(props) {
     return (
       <React.Fragment>
         <CssBaseline />
+        <MDBNavbar
+          className="justify-content-center text-xs p-2"
+          style={{
+            backgroundColor: "#EB562E",
+            fontFamily: "FontSemiBold",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          {" "}
+          King Mongkut’s University of Technology Thonburi (KMUTT)
+        </MDBNavbar>
         <HideOnScroll {...props}>
           <AppBar
-            className="px-3"
+            className="px-1"
             style={{
               background: "#474747",
               boxShadow: "unset",
             }}
             position="sticky"
           >
-            <Container maxWidth="xl">
-              <Toolbar disableGutters>
+            <Container maxWidth="xl" style={{ height: " 100px" }}>
+              <Toolbar disableGutters style={{ height: "inherit" }}>
                 <Box sx={{ flexGrow: 1, display: { xs: "block", md: "flex" } }}>
                   <Typography variant="h6" noWrap component="div">
                     <Link to="/" onClick={handleLogoClick}>
@@ -287,11 +312,21 @@ export default function Navbar(props) {
                     flexGrow: 0,
                     flexDirection: "initial",
                     gap: "1rem",
+                    alignItems: "center",
                   }}
                 >
-                  <span onClick={toggleLanguage} style={{ cursor: "pointer" }}>
-                    <span> {selectedLanguage === "en" ? "TH" : "EN"} </span>
-                    <span> {selectedLanguage === "en" ? "EN" : "TH"} </span>
+                  <span
+                    className="text-xs"
+                    onClick={toggleLanguage}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <span className="p-2">
+                      {selectedLanguage === "en" ? "TH" : "TH"}{" "}
+                    </span>
+                    <span style={{ borderRight: "1px solid white" }}></span>
+                    <span className="p-2">
+                      {selectedLanguage === "en" ? "EN" : "EN"}{" "}
+                    </span>
                   </span>
                   <Tooltip title="Open settings">
                     <IconButton
@@ -305,7 +340,7 @@ export default function Navbar(props) {
                   <Menu
                     // style={{ opacity: 0.7 }}
                     sx={{
-                      mt: "76px",
+                      mt: "62px",
                       left: "20px",
                       width: drawerWidth,
                       flexShrink: 0,
@@ -363,8 +398,9 @@ export default function Navbar(props) {
                               },
                             },
                             fontWeight: "bold",
-                            padding: "10px 20px 10px 20px",
+                            // padding: "10px 20px 10px 20px",
                             borderBottom: "1px solid white",
+                            fontFamily: "FontRegular",
                           }}
                         >
                           <a
@@ -407,17 +443,29 @@ export default function Navbar(props) {
     return (
       <React.Fragment>
         <CssBaseline />
+        <MDBNavbar
+          className="justify-content-center text-xs p-2"
+          style={{
+            backgroundColor: "#EB562E",
+            fontFamily: "FontSemiBold",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          {" "}
+          King Mongkut’s University of Technology Thonburi (KMUTT)
+        </MDBNavbar>
         <HideOnScroll {...props}>
           <AppBar
-            className="px-3"
+            className="px-1"
             style={{
               background: "#474747",
               boxShadow: "unset",
             }}
             position="sticky"
           >
-            <Container maxWidth="xl">
-              <Toolbar disableGutters>
+            <Container maxWidth="xl" style={{ height: " 100px" }}>
+              <Toolbar disableGutters style={{ height: "inherit" }}>
                 <Box sx={{ flexGrow: 1, display: { xs: "block", md: "flex" } }}>
                   <Typography variant="h6" noWrap component="div">
                     <div style={containerStyle2}>
@@ -437,11 +485,21 @@ export default function Navbar(props) {
                     flexGrow: 0,
                     flexDirection: "initial",
                     gap: "1rem",
+                    alignItems: "center",
                   }}
                 >
-                  <span onClick={toggleLanguage} style={{ cursor: "pointer" }}>
-                    <span> {selectedLanguage === "en" ? "TH" : "EN"} </span>
-                    <span> {selectedLanguage === "en" ? "EN" : "TH"} </span>
+                  <span
+                    className="text-xs"
+                    onClick={toggleLanguage}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <span className="p-2">
+                      {selectedLanguage === "en" ? "TH" : "TH"}{" "}
+                    </span>
+                    <span style={{ borderRight: "1px solid white" }}></span>
+                    <span className="p-2">
+                      {selectedLanguage === "en" ? "EN" : "EN"}{" "}
+                    </span>
                   </span>
                   <Tooltip title="Open settings">
                     <IconButton
@@ -455,7 +513,7 @@ export default function Navbar(props) {
                   <Menu
                     style={{ opacity: 0.9 }}
                     sx={{
-                      mt: "60px",
+                      mt: "62px",
                       left: "20px",
                       width: drawerWidth,
                       flexShrink: 0,
@@ -496,14 +554,15 @@ export default function Navbar(props) {
                             ":hover": {
                               color: "white",
 
-                              bgcolor: "#AE023E",
+                              bgcolor: "#EB562E",
                               opacity: "100%",
                               "& a, & > a": {
                                 color: "white",
                               },
                             },
                             fontWeight: "bold",
-                            padding: "10px 20px 10px 20px",
+                            fontFamily: "FontRegular",
+                            // padding: "10px 20px 10px 20px",
                             borderBottom: "1px solid white",
                             color: "inherit", // set default link color to black
                           }}

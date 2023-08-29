@@ -866,10 +866,10 @@ function PublicationMobile() {
     useContext(LanguageContext);
 
   return (
-    <div className="App">
+    <div className="App pt-2">
       <section>
         <MDBContainer
-          className="fluid p-5"
+          className="fluid px-5 pt-5 pb-3"
           id="cluster-container"
           style={{ backgroundColor: "#EDEDED" }}
         >
@@ -879,13 +879,14 @@ function PublicationMobile() {
               borderLeft: "0.4rem solid  #EB562E ",
               display: "flex",
               alignItems: "center",
-              fontFamily: "FontSemiBold",
+              fontFamily: "FontBold",
+              color: "#474747",
             }}
           >
             <p className="m-0 text-2xl">Latest Journal</p>
           </MDBRow>
-          <MDBRow>
-            <MDBCol className="py-2 d-flex flex-col col-4">
+          <MDBRow className="py-2">
+            <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
               <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
                 {/* style={{ height: "508px", width: "412px" }} */}
                 <img
@@ -901,24 +902,23 @@ function PublicationMobile() {
               </MDBCol>
             </MDBCol>
             <MDBCol
-              className="justify-content-center py-2"
-              style={{
-                alignItems: "center",
-              }}
+              className="d-flex flex-col justify-content-between py-2"
+              style={{}}
             >
               <p
-                className="m-0 text-md px-1"
-                style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+                className="m-0 text-md px-1 text-xl"
+                style={{ color: "#EB562E", fontFamily: "FontBold" }}
               >
                 KMUTT Research and Development Journal
               </p>
-              <p className="m-0 text-xs px-1 pt-2">Volume 46 No. 2</p>
-              <p className="m-0 text-xs px-1 ">April - June</p>
+              <span>
+                <p className="m-0 text-sm px-1 ">Volume 46 No. 2</p>
+                <p className="m-0 text-sm px-1 ">April - June</p>{" "}
+              </span>
             </MDBCol>
           </MDBRow>
         </MDBContainer>
 
-        
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>
           <MDBRow className="d-flex justify-content-between px-5 py-6 fluid">
             {/* Middle  */}

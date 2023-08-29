@@ -26,7 +26,6 @@ function FooterDesktop() {
 
   const navbarStyle = {
     // width: "1440px",
-    height: "200px",
     flexShrink: 0,
     background: "#474747",
   };
@@ -70,42 +69,100 @@ function FooterDesktop() {
   return (
     <div>
       <MDBNavbar style={navbarStyle}>
-        <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
-          {/* <MDBNavbarBrand href="/">
+        <MDBContainer className="fluid p-5 d-flex flex-col items-baseline">
+          <MDBRow className="g-1">
+            {/* <MDBNavbarBrand href="/">
             <img src={logojournal} style={logoStyle} alt="" loading="lazy" />
           </MDBNavbarBrand> */}
-          <MDBRow className="d-flex justify-content-between fluid pt-0 pb-3">
             <MDBCol
               className="text-sm w-fit px-0 pe-4 text-white"
               style={{ fontFamily: "FontSemiBold" }}
             >
+              <p
+                className="text-xl px-0"
+                style={{ fontFamily: "FontSemiBold" }}
+              >
+                หน่วยงาน
+              </p>
               <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                {" "}
+                สำนักงานบริหารทรัพยากรบุคคล
+              </p>
+              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                สำนักงานกิจการต่างประเทศ
+              </p>
+              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                สำนักหอสมุด
+              </p>
+            </MDBCol>
+            <MDBCol
+              className="text-sm w-fit px-0 pe-4 text-white"
+              style={{ fontFamily: "FontSemiBold" }}
+            >
+              <p
+                className="text-xl px-0"
+                style={{ fontFamily: "FontSemiBold" }}
+              >
+                หน่วยงาน
+              </p>
+              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                {" "}
+                สำนักงานบริหารทรัพยากรบุคคล
+              </p>
+              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                สำนักงานกิจการต่างประเทศ
+              </p>
+              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                สำนักหอสมุด
+              </p>
+            </MDBCol>
+            <MDBCol
+              className="text-sm w-fit px-0 pe-4 text-white"
+              style={{ fontFamily: "FontSemiBold" }}
+            >
+              <p
+                className="text-xl px-0"
+                style={{ fontFamily: "FontSemiBold" }}
+              >
+                หน่วยงาน
+              </p>
+              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                {" "}
+                สำนักงานบริหารทรัพยากรบุคคล
+              </p>
+              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                สำนักงานกิจการต่างประเทศ
+              </p>
+              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                สำนักหอสมุด
+              </p>
+            </MDBCol>
+            <MDBCol
+              className="text-sm w-fit px-0 pe-4 text-white"
+              style={{ fontFamily: "FontSemiBold" }}
+            >
+              <p
+                className="text-xl px-0"
+                style={{ fontFamily: "FontSemiBold" }}
+              >
+                ติดต่อเรา
+              </p>
+              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
+                {" "}
                 KMUTT Research & Development Journal
               </p>
               <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
-                {" "}
                 Research, Innovation and Partnerships Office
               </p>
-              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
-                King Mongkut’s University of Technology Thonburi
-              </p>
-            </MDBCol>
+            </MDBCol>{" "}
           </MDBRow>
-          <MDBRow className="d-flex justify-content-between fluid pt-0 pb-3">
-            <MDBCol
-              className="text-sm w-fit px-0 pe-4 text-white"
-              style={{ fontFamily: "FontSemiBold" }}
-            >
-              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
-                126 Pracha Uthit Rd., Bang Mod, Thung Khru, Bangkok 10140,
-                Thailand
-              </p>
-              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
-                {" "}
-                Tel. +66-2470-9652 Fax. +66-2872-9083
-              </p>
-              <p className="text-md px-0" style={{ fontFamily: "FontRegular" }}>
-                ...
+          <MDBRow>
+            <MDBCol className="p-0 pt-4">
+              <p
+                className="text-md px-0 text-white"
+                style={{ fontFamily: "FontRegular" }}
+              >
+                Copyright 2023 RIPO, All rights reserved
               </p>
             </MDBCol>
           </MDBRow>

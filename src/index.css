@@ -59,6 +59,7 @@
 
 body {
   margin: 0;
+  padding: 0 !important;
   font-family: "FontRegular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -131,6 +132,11 @@ code {
 
 .floating {
   top: 20px; /* Adjust this value as needed */
+}
+
+/* navbar  */
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  padding: 0px !important;
 }
 
 @tailwind base;
