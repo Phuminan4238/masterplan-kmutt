@@ -245,7 +245,7 @@ function AboutUsMobile() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:1337/api/contacts/?populate=*"
+            "http://10.35.29.179:1337/api/contacts/?populate=*"
           );
           const data = response.data.data;
           if (data && data.length > 0) {
