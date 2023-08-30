@@ -14,7 +14,7 @@ function JournalDesktop() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:1337/api/publications/?populate=*")
+      .get("http://10.35.29.179:1337/api/publications/?populate=*")
       .then(({ data }) => setPublications(data.data))
       .catch((error) => setError(error));
   }, []);
@@ -177,7 +177,7 @@ function JournalMobile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:1337/api/publications/?populate=*")
+      .get("http://10.35.29.179:1337/api/publications/?populate=*")
       .then(({ data }) => setPublications(data.data))
       .catch((error) => setError(error));
   }, []);

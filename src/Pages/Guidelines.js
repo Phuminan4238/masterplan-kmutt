@@ -68,7 +68,7 @@ function GuidelinesDesktop() {
   const [publications, setPublications] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:1337/api/publications/?populate=*")
+      .get("http://10.35.29.179:1337/api/publications/?populate=*")
       .then(({ data }) => setPublications(data.data))
       .catch((error) => setError(error));
   }, []);
@@ -510,6 +510,64 @@ function GuidelinesDesktop() {
                   </MDBBtn>
                 </div>
               </MDBRow>
+
+              {/* Manuscript Submission */}
+              <MDBRow
+                ref={submissionRef}
+                className="d-flex justify-content-between fluid py-3"
+              >
+                <MDBCol
+                  md="6"
+                  className="text-2xl w-fit px-0 pe-4 text-black"
+                  style={{ fontFamily: "FontBold" }}
+                >
+                  การสมัครสมาชิกวารสาร
+                </MDBCol>
+                <MDBCol
+                  className=""
+                  style={{
+                    borderTop: "1px solid black ",
+                    marginTop: "1rem",
+                  }}
+                ></MDBCol>
+              </MDBRow>
+              <MDBRow>
+                <ul className="list-decimal text-md ms-2 mb-0">
+                  <li className="text-md">
+                    ขอให้ผู้ที่ประสงค์จะสมัครสมาชิกหรือต่ออายุสมาชิกโอนเงินจำนวน
+                    300 บาทเข้าบัญชีธนาคารกรุงศรีอยุธยา จำกัด (มหาชน)
+                    สาขาถนนประชาอุทิศ ชื่อบัญชี “มจธ.-การวิจัย”
+                    บัญชีออมทรัพย์เลขที่ 330-1-17205-8
+                  </li>
+                </ul>
+              </MDBRow>
+              <MDBRow className="py-3 ">
+                <div className="d-flex text-red px-0">
+                  <MDBBtn
+                    outline
+                    style={{
+                      borderColor: "#EB562E",
+                      color: "white",
+                      backgroundColor: "#EB562E",
+                    }}
+                    className="me-3 text-sm px-3 capitalize font-bold rounded-0"
+                    size="sm"
+                  >
+                    ดาวน์โหลด ใบสมัครสมาชิก
+                  </MDBBtn>
+                </div>
+              </MDBRow>
+              <MDBRow>
+                <ul className="list-decimal text-md ms-2 mb-0">
+                  <li className="text-md">
+                    หลังจากโอนเงิน ให้ส่ง ใบสมัครสมาชิก และหลักฐานการโอนเงิน
+                    (pay-in-slip) มาที่ e-mail: journal@kmutt.ac.th หรือ
+                    โทรสารหมายเลข 0-2872-9083 ทางวารสารฯ
+                    จะส่งใบเสร็จรับเงินไปตามรายละเอียดในใบสมัคร
+                  </li>
+                </ul>
+              </MDBRow>
+              {/* ******************* */}
             </MDBCol>
             {/* ******************* */}
 
@@ -685,7 +743,7 @@ function GuidelinesMobile() {
   const [publications, setPublications] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:1337/api/publications/?populate=*")
+      .get("http://10.35.29.179:1337/api/publications/?populate=*")
       .then(({ data }) => setPublications(data.data))
       .catch((error) => setError(error));
   }, []);

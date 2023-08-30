@@ -71,7 +71,7 @@ function PublicationDesktop() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/policies/?populate=*&filters[topic][$eq]=policy"
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=policy"
       )
       .then(({ data }) => setPolicies(data.data))
       .catch((error) => setError(error));
@@ -80,7 +80,7 @@ function PublicationDesktop() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/policies/?populate=*&filters[topic][$eq]=ethics"
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=ethics"
       )
       .then(({ data }) => setEthics(data.data))
       .catch((error) => setError(error));
@@ -89,7 +89,7 @@ function PublicationDesktop() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/policies/?populate=*&filters[topic][$eq]=distribution"
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=distribution"
       )
       .then(({ data }) => setDistributions(data.data))
       .catch((error) => setError(error));
@@ -98,7 +98,7 @@ function PublicationDesktop() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/policies/?populate=*&filters[topic][$eq]=periodicity"
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=periodicity"
       )
       .then(({ data }) => setPeridiocities(data.data))
       .catch((error) => setError(error));
@@ -108,7 +108,7 @@ function PublicationDesktop() {
   const [member, setMembers] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:1337/api/members")
+      .get("http://10.35.29.179:1337/api/members")
       .then(({ data }) => setMembers(data.data))
       .catch((error) => setError(error));
   }, []);
@@ -116,7 +116,7 @@ function PublicationDesktop() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/members/?populate=*&filters[usertype][$eq]=honorary_member"
+        "http://10.35.29.179:1337/api/members/?populate=*&filters[usertype][$eq]=honorary_member"
       )
       .then(({ data }) => setHonoraryMembers(data.data))
       .catch((error) => setError(error));
@@ -125,7 +125,7 @@ function PublicationDesktop() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/members/?populate=*&filters[usertype][$eq]=editor_chief"
+        "http://10.35.29.179:1337/api/members/?populate=*&filters[usertype][$eq]=editor_chief"
       )
       .then(({ data }) => setEditorMembers(data.data))
       .catch((error) => setError(error));
@@ -134,7 +134,7 @@ function PublicationDesktop() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/members/?populate=*&filters[usertype][$eq]=board_member"
+        "http://10.35.29.179:1337/api/members/?populate=*&filters[usertype][$eq]=board_member"
       )
       .then(({ data }) => setBoardMembers(data.data))
       .catch((error) => setError(error));
@@ -783,7 +783,7 @@ function PublicationMobile() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/policies/?populate=*&filters[topic][$eq]=policy"
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=policy"
       )
       .then(({ data }) => setPolicies(data.data))
       .catch((error) => setError(error));
@@ -792,7 +792,7 @@ function PublicationMobile() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/policies/?populate=*&filters[topic][$eq]=ethics"
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=ethics"
       )
       .then(({ data }) => setEthics(data.data))
       .catch((error) => setError(error));
@@ -801,7 +801,7 @@ function PublicationMobile() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/policies/?populate=*&filters[topic][$eq]=distribution"
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=distribution"
       )
       .then(({ data }) => setDistributions(data.data))
       .catch((error) => setError(error));
@@ -810,7 +810,7 @@ function PublicationMobile() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/policies/?populate=*&filters[topic][$eq]=periodicity"
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=periodicity"
       )
       .then(({ data }) => setPeridiocities(data.data))
       .catch((error) => setError(error));
@@ -820,7 +820,7 @@ function PublicationMobile() {
   const [member, setMembers] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:1337/api/members")
+      .get("http://10.35.29.179:1337/api/members")
       .then(({ data }) => setMembers(data.data))
       .catch((error) => setError(error));
   }, []);
@@ -828,7 +828,7 @@ function PublicationMobile() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/members/?populate=*&filters[usertype][$eq]=honorary_member"
+        "http://10.35.29.179:1337/api/members/?populate=*&filters[usertype][$eq]=honorary_member"
       )
       .then(({ data }) => setHonoraryMembers(data.data))
       .catch((error) => setError(error));
@@ -837,7 +837,7 @@ function PublicationMobile() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/members/?populate=*&filters[usertype][$eq]=editor_chief"
+        "http://10.35.29.179:1337/api/members/?populate=*&filters[usertype][$eq]=editor_chief"
       )
       .then(({ data }) => setEditorMembers(data.data))
       .catch((error) => setError(error));
@@ -846,7 +846,7 @@ function PublicationMobile() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:1337/api/members/?populate=*&filters[usertype][$eq]=board_member"
+        "http://10.35.29.179:1337/api/members/?populate=*&filters[usertype][$eq]=board_member"
       )
       .then(({ data }) => setBoardMembers(data.data))
       .catch((error) => setError(error));

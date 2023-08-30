@@ -24,7 +24,7 @@ function HomeDesktop() {
     let isMounted = true;
 
     const instance = axios.create({
-      baseURL: "http://localhost:1337/api/",
+      baseURL: "http://10.35.29.179:1337/api/",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -120,9 +120,9 @@ function HomeDesktop() {
                   <img
                     // src={journalimage}
                     src={
-                      "http://localhost:1337" +
+                      "http://10.35.29.179:1337" +
                       publication.attributes.journal[0]?.uploadfiles.data[0]
-                        ?.attributes.fileupload?.data[0]?.attributes.url
+                        ?.attributes.fileupload?.data[1]?.attributes.url
                     }
                     style={{ width: "100%" }}
                   />
@@ -527,7 +527,7 @@ function HomeMobile() {
     let isMounted = true;
 
     const instance = axios.create({
-      baseURL: "http://localhost:1337/api/",
+      baseURL: "http://10.35.29.179:1337/api/",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -631,9 +631,9 @@ function HomeMobile() {
                   <img
                     // src={journalimage}
                     src={
-                      "http://localhost:1337" +
+                      "http://10.35.29.179:1337" +
                       publication.attributes.journal[0]?.uploadfiles.data[0]
-                        ?.attributes.fileupload?.data[0]?.attributes.url
+                        ?.attributes.fileupload?.data[1]?.attributes.url
                     }
                     style={{ width: "100%" }}
                   />
