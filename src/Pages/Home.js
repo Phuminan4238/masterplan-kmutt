@@ -638,7 +638,6 @@ function HomeMobile() {
                     style={{ width: "100%" }}
                   />
                   {/* <h2>{publication.attributes.journal[0]?.title}</h2> */}
-                  {/* comment  */}
                 </MDBCol>
               ))}
               {publications.map((publication) => (
