@@ -141,7 +141,7 @@ function HomeDesktop() {
                       }}
                     >
                       {selectedLanguage === "en"
-                        ? "Latest Journal test 2"
+                        ? "Latest Journal test 3"
                         : "วารสารล่าสุด"}
                     </p>
                     <div className="d-flex flex-column mt-auto">
