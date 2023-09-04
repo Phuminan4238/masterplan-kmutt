@@ -32,7 +32,7 @@ sudo rm -rf public
 sudo mv public-o public
 
 git pull
-udo npm run build
+sudo npm run build
 -> build
 
 ### move 
