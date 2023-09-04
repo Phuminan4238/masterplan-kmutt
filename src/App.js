@@ -10,8 +10,6 @@ import Guidelines from "./Pages/Guidelines";
 import Journal from "./Pages/Journal";
 import AboutUs from "./Pages/About us";
 // Components
-import HomeNav from "./Components/HomeNav";
-import AllNav from "./Components/AllNav";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer.jsx";
 
