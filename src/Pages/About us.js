@@ -339,8 +339,9 @@ function AboutUsMobile() {
         </MDBContainer>
 
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>
-          <MDBRow className="d-flex justify-content-between px-5 py-6 fluid">
-            <MDBCol md="8">
+          <MDBRow className="d-flex justify-content-between px-5 py-4 fluid">
+            {/* Middle  */}
+            <MDBCol md="8" className="px-0">
               {/* Publication Policy  */}
               <MDBRow className="justify-content-center ">
                 <p
@@ -354,8 +355,15 @@ function AboutUsMobile() {
               </MDBRow>
               <MDBRow className="d-flex justify-content-between fluid py-3">
                 <MDBCol
-                  className="text-2xl w-fit ps-0 text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+                  className="col-3"
+                  style={{
+                    borderTop: "1px solid black ",
+                    marginTop: "1rem",
+                  }}
+                ></MDBCol>
+                <MDBCol
+                  className="text-xl w-fit  text-black"
+                  style={{ fontFamily: "FontBold" }}
                 >
                   {selectedLanguage === "en"
                     ? `${aboutData?.header_en}`
@@ -364,7 +372,7 @@ function AboutUsMobile() {
               </MDBRow>
               <MDBRow className="justify-content-center ">
                 <p
-                  className="text-md px-0 "
+                  className="text-sm px-0 "
                   style={{ fontFamily: "FontRegular" }}
                 >
                   {selectedLanguage === "en"
@@ -373,11 +381,11 @@ function AboutUsMobile() {
                 </p>
               </MDBRow>
               {/* ******************* */}
-              {/* Publication Ethics  */}
+              {/* Editorial Office */}
               <MDBRow className="d-flex justify-content-between fluid pt-0 pb-3">
                 <MDBCol
                   md="6"
-                  className="text-2xl w-fit px-0 pe-4 text-black"
+                  className="text-xl w-fit px-0 pe-4 text-black"
                   style={{ fontFamily: "FontSemiBold" }}
                 >
                   {selectedLanguage === "en"
@@ -392,9 +400,10 @@ function AboutUsMobile() {
                   }}
                 ></MDBCol>
               </MDBRow>
+
               <MDBRow className="justify-content-center">
                 <p
-                  className="text-md px-0"
+                  className="text-sm px-0 mb-2"
                   style={{ fontFamily: "FontRegular" }}
                 >
                   {selectedLanguage === "en"
@@ -404,14 +413,14 @@ function AboutUsMobile() {
               </MDBRow>
               <MDBRow>
                 <p
-                  className="text-lg px-0 mb-0  text-black"
+                  className="text-md px-0 mb-0  text-black"
                   style={{ fontFamily: "FontSemiBold" }}
                 >
                   {selectedLanguage === "en"
                     ? `${locationData?.header_en}`
                     : `${locationData?.header_th}`}
                 </p>
-                <ul className="list-none ps-0">
+                <ul className="text-sm list-none ps-0">
                   <li>
                     {selectedLanguage === "en"
                       ? `${locationData?.content_en}`
@@ -420,34 +429,14 @@ function AboutUsMobile() {
                 </ul>
               </MDBRow>
             </MDBCol>
-
-            <MDBCol md="2">
-              <MDBRow className="justify-content-center ">
-                <p
-                  className="text-4xl px-0 text-white"
-                  style={{ fontFamily: "FontBold" }}
-                >
-                  {""}
-                </p>
-              </MDBRow>
-              <MDBRow className="d-flex justify-content-between fluid py-3">
-                <ul className="ps-0 text-sm text-white">
-                  <li>
-                    <a style={{ fontFamily: "FontSemiBold" }}> </a>
-                  </li>
-                </ul>
-              </MDBRow>
-            </MDBCol>
           </MDBRow>
         </MDBContainer>
       </section>
-      {/* <ul>
-        {publications.map(({ id, attributes }) => (
-          <>
-            <li key={id}>{attributes.journal[0]?.title}</li>
-          </>
-        ))}
-      </ul> */}
+      <section>
+        <MDBContainer>
+          <MDBRow style={{ height: "8vh" }}></MDBRow>
+        </MDBContainer>
+      </section>
     </div>
   );
 }

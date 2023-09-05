@@ -99,7 +99,7 @@ function HomeDesktop() {
           id="cluster-container"
           style={{
             background: "#474747",
-            height: "508px",
+            height: "500px",
           }}
         >
           <MDBContainer
@@ -136,12 +136,12 @@ function HomeDesktop() {
                       className="font-bold mb-2 px-2 py-1 xs:text-sm md:text-sm w-fit uppercase"
                       style={{
                         fontFamily: "FontMediumTH",
-                        backgroundColor: "white",
+                        backgroundColor: "#fce2db",
                         color: "#EB562E",
                       }}
                     >
                       {selectedLanguage === "en"
-                        ? "Latest Journal test 3"
+                        ? "Latest Journal"
                         : "วารสารล่าสุด"}
                     </p>
                     <div className="d-flex flex-column mt-auto">
@@ -186,7 +186,7 @@ function HomeDesktop() {
                           : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
                       </p>
                       <p
-                        className="text-white"
+                        className="text-white mb-0"
                         style={{
                           fontSize: "1.5rem",
                           fontFamily: "FontMedium",
@@ -299,11 +299,11 @@ function HomeDesktop() {
               >
                 <div className="d-flex flex-column w-100">
                   <p
-                    className="font-bold mb-2 xs:pt-0 md:pt-0 xs:text-md md:text-lg"
+                    className="font-bold mb-3 xs:pt-0 md:pt-0 xs:text-md md:text-lg"
                     style={{
                       fontFamily: "FontMedium",
                       color: "white",
-                      fontSize: "1.25rem",
+                      fontSize: "1.4rem",
                     }}
                   >
                     {selectedLanguage === "en"
@@ -317,7 +317,7 @@ function HomeDesktop() {
                     <p
                       className="pb-2"
                       style={{
-                        fontSize: "2.5rem",
+                        fontSize: "2.8rem",
                         fontFamily: "FontMediumTH",
                       }}
                     >
@@ -326,7 +326,7 @@ function HomeDesktop() {
                     <p
                       className="pb-2"
                       style={{
-                        fontSize: "2.5rem",
+                        fontSize: "2.8rem",
                         fontFamily: "FontMediumTH",
                       }}
                     >
@@ -335,7 +335,7 @@ function HomeDesktop() {
                     <p
                       className=""
                       style={{
-                        fontSize: "2.5rem",
+                        fontSize: "2.8rem",
                         fontFamily: "FontMediumTH",
                       }}
                     >
@@ -358,11 +358,11 @@ function HomeDesktop() {
                           color: "#EB562E",
                           backgroundColor: "white",
                         }}
-                        className=" text-sm px-btn capitalize font-bold rounded-0"
+                        className=" text-sm px-btn capitalize font-extrabold rounded-0"
                         size="lg"
                       >
                         {selectedLanguage === "en"
-                          ? "      Contact Us"
+                          ? "      Contact us"
                           : "ติดต่อเรา"}
                       </MDBBtn>
                     </Link>
@@ -503,7 +503,7 @@ function HomeDesktop() {
 
       <section>
         <MDBContainer>
-          <MDBRow style={{ height: "20vh" }}></MDBRow>
+          <MDBRow style={{ height: "5vh" }}></MDBRow>
         </MDBContainer>
       </section>
       {/* <ul>
@@ -616,7 +616,7 @@ function HomeMobile() {
                     className="font-bold mb-2 px-2 py-1 xs:text-lg w-fit uppercase"
                     style={{
                       fontFamily: "FontMediumTH",
-                      backgroundColor: "white",
+                      backgroundColor: "#fce2db",
                       color: "#EB562E",
                     }}
                   >
@@ -645,9 +645,9 @@ function HomeMobile() {
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex flex-column mt-auto">
                       <p
-                        className=" text-white"
+                        className=" text-white mb-2"
                         style={{
-                          fontSize: "1.4rem",
+                          fontSize: "1.6rem",
                           fontFamily: "FontMediumTH",
                           maxWidth: "80%", // Set a maximum width for the title
                           overflowWrap: "break-word", // Allow word wrapping within the title
@@ -670,8 +670,8 @@ function HomeMobile() {
                       <p
                         className="text-white mb-0"
                         style={{
-                          fontSize: "1rem",
-                          fontFamily: "FontRegular",
+                          fontSize: "1.1rem",
+                          fontFamily: "FontSemiBold",
                         }}
                       >
                         {/* Volumn 46 No. 2 */}
@@ -680,17 +680,15 @@ function HomeMobile() {
                           : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
                       </p>
                       <p
-                        className="text-white"
+                        className="text-white mb-3"
                         style={{
-                          fontSize: "1rem",
-                          fontFamily: "FontRegular",
+                          fontSize: "1.1rem",
+                          fontFamily: "FontSemiBold",
                         }}
                       >
-                        <p>
-                          {selectedLanguage === "en"
-                            ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
-                            : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}
-                        </p>
+                        {selectedLanguage === "en"
+                          ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
+                          : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}
 
                         {/* 
                         {publication.attributes.journal.map((journalEntry) => (
@@ -710,42 +708,47 @@ function HomeMobile() {
                         ))} */}
                       </p>
                     </div>
-                    <div className="d-flex  mt-1 text-red">
+
+                    <div
+                      className="d-flex flex-col align-items-center justify-content-center mb-2"
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                      }}
+                    >
                       <a
                         href="https://ripo.kmutt.ac.th/publication/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center text-white"
+                        style={{ width: "100%" }} // Set the width to 100%
+                        className="text-white font-semibold text-center py-2"
                       >
-                        <MDBBtn
-                          outline
-                          style={{
-                            borderColor: "#EB562E",
-                            color: "white",
-                            backgroundColor: "#EB562E",
-                          }}
-                          className="me-3 text-sm px-3 capitalize font-bold rounded-0"
-                          size="sm"
-                        >
-                          {selectedLanguage === "en"
-                            ? "Read more"
-                            : "อ่านเพิ่มเติม"}
-                        </MDBBtn>
+                        {selectedLanguage === "en"
+                          ? "Read more"
+                          : "อ่านเพิ่มเติม"}
                       </a>
-                      <MDBBtn
-                        outline
-                        style={{
-                          borderColor: "white",
-                          color: "#EB562E",
-                          backgroundColor: "white",
-                        }}
-                        className="text-sm py-1 px-2 capitalize font-bold rounded-0"
-                        size="sm"
+                    </div>
+
+                    <div
+                      className="d-flex flex-col align-items-center justify-content-center"
+                      style={{
+                        borderColor: "white",
+                        color: "#EB562E",
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <a
+                        href="https://ripo.kmutt.ac.th/publication/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ width: "100%", color: "#EB562E" }} // Set the width to 100%
+                        className=" font-semibold text-center py-2"
                       >
                         {selectedLanguage === "en"
                           ? "Explore All"
                           : "ค้นหาทั้งหมด"}
-                      </MDBBtn>
+                      </a>
                     </div>
                   </div>
                 </MDBCol>
@@ -756,6 +759,9 @@ function HomeMobile() {
       </section>
 
       <section>
+        <MDBContainer>
+          <MDBRow style={{ height: "14vh" }}></MDBRow>
+        </MDBContainer>
         <MDBContainer
           className="fluid p-0 px-0"
           style={{
@@ -765,7 +771,7 @@ function HomeMobile() {
             justifyContent: "center",
           }}
         >
-          <MDBContainer className={`fluid py-5 px-3 ${containerStyle["6xl"]}`}>
+          <MDBContainer className={`fluid pb-5 px-3 ${containerStyle["6xl"]}`}>
             <MDBRow
               className="justify-content-center"
               style={{
@@ -781,9 +787,8 @@ function HomeMobile() {
               <MDBCol
                 md="4"
                 className="d-flex p-0"
-                style={{ overflow: "hidden" }}
+                style={{ overflow: "hidden", height: "280px" }}
               >
-                {/* style={{ height: "508px", width: "412px" }} */}
                 <img
                   src={welcomecover}
                   alt="Your image"
@@ -807,11 +812,11 @@ function HomeMobile() {
               >
                 <div className="d-flex flex-column w-100">
                   <p
-                    className="font-bold mb-2 xs:pt-0 md:pt-0 xs:text-md md:text-lg"
+                    className="font-bold mb-0 xs:pt-0 md:pt-0 xs:text-md md:text-lg"
                     style={{
                       fontFamily: "FontMedium",
                       color: "white",
-                      fontSize: "1.25rem",
+                      fontSize: "1.4rem",
                     }}
                   >
                     {selectedLanguage === "en"
@@ -841,7 +846,7 @@ function HomeMobile() {
                       & Development
                     </p>
                     <p
-                      className=""
+                      className="mb-0"
                       style={{
                         fontSize: "2rem",
                         fontFamily: "FontMediumTH",
@@ -850,29 +855,27 @@ function HomeMobile() {
                       Journal
                     </p>
                   </div>
-                  <div className="d-flex  mt-1 text-red">
+                  <div
+                    className="d-flex flex-col align-items-center justify-content-center mt-2"
+                    style={{
+                      borderColor: "white",
+                      color: "#EB562E",
+                      backgroundColor: "white",
+                    }}
+                  >
                     <Link
                       to={`/about-us`}
                       onClick={() => {
                         window.scrollTo(0, 0);
                         window.location.replace(`about-us`);
                       }}
-                      className="flex items-center text-white"
+                      style={{ width: "100%", color: "#EB562E" }} // Set the width to 100%
+                      className=" font-semibold text-center py-2"
                     >
-                      <MDBBtn
-                        outline
-                        style={{
-                          borderColor: "white",
-                          color: "#EB562E",
-                          backgroundColor: "white",
-                        }}
-                        className=" text-sm px-btn capitalize font-bold rounded-0"
-                        size="lg"
-                      >
-                        {selectedLanguage === "en"
-                          ? "      Contact Us"
-                          : "ติดต่อเรา"}
-                      </MDBBtn>
+                      {" "}
+                      {selectedLanguage === "en"
+                        ? "      Contact Us"
+                        : "ติดต่อเรา"}
                     </Link>
                   </div>
                 </div>
@@ -987,7 +990,7 @@ function HomeMobile() {
 
       <section>
         <MDBContainer>
-          <MDBRow style={{ height: "20vh" }}></MDBRow>
+          <MDBRow style={{ height: "40vh" }}></MDBRow>
         </MDBContainer>
       </section>
       {/* <ul>

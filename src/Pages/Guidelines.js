@@ -763,6 +763,9 @@ function GuidelinesMobile() {
     borderBottom: "1px solid black",
     padding: "0.5rem 0px 0.5rem 0px",
   };
+  const tableRowMobile = {
+    borderBottom: "1px solid black",
+  };
   const cellContentStyle = {
     padding: "0.5rem 0px 0.5rem 0px",
     verticalAlign: "top",
@@ -823,9 +826,9 @@ function GuidelinesMobile() {
         </MDBContainer>
 
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>
-          <MDBRow className="d-flex justify-content-between px-5 py-6 fluid">
+          <MDBRow className="d-flex justify-content-between px-5 py-4 fluid">
             {/* Middle  */}
-            <MDBCol md="8">
+            <MDBCol md="8" className="px-0">
               {/* Publication Policy  */}
               <MDBRow className="justify-content-center ">
                 <p
@@ -848,7 +851,7 @@ function GuidelinesMobile() {
                 ></MDBCol>
                 <MDBCol
                   className="text-xl w-fit  text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+                  style={{ fontFamily: "FontBold" }}
                 >
                   Manuscript Preparation Guidelines
                 </MDBCol>
@@ -865,12 +868,11 @@ function GuidelinesMobile() {
 
               <MDBRow className="pt-0 pb-4">
                 <table style={tableStyle}>
+                  {/* Style table  */}
                   <tbody className="text-sm">
-                    <tr style={tableRowStyle}>
-                      <td>
-                        <div style={cellContentStyle}>Title</div>
-                      </td>
-                      <td>
+                    <tr style={tableRowStyle} className="py-4">
+                      <td style={{ verticalAlign: "top" }}>Title</td>
+                      <td style={{ width: "60%", verticalAlign: "top" }}>
                         Title should be concise and cover the main theme of the
                         article
                       </td>
@@ -1029,32 +1031,32 @@ function GuidelinesMobile() {
               {/* ******************* */}
 
               <MDBRow className="d-flex justify-content-between fluid ">
-                <MDBCol className=" w-fit px-0 pe-4">
+                <MDBCol className=" w-fit px-0 ">
                   <p
-                    className="mb-2 text-black"
-                    style={{ fontFamily: "FontSemiBold" }}
+                    className="mb-2 text-black text-sm"
+                    style={{ fontFamily: "FontMedium" }}
                   >
                     The authors should also ensure that the following important
                     points have been taken into account:
                   </p>
                   <ul className="list-decimal text-sm mb-0 ps-3">
-                    <li className="text-sm">
+                    <li className="text-sm pb-2">
                       The submission has not been previously published, nor it
                       is under consideration by any other journal.
                     </li>
-                    <li className="text-sm">
+                    <li className="text-sm pb-2">
                       The submission file should be in OpenOffice, Microsoft
                       Word, RTF, or WordPerfect document file format.
                     </li>
-                    <li className="text-sm">
+                    <li className="text-sm pb-2">
                       Where applicable, URLs for the references have been
                       provided.
                     </li>
-                    <li className="text-sm">
+                    <li className="text-sm pb-2">
                       Thai manuscript and English manuscript should be prepared
                       using TH Sarabun New size 16 pt.
                     </li>
-                    <li className="text-sm">
+                    <li className="text-sm pb-2">
                       The text adheres to the stylistic and bibliographic
                       requirements of the Journal.
                     </li>
@@ -1069,7 +1071,7 @@ function GuidelinesMobile() {
               >
                 <MDBCol
                   md="6"
-                  className="text-xl w-fit px-0 pe-4 text-black"
+                  className="text-xl w-fit px-0  text-black"
                   style={{ fontFamily: "FontBold" }}
                 >
                   Manuscript Template
@@ -1139,9 +1141,11 @@ function GuidelinesMobile() {
               <MDBRow>
                 <ul className="list-decimal text-md ms-2 mb-0">
                   <li className="text-sm pb-2">
-                    Send a manuscript file to journal@kmutt.ac.th. Please also
-                    suggest 3 possible reviewers, with full names and e-mail
-                    addresses, who can serve as reviewers of the manuscript.
+                    Send a manuscript file to{" "}
+                    <span className="underline"> journal@kmutt.ac.th.</span>{" "}
+                    Please also suggest 3 possible reviewers, with full names
+                    and e-mail addresses, who can serve as reviewers of the
+                    manuscript.
                   </li>
                   <li className="text-sm">
                     Manuscript review and publication of an accepted article are
@@ -1199,124 +1203,14 @@ function GuidelinesMobile() {
               </MDBRow>
             </MDBCol>
             {/* ******************* */}
-
-            {/* Right (Floating) */}
-            <MDBCol md="2" className="pe-0">
-              <div
-                className={`fixed top-0 h-full ${
-                  isFixed ? "right-2" : "md:right-2"
-                } transition-transform ease-in-out duration-300`}
-                style={{
-                  position: "sticky",
-                  top: "0",
-                  maxHeight: "50vh",
-                  overflowY: "auto",
-                  transform: `translateY(${Math.min(
-                    0,
-                    window.scrollY * 0.6
-                  )}px)`, // Adjust the multiplier (0.2) to control the effect
-                }}
-              >
-                <MDBRow className="justify-content-center ">
-                  <p
-                    className="text-4xl px-0 text-white"
-                    style={{ fontFamily: "FontBold" }}
-                  >
-                    Publication
-                  </p>
-                </MDBRow>
-                <MDBRow className="d-flex justify-content-between fluid py-3">
-                  <ul className=" text-sm">
-                    <li style={styles.listItem}>
-                      <a
-                        className={`${
-                          activeTopic === "preparation" ? "active" : ""
-                        }`}
-                        style={{
-                          ...styles.listItemLink,
-                          ...(activeTopic === "preparation"
-                            ? styles.activeLink
-                            : {}),
-                        }}
-                        onClick={() => {
-                          scrollToRef(preparationRef);
-                          setActiveTopic("preparation");
-                        }}
-                      >
-                        Manuscript Preparation Guidelines
-                      </a>
-                    </li>
-                    <li style={styles.listItem}>
-                      <a
-                        className={`${
-                          activeTopic === "template" ? "active" : ""
-                        }`}
-                        style={{
-                          ...styles.listItemLink,
-                          ...(activeTopic === "template"
-                            ? styles.activeLink
-                            : {}),
-                        }}
-                        onClick={() => {
-                          scrollToRef(templateRef);
-                          setActiveTopic("template");
-                        }}
-                      >
-                        Manuscript Template
-                      </a>
-                    </li>
-                    <li style={styles.listItem}>
-                      <a
-                        className={`${
-                          activeTopic === "submission" ? "active" : ""
-                        }`}
-                        style={{
-                          ...styles.listItemLink,
-                          ...(activeTopic === "submission"
-                            ? styles.activeLink
-                            : {}),
-                        }}
-                        onClick={() => {
-                          scrollToRef(submissionRef);
-                          setActiveTopic("submission");
-                        }}
-                      >
-                        Manuscript Submission
-                      </a>{" "}
-                    </li>
-                    <li style={styles.listItem}>
-                      <a
-                        className={`${
-                          activeTopic === "instruction" ? "active" : ""
-                        }`}
-                        style={{
-                          ...styles.listItemLink,
-                          ...(activeTopic === "instruction"
-                            ? styles.activeLink
-                            : {}),
-                        }}
-                        onClick={() => {
-                          scrollToRef(instructionRef);
-                          setActiveTopic("instruction");
-                        }}
-                      >
-                        Instructions on the Use of Editorial Manager
-                      </a>{" "}
-                    </li>
-                  </ul>
-                </MDBRow>
-              </div>
-            </MDBCol>
           </MDBRow>
         </MDBContainer>
       </section>
-      {/* <ul>
-        {publications.map(({ id, attributes }) => (
-          <>
-            <li key={id}>{attributes.journal[0]?.title}</li>
-          </>
-        ))}
-      </ul> */}
+      <section>
+        <MDBContainer>
+          <MDBRow style={{ height: "8vh" }}></MDBRow>
+        </MDBContainer>
+      </section>
     </div>
   );
 }

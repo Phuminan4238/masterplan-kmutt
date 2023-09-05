@@ -260,8 +260,9 @@ function JournalMobile() {
         </MDBContainer>
 
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>
-          <MDBRow className="d-flex justify-content-between px-5 py-6 fluid">
-            <MDBCol md="10">
+          <MDBRow className="d-flex justify-content-between px-5 py-4 fluid">
+            {/* Middle  */}
+            <MDBCol md="8" className="px-0">
               {/* Publication Policy  */}
               <MDBRow className="justify-content-center ">
                 <p
@@ -274,66 +275,66 @@ function JournalMobile() {
               <MDBRow className="justify-content-start py-3">
                 <MDBCol
                   md="5"
+                  className="d-flex flex-col"
                   style={{
                     backgroundColor: "#EB562E",
-                    display: "inline-flex",
-                    padding: "24px 36px 24px 36px",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    padding: "1rem",
+                    gap: "2rem",
                   }}
                 >
-                  <p
-                    className="text-lg px-0 mb-0 text-white"
-                    style={{ fontFamily: "FontSemiBold" }}
-                  >
-                    Search KMUTT Digital Library
-                  </p>
-                  <span>
+                  <div className="text-end">
                     <MDBIcon
                       fas
                       icon="chevron-right"
                       style={{ color: "white" }}
                     />
-                  </span>
+                  </div>
+                  <div>
+                    <p
+                      className="text-md px-0 mb-0 text-white"
+                      style={{ fontFamily: "FontSemiBold" }}
+                    >
+                      Search KMUTT Digital Library
+                    </p>
+                  </div>
                 </MDBCol>
               </MDBRow>
-              <MDBRow className="justify-content-start py-3">
+              <MDBRow className="justify-content-start ">
                 <MDBCol
                   md="5"
+                  className="d-flex flex-col"
                   style={{
                     backgroundColor: "#EB562E",
-                    display: "inline-flex",
-                    padding: "24px 36px 24px 36px",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    padding: "1rem",
+                    gap: "2rem",
                   }}
                 >
-                  <p
-                    className="text-lg px-0 mb-0 text-white"
-                    style={{ fontFamily: "FontSemiBold" }}
-                  >
-                    Read KMUTT RIPO
-                  </p>
-                  <span>
+                  <div className="text-end">
                     <MDBIcon
                       fas
                       icon="chevron-right"
                       style={{ color: "white" }}
                     />
-                  </span>
+                  </div>
+                  <div>
+                    <p
+                      className="text-md px-0 mb-0 text-white"
+                      style={{ fontFamily: "FontSemiBold" }}
+                    >
+                      Read KMUTT RIPO
+                    </p>
+                  </div>
                 </MDBCol>
               </MDBRow>
             </MDBCol>
           </MDBRow>
         </MDBContainer>
       </section>
-      {/* <ul>
-        {publications.map(({ id, attributes }) => (
-          <>
-            <li key={id}>{attributes.journal[0]?.title}</li>
-          </>
-        ))}
-      </ul> */}
+      <section>
+        <MDBContainer>
+          <MDBRow style={{ height: "8vh" }}></MDBRow>
+        </MDBContainer>
+      </section>
     </div>
   );
 }

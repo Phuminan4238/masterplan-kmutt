@@ -920,9 +920,9 @@ function PublicationMobile() {
         </MDBContainer>
 
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>
-          <MDBRow className="d-flex justify-content-between px-5 py-6 fluid">
+          <MDBRow className="d-flex justify-content-between px-5 py-4 fluid">
             {/* Middle  */}
-            <MDBCol md="8">
+            <MDBCol md="8" className="px-0">
               {/* Publication Policy  */}
               {policy[0] && (
                 <div>
@@ -950,7 +950,7 @@ function PublicationMobile() {
                     <MDBCol
                       md="1"
                       className="text-xl w-fit  text-black"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      style={{ fontFamily: "FontBold" }}
                     >
                       {selectedLanguage === "en"
                         ? `${policy[0].attributes.header_en} `
@@ -1009,7 +1009,7 @@ function PublicationMobile() {
                   <MDBRow className="d-flex justify-content-between fluid ">
                     <MDBCol className=" w-fit px-0">
                       <p
-                        className="mb-2 text-black"
+                        className="mb-0 text-black"
                         style={{ fontFamily: "FontSemiBold" }}
                       >
                         {selectedLanguage === "en" ? (
@@ -1310,13 +1310,11 @@ function PublicationMobile() {
           </MDBRow>
         </MDBContainer>
       </section>
-      {/* <ul>
-        {publications.map(({ id, attributes }) => (
-          <>
-            <li key={id}>{attributes.journal[0]?.title}</li>
-          </>
-        ))}
-      </ul> */}
+      <section>
+        <MDBContainer>
+          <MDBRow style={{ height: "8vh" }}></MDBRow>
+        </MDBContainer>
+      </section>
     </div>
   );
 }

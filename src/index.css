@@ -139,6 +139,15 @@ code {
   padding: 0px !important;
 }
 
+/* Add this CSS to your stylesheets */
+.navbar-scroll {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Adjust the z-index as needed */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
