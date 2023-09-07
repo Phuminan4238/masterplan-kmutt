@@ -82,25 +82,35 @@ function FooterDesktop() {
                 className="text-xl px-0"
                 style={{ fontFamily: "FontMediumTH" }}
               >
-                หน่วยงาน
+                {selectedLanguage === "en" ? "Service Agencies" : "หน่วยงาน"}
               </p>
               <p
                 className="text-md px-0 w-fit"
                 style={{ borderBottom: "1px solid white " }}
               >
-                สำนักงานบริหารทรัพยากรบุคคล
+                {selectedLanguage === "en" ? (
+                  <>
+                    Human Resource <br /> Management Office
+                  </>
+                ) : (
+                  "สำนักงานบริหารทรัพยากรบุคคล"
+                )}
               </p>
               <p
                 className="text-md px-0 w-fit"
                 style={{ borderBottom: "1px solid white " }}
               >
-                สำนักงานกิจการต่างประเทศ
+                {selectedLanguage === "en"
+                  ? "  KMUTT Internationalization"
+                  : "          สำนักงานกิจการต่างประเทศ"}
               </p>
               <p
                 className="text-md px-0 w-fit"
                 style={{ borderBottom: "1px solid white " }}
               >
-                สำนักหอสมุด
+                {selectedLanguage === "en"
+                  ? "  KMUTT Library"
+                  : "    สำนักหอสมุด"}
               </p>
             </MDBCol>
             <MDBCol
@@ -111,25 +121,37 @@ function FooterDesktop() {
                 className="text-xl px-0"
                 style={{ fontFamily: "FontMediumTH" }}
               >
-                หน่วยงาน
+                {selectedLanguage === "en"
+                  ? "Service Agencies"
+                  : "    หน่วยงาน"}
               </p>
               <p
                 className="text-md px-0 w-fit"
                 style={{ borderBottom: "1px solid white " }}
               >
-                สำนักงานบริหารทรัพยากรบุคคล
+                {selectedLanguage === "en" ? (
+                  <>
+                    Human Resource <br /> Management Office
+                  </>
+                ) : (
+                  "สำนักงานบริหารทรัพยากรบุคคล"
+                )}
               </p>
               <p
                 className="text-md px-0 w-fit"
                 style={{ borderBottom: "1px solid white " }}
               >
-                สำนักงานกิจการต่างประเทศ
+                {selectedLanguage === "en"
+                  ? "  KMUTT Internationalization"
+                  : "          สำนักงานกิจการต่างประเทศ"}
               </p>
               <p
                 className="text-md px-0 w-fit"
                 style={{ borderBottom: "1px solid white " }}
               >
-                สำนักหอสมุด
+                {selectedLanguage === "en"
+                  ? "  KMUTT Library"
+                  : "    สำนักหอสมุด"}
               </p>
             </MDBCol>
             <MDBCol
@@ -140,25 +162,37 @@ function FooterDesktop() {
                 className="text-xl px-0"
                 style={{ fontFamily: "FontMediumTH" }}
               >
-                หน่วยงาน
+                {selectedLanguage === "en"
+                  ? "Service Agencies"
+                  : "    หน่วยงาน"}
               </p>
               <p
                 className="text-md px-0  w-fit"
                 style={{ borderBottom: "1px solid white " }}
               >
-                สำนักงานบริหารทรัพยากรบุคคล
+                {selectedLanguage === "en" ? (
+                  <>
+                    Human Resource <br /> Management Office
+                  </>
+                ) : (
+                  "สำนักงานบริหารทรัพยากรบุคคล"
+                )}
               </p>
               <p
                 className="text-md px-0 w-fit"
                 style={{ borderBottom: "1px solid white " }}
               >
-                สำนักงานกิจการต่างประเทศ
+                {selectedLanguage === "en"
+                  ? "  KMUTT Internationalization"
+                  : "          สำนักงานกิจการต่างประเทศ"}
               </p>
               <p
                 className="text-md px-0 w-fit"
                 style={{ borderBottom: "1px solid white " }}
               >
-                สำนักหอสมุด
+                {selectedLanguage === "en"
+                  ? "  KMUTT Library"
+                  : "    สำนักหอสมุด"}
               </p>
             </MDBCol>
             <MDBCol

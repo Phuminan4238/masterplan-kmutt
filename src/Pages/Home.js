@@ -15,6 +15,7 @@ import welcomecover from "../Images/welcome-cover.png";
 import { text } from "@fortawesome/fontawesome-svg-core";
 import { LanguageContext } from "../Components/LanguageContext";
 import Container from "@mui/material/Container";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 function HomeDesktop() {
   const [error, setError] = useState(null);
@@ -182,7 +183,7 @@ function HomeDesktop() {
                       >
                         {/* Volumn 46 No. 2 */}
                         {selectedLanguage === "en"
-                          ? `Volumn ${publication.attributes.journal[0]?.volumn} Number ${publication.attributes.journal[0]?.number}`
+                          ? `Volumn ${publication.attributes.journal[0]?.volumn} No. ${publication.attributes.journal[0]?.number}`
                           : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
                       </p>
                       <p
@@ -195,7 +196,10 @@ function HomeDesktop() {
                         <p>
                           {selectedLanguage === "en"
                             ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
-                            : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}
+                            : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
+                          {selectedLanguage === "en"
+                            ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
+                            : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
                         </p>
 
                         {/* 
@@ -218,7 +222,7 @@ function HomeDesktop() {
                     </div>
                     <div className="d-flex  mt-1 text-red">
                       <a
-                        href="https://ripo.kmutt.ac.th/publication/"
+                        href="https://ripo.kmutt.ac.th/publication/v46n2/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center text-white"
@@ -238,20 +242,27 @@ function HomeDesktop() {
                             : "อ่านเพิ่มเติม"}
                         </MDBBtn>
                       </a>
-                      <MDBBtn
-                        outline
-                        style={{
-                          borderColor: "white",
-                          color: "#EB562E",
-                          backgroundColor: "white",
-                        }}
-                        className="text-sm py-1 px-2 capitalize font-bold rounded-0"
-                        size="sm"
+                      <a
+                        href="https://ripo.kmutt.ac.th/publication/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center text-white"
                       >
-                        {selectedLanguage === "en"
-                          ? "Explore All"
-                          : "ค้นหาทั้งหมด"}
-                      </MDBBtn>
+                        <MDBBtn
+                          outline
+                          style={{
+                            borderColor: "white",
+                            color: "#EB562E",
+                            backgroundColor: "white",
+                          }}
+                          className="text-sm py-1 px-2 capitalize font-bold rounded-0"
+                          size="sm"
+                        >
+                          {selectedLanguage === "en"
+                            ? "Explore All"
+                            : "ค้นหาทั้งหมด"}
+                        </MDBBtn>
+                      </a>
                     </div>
                   </div>
                 </MDBCol>
@@ -427,8 +438,13 @@ function HomeDesktop() {
                       : "งานตีพิมพ์ของเรา"}
                   </p>
                 </Link>
-                <span style={{ fontSize: "1.5rem", color: "white" }}>
+                {/* <span style={{ fontSize: "1.5rem", color: "white" }}>
                   <MDBIcon fas icon="chevron-right" />
+                </span> */}
+                <span>
+                  <ArrowForwardIcon
+                    style={{ color: "white", fontSize: "4rem" }}
+                  ></ArrowForwardIcon>
                 </span>
               </div>
             </MDBCol>
@@ -459,17 +475,22 @@ function HomeDesktop() {
                       : "คู่มือการใช้งาน"}
                   </p>
                 </Link>
-                <span style={{ fontSize: "1.5rem" }}>
+                {/* <span style={{ fontSize: "3rem" }}>
                   <MDBIcon
                     fas
                     icon="chevron-right"
                     style={{ color: "white" }}
                   />
+                </span> */}
+                <span>
+                  <ArrowForwardIcon
+                    style={{ color: "white", fontSize: "4rem" }}
+                  ></ArrowForwardIcon>
                 </span>
               </div>
               <div
-                className="d-flex flex-row flex-wrap justify-content-between align-items-start w-100 gap-4 p-6"
-                style={{ backgroundColor: "#EB562E", height: "30%" }}
+                className="d-flex flex-row flex-wrap justify-content-between align-items-center w-100 gap-4 p-6"
+                style={{ backgroundColor: "#EB562E", minHeight: "10vh" }}
               >
                 <Link
                   to={`/journal`}
@@ -478,6 +499,7 @@ function HomeDesktop() {
                     window.location.replace(`journal`);
                   }}
                   className="flex items-center text-white"
+                  style={{ flex: "1" }}
                 >
                   <p
                     className="text-white mb-0 xs:text-xl md:text-2xl"
@@ -488,12 +510,10 @@ function HomeDesktop() {
                       : "วารสารเพิ่มเติม"}
                   </p>
                 </Link>
-                <span style={{ fontSize: "1.5rem" }}>
-                  <MDBIcon
-                    fas
-                    icon="chevron-right"
-                    style={{ color: "white" }}
-                  />
+                <span>
+                  <ArrowForwardIcon
+                    style={{ color: "white", fontSize: "4rem" }}
+                  ></ArrowForwardIcon>
                 </span>
               </div>
             </MDBCol>

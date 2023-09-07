@@ -19,6 +19,41 @@ import { text } from "@fortawesome/fontawesome-svg-core";
 import { LanguageContext } from "../Components/LanguageContext";
 
 function PublicationDesktop() {
+  const [publications, setPublications] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const instance = axios.create({
+      baseURL: "http://10.35.29.179:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "publications?populate=journal.uploadfiles.fileupload,journal.year,journal.months"
+        );
+        if (isMounted) {
+          setPublications(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (publications.length === 0) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [publications]);
+
   // Ref
   const policyRef = useRef(null);
   const ethicRef = useRef(null);
@@ -54,7 +89,7 @@ function PublicationDesktop() {
       marginBottom: "0.5rem",
     },
     listItemLink: {
-      color: "#333",
+      color: "#474747",
       textDecoration: "none",
       transition: "color 0.3s",
       fontWeight: "400",
@@ -159,53 +194,80 @@ function PublicationDesktop() {
         <MDBContainer className={`fluid px-3 ${containerStyle["6xl"]}`}>
           <MDBRow className="d-flex justify-content-between py-6 fluid gx-6">
             {/* Left */}
-            <MDBCol md="2">
-              {/* Journal  */}
-              <MDBRow
-                className="justify-content-center py-1"
-                style={{
-                  borderLeft: "0.4rem solid  #EB562E ",
-                  display: "flex",
-                  alignItems: "center",
-                  fontFamily: "FontSemiBold",
-                }}
-              >
-                <p className="m-0 text-2xl">Latest</p>
-                <p className="m-0 text-2xl">Journal</p>
-              </MDBRow>
-              <MDBRow className="pt-3 pb-2">
-                <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
-                  {/* style={{ height: "508px", width: "412px" }} */}
-                  <img
-                    src={journalimage}
-                    alt="Your image"
-                    className="image-fluid"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </MDBCol>
-              </MDBRow>
-              <MDBRow
-                className="justify-content-center py-1"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <p
-                  className="m-0 text-md px-1"
-                  style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+            {publications.map((publication) => (
+              <MDBCol md="2">
+                {/* Journal  */}
+                <MDBRow
+                  className="justify-content-center"
+                  style={{
+                    borderLeft: "0.4rem solid  #EB562E ",
+                    display: "flex",
+                    alignItems: "center",
+                    fontFamily: "FontSemiBold",
+                    color: "#474747",
+                    fontSize: "36px",
+                  }}
                 >
-                  KMUTT Research and Development Journal
-                </p>
-                <p className="m-0 text-xs px-1 py-2">
-                  Volume 46 No. 2 April - June
-                </p>
-              </MDBRow>
-            </MDBCol>
+                  <p className="m-0 ">Latest</p>
+                  <p className="m-0 ">Journal</p>
+                </MDBRow>
+                <MDBRow className="pt-3 pb-2">
+                  <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
+                    {/* style={{ height: "508px", width: "412px" }} */}
+                    <img
+                      src={journalimage}
+                      alt="Your image"
+                      className="image-fluid"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow
+                  className="justify-content-center py-1"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* local data */}
+                  <p
+                    className="m-0 text-md px-1"
+                    style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+                  >
+                    KMUTT Research and Development Journal
+                    {/* {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.title}`
+                      : `${publication.attributes.journal[0]?.title_th}`} */}
+                  </p>
+
+                  <p
+                    className="m-0 px-1 pt-2"
+                    style={{ color: "#474747", fontSize: "14px" }}
+                  >
+                    {/* Volumn 46 No. 2 */}
+                    {selectedLanguage === "en"
+                      ? `Volumn ${publication.attributes.journal[0]?.volumn} No. ${publication.attributes.journal[0]?.number}`
+                      : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
+                    {""}
+                  </p>
+                  <p
+                    className="m-0 text-xs px-1"
+                    style={{ color: "#474747", fontSize: "14px" }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
+                  </p>
+                </MDBRow>
+              </MDBCol>
+            ))}
             {/* ******************* */}
 
             {/* Middle  */}
@@ -216,7 +278,7 @@ function PublicationDesktop() {
                   <MDBRow className="justify-content-center ">
                     <p
                       className="text-4xl px-0 text-black"
-                      style={{ fontFamily: "FontBold" }}
+                      style={{ fontFamily: "FontBold", fontSize: "48px" }}
                     >
                       {selectedLanguage === "en"
                         ? "Publication"
@@ -236,8 +298,8 @@ function PublicationDesktop() {
                     ></MDBCol>
                     <MDBCol
                       md="6"
-                      className="text-2xl w-fit ps-4 text-black"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      className="w-fit ps-4 text-black"
+                      style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
                     >
                       {selectedLanguage === "en"
                         ? `${policy[0].attributes.header_en} `
@@ -268,7 +330,7 @@ function PublicationDesktop() {
                     <MDBCol
                       md="6"
                       className="text-2xl w-fit px-0 pe-4 text-black"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
                     >
                       {selectedLanguage === "en"
                         ? `${ethic[0].attributes.header_en} `
@@ -297,7 +359,7 @@ function PublicationDesktop() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        style={{ fontFamily: "FontBold" }}
                       >
                         {selectedLanguage === "en" ? (
                           <p>
@@ -337,7 +399,7 @@ function PublicationDesktop() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        style={{ fontFamily: "FontBold" }}
                       >
                         {selectedLanguage === "en" ? (
                           <p>
@@ -380,7 +442,7 @@ function PublicationDesktop() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        style={{ fontFamily: "FontBold" }}
                       >
                         {selectedLanguage === "en" ? (
                           <p>
@@ -432,7 +494,7 @@ function PublicationDesktop() {
                     <MDBCol
                       md="6"
                       className="text-2xl w-fit px-0 pe-4 text-black"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
                     >
                       {selectedLanguage === "en"
                         ? `${distribution[0].attributes.header_en}`
@@ -470,7 +532,7 @@ function PublicationDesktop() {
                     <MDBCol
                       md="6"
                       className="text-2xl w-fit px-0 pe-4 text-black"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
                     >
                       {selectedLanguage === "en"
                         ? `${periodicity[0].attributes.header_en}`
@@ -506,7 +568,7 @@ function PublicationDesktop() {
                 <MDBCol
                   md="6"
                   className="text-2xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+                  style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
                 >
                   Editorial Board Members
                 </MDBCol>
@@ -524,8 +586,8 @@ function PublicationDesktop() {
                   <MDBRow className="d-flex justify-content-between fluid mb-2">
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
-                        className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        className="mb-2 text-black italic"
+                        style={{ fontFamily: "FontMedium" }}
                       >
                         {honorarymember[0].attributes.position_en}
                       </p>
@@ -548,8 +610,8 @@ function PublicationDesktop() {
                   <MDBRow className="d-flex justify-content-between fluid mb-2">
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
-                        className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        className="mb-2 text-black italic"
+                        style={{ fontFamily: "FontMedium" }}
                       >
                         {editormember[0].attributes.position_en}
                       </p>
@@ -572,8 +634,8 @@ function PublicationDesktop() {
                   <MDBRow className="d-flex justify-content-between fluid mb-2">
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
-                        className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        className="mb-2 text-black italic"
+                        style={{ fontFamily: "FontMedium" }}
                       >
                         {boardmember[0].attributes.position_en}
                       </p>
@@ -582,7 +644,9 @@ function PublicationDesktop() {
                           <li key={memberData.id}>
                             {memberData.attributes.prefix_en} {""}
                             {memberData.attributes.name_en} {""}
-                            {memberData.attributes.surname_en}
+                            {memberData.attributes.surname_en} {""} {"("}
+                            {memberData.attributes.organization_en}
+                            {")"}
                           </li>
                         </ul>
                       ))}
@@ -619,7 +683,10 @@ function PublicationDesktop() {
                   </p>
                 </MDBRow>
                 <MDBRow className="d-flex justify-content-between fluid py-3">
-                  <ul className="text-sm">
+                  <ul
+                    className=""
+                    style={{ color: "#474747", fontSize: "16px" }}
+                  >
                     <li style={styles.listItem}>
                       <a
                         className={`${

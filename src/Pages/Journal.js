@@ -7,17 +7,54 @@ import { useMediaQuery } from "react-responsive";
 import journalimage from "../Images/journal-image.png";
 import welcomecover from "../Images/welcome-cover.png";
 import { text } from "@fortawesome/fontawesome-svg-core";
+import NorthEastIcon from "@mui/icons-material/NorthEast";
+import { LanguageContext } from "../Components/LanguageContext";
 
 function JournalDesktop() {
-  const [error, setError] = useState(null);
   const [publications, setPublications] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://10.35.29.179:1337/api/publications/?populate=*")
-      .then(({ data }) => setPublications(data.data))
-      .catch((error) => setError(error));
-  }, []);
+    let isMounted = true;
+
+    const instance = axios.create({
+      baseURL: "http://10.35.29.179:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "publications?populate=journal.uploadfiles.fileupload,journal.year,journal.months"
+        );
+        if (isMounted) {
+          setPublications(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (publications.length === 0) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [publications]);
+
+  const [error, setError] = useState(null);
+  // const [publications, setPublications] = useState([]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://10.35.29.179:1337/api/publications/?populate=*")
+  //     .then(({ data }) => setPublications(data.data))
+  //     .catch((error) => setError(error));
+  // }, []);
 
   const isDesktop = useMediaQuery({ minWidth: 940 });
 
@@ -42,57 +79,89 @@ function JournalDesktop() {
     verticalAlign: "top",
   };
 
+  const { selectedLanguage, handleLanguageSwitch } =
+    useContext(LanguageContext);
+
   return (
     <div className="App">
       <section>
         <MDBContainer className={`fluid px-3 ${containerStyle["6xl"]}`}>
           <MDBRow className="d-flex justify-content-between py-6 fluid gx-6">
-            <MDBCol md="2">
-              <MDBRow
-                className="justify-content-center py-1"
-                style={{
-                  borderLeft: "0.4rem solid  #EB562E ",
-                  display: "flex",
-                  alignItems: "center",
-                  fontFamily: "FontSemiBold",
-                }}
-              >
-                <p className="m-0 text-2xl">Latest</p>
-                <p className="m-0 text-2xl">Journal</p>
-              </MDBRow>
-              <MDBRow className="pt-3 pb-2">
-                <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
-                  {/* style={{ height: "508px", width: "412px" }} */}
-                  <img
-                    src={journalimage}
-                    alt="Your image"
-                    className="image-fluid"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </MDBCol>
-              </MDBRow>
-              <MDBRow
-                className="justify-content-center py-1"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <p
-                  className="m-0 text-md px-1"
-                  style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+            {/* Left */}
+            {publications.map((publication) => (
+              <MDBCol md="2">
+                {/* Journal  */}
+                <MDBRow
+                  className="justify-content-center"
+                  style={{
+                    borderLeft: "0.4rem solid  #EB562E ",
+                    display: "flex",
+                    alignItems: "center",
+                    fontFamily: "FontSemiBold",
+                    color: "#474747",
+                    fontSize: "36px",
+                  }}
                 >
-                  KMUTT Research and Development Journal
-                </p>
-                <p className="m-0 text-xs px-1 py-2">
-                  Volume 46 No. 2 April - June
-                </p>
-              </MDBRow>
-            </MDBCol>
+                  <p className="m-0 ">Latest</p>
+                  <p className="m-0 ">Journal</p>
+                </MDBRow>
+                <MDBRow className="pt-3 pb-2">
+                  <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
+                    {/* style={{ height: "508px", width: "412px" }} */}
+                    <img
+                      src={journalimage}
+                      alt="Your image"
+                      className="image-fluid"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow
+                  className="justify-content-center py-1"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* local data */}
+                  <p
+                    className="m-0 text-md px-1"
+                    style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+                  >
+                    KMUTT Research and Development Journal
+                    {/* {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.title}`
+                      : `${publication.attributes.journal[0]?.title_th}`} */}
+                  </p>
+
+                  <p
+                    className="m-0 px-1 pt-2"
+                    style={{ color: "#474747", fontSize: "14px" }}
+                  >
+                    {/* Volumn 46 No. 2 */}
+                    {selectedLanguage === "en"
+                      ? `Volumn ${publication.attributes.journal[0]?.volumn} No. ${publication.attributes.journal[0]?.number}`
+                      : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
+                    {""}
+                  </p>
+                  <p
+                    className="m-0 text-xs px-1"
+                    style={{ color: "#474747", fontSize: "14px" }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
+                  </p>
+                </MDBRow>
+              </MDBCol>
+            ))}
 
             <MDBCol md="10">
               {/* Publication Policy  */}
@@ -105,56 +174,71 @@ function JournalDesktop() {
                 </p>
               </MDBRow>
               <MDBRow className="justify-content-start py-3">
-                <MDBCol
-                  md="5"
-                  style={{
-                    backgroundColor: "#EB562E",
-                    display: "inline-flex",
-                    padding: "24px 36px 24px 36px",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
+                <a
+                  href="https://www.lib.kmutt.ac.th/en/"
+                  target="_blank"
+                  className="flex items-center text-white ps-0"
                 >
-                  <p
-                    className="text-lg px-0 mb-0 text-white"
-                    style={{ fontFamily: "FontSemiBold" }}
+                  <MDBCol
+                    md="7"
+                    style={{
+                      backgroundColor: "#EB562E",
+                      display: "inline-flex",
+                      padding: "2.4rem",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
                   >
-                    Search KMUTT Digital Library
-                  </p>
-                  <span>
+                    <p
+                      className="text-2xl px-0 mb-0 text-white"
+                      style={{ fontFamily: "FontSemiBold" }}
+                    >
+                      Search KMUTT Digital Library
+                    </p>
+                    {/* <span>
                     <MDBIcon
                       fas
                       icon="chevron-right"
                       style={{ color: "white" }}
                     />
-                  </span>
-                </MDBCol>
+                  </span> */}
+                    <span>
+                      <NorthEastIcon
+                        style={{ color: "white", fontSize: "3rem" }}
+                      ></NorthEastIcon>
+                    </span>
+                  </MDBCol>
+                </a>
               </MDBRow>
               <MDBRow className="justify-content-start py-3">
-                <MDBCol
-                  md="5"
-                  style={{
-                    backgroundColor: "#EB562E",
-                    display: "inline-flex",
-                    padding: "24px 36px 24px 36px",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
+                <a
+                  href="https://ripo.kmutt.ac.th/publication/"
+                  target="_blank"
+                  className="flex items-center text-white ps-0"
                 >
-                  <p
-                    className="text-lg px-0 mb-0 text-white"
-                    style={{ fontFamily: "FontSemiBold" }}
+                  <MDBCol
+                    md="7"
+                    style={{
+                      backgroundColor: "#EB562E",
+                      display: "inline-flex",
+                      padding: "2.4rem",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
                   >
-                    Read KMUTT RIPO
-                  </p>
-                  <span>
-                    <MDBIcon
-                      fas
-                      icon="chevron-right"
-                      style={{ color: "white" }}
-                    />
-                  </span>
-                </MDBCol>
+                    <p
+                      className="text-2xl px-0 mb-0 text-white"
+                      style={{ fontFamily: "FontSemiBold" }}
+                    >
+                      Read KMUTT RIPO
+                    </p>
+                    <span>
+                      <NorthEastIcon
+                        style={{ color: "white", fontSize: "3rem" }}
+                      ></NorthEastIcon>
+                    </span>
+                  </MDBCol>
+                </a>
               </MDBRow>
             </MDBCol>
           </MDBRow>
