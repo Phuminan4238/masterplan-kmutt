@@ -350,7 +350,7 @@ function HomeDesktop() {
                         fontFamily: "FontMediumTH",
                       }}
                     >
-                      Journal
+                      Journal test
                     </p>
                   </div>
                   <div className="d-flex  mt-1 text-red">
