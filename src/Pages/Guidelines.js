@@ -333,7 +333,7 @@ function GuidelinesDesktop() {
                   style={{ fontFamily: "FontSemiBold" }}
                 >
                   Authors of a manuscript should adhere to the following
-                  Guidelines
+                  Guidelines.
                 </p>
               </MDBRow>
               <MDBRow className="pt-0 pb-2">
