@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useState, useEffect, setIsLoaded } from "react";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 import {
   MDBContainer,
   MDBRow,
@@ -119,19 +120,28 @@ function AboutUsDesktop() {
                     borderLeft: "0.4rem solid  #EB562E ",
                     display: "flex",
                     alignItems: "center",
-                    fontFamily: "FontSemiBold",
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                     color: "#474747",
                     fontSize: "36px",
                   }}
                 >
-                  <p className="m-0 ">Latest</p>
-                  <p className="m-0 ">Journal</p>
+                  <p className="m-0 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? "Latest Journal"
+                      : "วารสารล่าสุด"}
+                  </p>
                 </MDBRow>
                 <MDBRow className="pt-3 pb-2">
                   <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
                     {/* style={{ height: "508px", width: "412px" }} */}
                     <img
-                      src={journalimage}
+                      src={
+                        "http://10.35.29.179:1337" +
+                        publication.attributes.journal[0]?.uploadfiles.data[0]
+                          ?.attributes.fileupload?.data[1]?.attributes.url
+                      }
                       alt="Your image"
                       className="image-fluid"
                       style={{
@@ -150,19 +160,39 @@ function AboutUsDesktop() {
                   }}
                 >
                   {/* local data */}
-                  <p
-                    className="m-0 text-md px-1"
-                    style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+                  <Link
+                    to={publication.attributes.journal[0]?.url}
+                    target="_blank"
+                    style={{ color: "black", padding: "0px" }}
                   >
-                    KMUTT Research and Development Journal
-                    {/* {selectedLanguage === "en"
+                    <p
+                      className="m-0 text-md px-1"
+                      style={{
+                        color: "#EB562E",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontThaiSemiBold"
+                            : "FontThaiSemiBold",
+                      }}
+                    >
+                      {selectedLanguage === "en"
+                        ? `${publication.attributes.journal[0]?.title}`
+                        : `${publication.attributes.journal[0]?.title_th}`}
+                      {/* {selectedLanguage === "en"
                       ? `${publication.attributes.journal[0]?.title}`
                       : `${publication.attributes.journal[0]?.title_th}`} */}
-                  </p>
-
+                    </p>
+                  </Link>
                   <p
                     className="m-0 px-1 pt-2"
-                    style={{ color: "#474747", fontSize: "14px" }}
+                    style={{
+                      color: "#474747",
+                      fontSize: "14px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontRegular"
+                          : "FontThaiRegular",
+                    }}
                   >
                     {/* Volumn 46 No. 2 */}
                     {selectedLanguage === "en"
@@ -172,7 +202,14 @@ function AboutUsDesktop() {
                   </p>
                   <p
                     className="m-0 text-xs px-1"
-                    style={{ color: "#474747", fontSize: "14px" }}
+                    style={{
+                      color: "#474747",
+                      fontSize: "14px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontRegular"
+                          : "FontThaiRegular",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
@@ -184,13 +221,14 @@ function AboutUsDesktop() {
                 </MDBRow>
               </MDBCol>
             ))}
+            {/* ******************* */}
 
             <MDBCol md="8">
               {/* Publication Policy  */}
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-4xl px-0 text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  style={{ fontFamily: "FontBold", fontSize: "48px" }}
                 >
                   {selectedLanguage === "en"
                     ? `${aboutData?.topic}`
@@ -200,7 +238,7 @@ function AboutUsDesktop() {
               <MDBRow className="d-flex justify-content-between fluid py-3">
                 <MDBCol
                   className="text-2xl w-fit ps-0 text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+                  style={{ fontFamily: "FontBold" }}
                 >
                   {selectedLanguage === "en"
                     ? `${aboutData?.header_en}`
@@ -215,7 +253,7 @@ function AboutUsDesktop() {
                     __html:
                       selectedLanguage === "en"
                         ? aboutData?.content_markdown
-                        : aboutData?.content_markdown,
+                        : aboutData?.content_markdown_th,
                   }}
                 />
               </MDBRow>
@@ -225,7 +263,7 @@ function AboutUsDesktop() {
                 <MDBCol
                   md="6"
                   className="text-2xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+                  style={{ fontFamily: "FontBold" }}
                 >
                   {selectedLanguage === "en"
                     ? `${officeData?.header_en}`
@@ -241,20 +279,20 @@ function AboutUsDesktop() {
               </MDBRow>
               <MDBRow className="justify-content-center">
                 <p
-                  className="text-md px-0 mb-0"
+                  className="text-md px-0"
                   style={{ fontFamily: "FontRegular" }}
                   dangerouslySetInnerHTML={{
                     __html:
                       selectedLanguage === "en"
                         ? officeData?.content_markdown
-                        : officeData?.content_markdown,
+                        : officeData?.content_markdown_th,
                   }}
                 />
               </MDBRow>
               <MDBRow>
                 <p
                   className="text-lg px-0 mb-0  text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+                  style={{ fontFamily: "FontBold" }}
                 >
                   {selectedLanguage === "en"
                     ? `${locationData?.header_en}`
@@ -267,7 +305,7 @@ function AboutUsDesktop() {
                     __html:
                       selectedLanguage === "en"
                         ? locationData?.content_markdown
-                        : locationData?.content_markdown,
+                        : locationData?.content_markdown_th,
                   }}
                 />
               </MDBRow>

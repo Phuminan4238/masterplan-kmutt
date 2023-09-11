@@ -31,9 +31,17 @@ import {
   MDBRow,
 } from "mdb-react-ui-kit";
 import logojournal from "../Images/journal-logo.svg";
+import logojournal3 from "../Images/journal-logo3.png";
 import { LanguageContext } from "./LanguageContext";
 
 const pages = ["Home", "Publications", "Guidelines", "Journal", "About us"];
+const pages_th = [
+  "หน้าแรก",
+  "การจัดพิมพ์",
+  "ข้อแนะนำ",
+  "วารสาร",
+  "เกี่ยวกับเรา",
+];
 const drawerWidth = 250;
 
 function HideOnScroll(props) {
@@ -106,13 +114,17 @@ export default function Navbar(props) {
     height: "124px",
   };
 
+  const logoMobileStyle = {
+    height: "auto",
+  };
+
   const customRowStyle = {
     display: "inline-flex",
     justifyContent: "flex-end",
     alignItems: "flex-start",
     gap: "1rem",
     whiteSpace: "nowrap",
-    fontFamily: "FontSemiBold",
+    fontFamily: selectedLanguage === "en" ? "FontSemiBold" : "FontThaiSemiBold",
   };
 
   const containerStyle = {
@@ -189,7 +201,8 @@ export default function Navbar(props) {
           className="justify-content-center"
           style={{
             backgroundColor: "#EB562E",
-            fontFamily: "FontSemiBold",
+            fontFamily:
+              selectedLanguage === "en" ? "FontSemiBold" : "FontThaiSemiBold",
             color: "white",
             textAlign: "center",
           }}
@@ -201,7 +214,7 @@ export default function Navbar(props) {
         <MDBNavbar style={navbarStyle}>
           <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
             <MDBNavbarBrand href="/">
-              <img src={logojournal} style={logoStyle} alt="" loading="lazy" />
+              <img src={logojournal3} style={logoStyle} alt="" loading="lazy" />
             </MDBNavbarBrand>
           </MDBContainer>
         </MDBNavbar>
@@ -209,7 +222,7 @@ export default function Navbar(props) {
         <MDBNavbar style={menuStyle}>
           <MDBContainer className={`fluid p-0 px-3 ${containerStyle["6xl"]}`}>
             <MDBRow style={customRowStyle}>
-              {pages.map((page) => (
+              {pages.map((page, index) => (
                 <MDBCol key={page}>
                   <Link
                     to={
@@ -231,6 +244,10 @@ export default function Navbar(props) {
                       to={`/${page}`}
                       sx={{
                         fontWeight: "bold",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontSemiBold"
+                            : "FontThaiSemiBold",
                         padding: "20px",
                         ":hover": {
                           "& a, & > a": {
@@ -239,7 +256,7 @@ export default function Navbar(props) {
                         },
                       }}
                     >
-                      {page}
+                      {selectedLanguage === "en" ? page : pages_th[index]}
                     </a>
                   </Link>
                 </MDBCol>
@@ -284,7 +301,7 @@ export default function Navbar(props) {
         <MDBNavbar style={navbarStyle}>
           <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
             <MDBNavbarBrand href="/">
-              <img src={logojournal} style={logoStyle} alt="" loading="lazy" />
+              <img src={logojournal3} style={logoStyle} alt="" loading="lazy" />
             </MDBNavbarBrand>
           </MDBContainer>
         </MDBNavbar>
@@ -381,9 +398,9 @@ export default function Navbar(props) {
                     <Link to="/" onClick={handleLogoClick}>
                       <div style={containerStyle2}>
                         <img
-                          src={logojournal}
+                          src={logojournal3}
                           loading="lazy"
-                          style={logoStyle}
+                          style={logoMobileStyle}
                         />
                       </div>
                     </Link>
@@ -554,9 +571,9 @@ export default function Navbar(props) {
                     <div style={containerStyle2}>
                       <Link to="/" onClick={handleLogoClick}>
                         <img
-                          src={logojournal}
+                          src={logojournal3}
                           aloading="lazy"
-                          style={logoStyle}
+                          style={logoMobileStyle}
                         />
                       </Link>
                     </div>

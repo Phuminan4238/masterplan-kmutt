@@ -100,7 +100,7 @@ function HomeDesktop() {
           id="cluster-container"
           style={{
             background: "#474747",
-            height: "500px",
+            height: "510px",
           }}
         >
           <MDBContainer
@@ -158,7 +158,7 @@ function HomeDesktop() {
                       <p
                         className="m-0 py-3 text-white"
                         style={{
-                          fontSize: "1.2rem",
+                          fontSize: "2rem",
                           fontFamily: "FontMediumTH",
                           maxWidth: "80%", // Set a maximum width for the title
                           overflowWrap: "break-word", // Allow word wrapping within the title
@@ -178,7 +178,10 @@ function HomeDesktop() {
                         className="text-white mb-0"
                         style={{
                           fontSize: "1.5rem",
-                          fontFamily: "FontMedium",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
                         }}
                       >
                         {/* Volumn 46 No. 2 */}
@@ -190,7 +193,10 @@ function HomeDesktop() {
                         className="text-white mb-0"
                         style={{
                           fontSize: "1.5rem",
-                          fontFamily: "FontMedium",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
                         }}
                       >
                         <p>
@@ -201,31 +207,13 @@ function HomeDesktop() {
                             ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
                             : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
                         </p>
-
-                        {/* 
-                        {publication.attributes.journal.map((journalEntry) => (
-                          <div key={journalEntry.id}>
-                            {journalEntry.months?.data.map((tag) => (
-                              <p key={tag.id}>{tag.attributes.name_en}</p>
-                            ))}
-                          </div>
-                        ))} */}
-
-                        {/* {publication.attributes.journal.map((journalEntry) => (
-                          <div key={journalEntry.id}>
-                            {journalEntry.months?.data.map((tag) => (
-                              <p key={tag.id}>{tag.attributes.name_en}</p>
-                            ))}
-                          </div>
-                        ))} */}
                       </p>
                     </div>
                     <div className="d-flex  mt-1 text-red">
-                      <a
-                        href="https://ripo.kmutt.ac.th/publication/v46n2/"
+                      <Link
+                        to={publication.attributes.journal[0]?.url}
                         target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center text-white"
+                        style={{ color: "black" }}
                       >
                         <MDBBtn
                           outline
@@ -233,6 +221,10 @@ function HomeDesktop() {
                             borderColor: "#EB562E",
                             color: "white",
                             backgroundColor: "#EB562E",
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? "FontMedium"
+                                : "FontThaiMedium",
                           }}
                           className="me-3 text-sm px-3 capitalize font-bold rounded-0"
                           size="sm"
@@ -241,7 +233,8 @@ function HomeDesktop() {
                             ? "Read more"
                             : "อ่านเพิ่มเติม"}
                         </MDBBtn>
-                      </a>
+                      </Link>
+
                       <a
                         href="https://ripo.kmutt.ac.th/publication/"
                         target="_blank"
@@ -254,6 +247,10 @@ function HomeDesktop() {
                             borderColor: "white",
                             color: "#EB562E",
                             backgroundColor: "white",
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? "FontMedium"
+                                : "FontThaiMedium",
                           }}
                           className="text-sm py-1 px-2 capitalize font-bold rounded-0"
                           size="sm"
@@ -312,13 +309,16 @@ function HomeDesktop() {
                   <p
                     className="font-bold mb-3 xs:pt-0 md:pt-0 xs:text-md md:text-lg"
                     style={{
-                      fontFamily: "FontMedium",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontMedium"
+                          : "FontThaiMedium",
                       color: "white",
                       fontSize: "1.4rem",
                     }}
                   >
                     {selectedLanguage === "en"
-                      ? "    Welcome to"
+                      ? "Welcome to"
                       : "ยินดีต้อนรับสู่"}
                   </p>
                   <div
@@ -368,13 +368,15 @@ function HomeDesktop() {
                           borderColor: "white",
                           color: "#EB562E",
                           backgroundColor: "white",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
                         }}
                         className=" text-sm px-btn capitalize font-extrabold rounded-0"
                         size="lg"
                       >
-                        {selectedLanguage === "en"
-                          ? "      Contact us"
-                          : "ติดต่อเรา"}
+                        {selectedLanguage === "en" ? "Contact us" : "ติดต่อเรา"}
                       </MDBBtn>
                     </Link>
                   </div>
@@ -431,7 +433,12 @@ function HomeDesktop() {
                 >
                   <p
                     className="text-white mb-0 xs:text-xl md:text-5xl"
-                    style={{ fontFamily: "FontSemiBold" }}
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontSemiBold"
+                          : "FontThaiSemiBold",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? "Our Publications"
@@ -468,7 +475,12 @@ function HomeDesktop() {
                 >
                   <p
                     className="text-white mb-0 xs:text-xl md:text-5xl"
-                    style={{ fontFamily: "FontSemiBold" }}
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontSemiBold"
+                          : "FontThaiSemiBold",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? " Our Guidelines"
@@ -503,10 +515,15 @@ function HomeDesktop() {
                 >
                   <p
                     className="text-white mb-0 xs:text-xl md:text-2xl"
-                    style={{ fontFamily: "FontSemiBold" }}
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontSemiBold"
+                          : "FontThaiSemiBold",
+                    }}
                   >
                     {selectedLanguage === "en"
-                      ? "           Explore Our Journal"
+                      ? "Explore Our Journal"
                       : "วารสารเพิ่มเติม"}
                   </p>
                 </Link>
@@ -737,17 +754,15 @@ function HomeMobile() {
                         backgroundColor: "#EB562E",
                       }}
                     >
-                      <a
-                        href="https://ripo.kmutt.ac.th/publication/"
+                      <Link
+                        to={publication.attributes.journal[0]?.url}
                         target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ width: "100%" }} // Set the width to 100%
-                        className="text-white font-semibold text-center py-2"
+                        style={{ color: "black" }}
                       >
                         {selectedLanguage === "en"
                           ? "Read more"
                           : "อ่านเพิ่มเติม"}
-                      </a>
+                      </Link>
                     </div>
 
                     <div

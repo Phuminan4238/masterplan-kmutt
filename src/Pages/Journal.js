@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useState, useEffect, setIsLoaded } from "react";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useMediaQuery } from "react-responsive";
@@ -97,19 +98,28 @@ function JournalDesktop() {
                     borderLeft: "0.4rem solid  #EB562E ",
                     display: "flex",
                     alignItems: "center",
-                    fontFamily: "FontSemiBold",
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                     color: "#474747",
                     fontSize: "36px",
                   }}
                 >
-                  <p className="m-0 ">Latest</p>
-                  <p className="m-0 ">Journal</p>
+                  <p className="m-0 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? "Latest Journal"
+                      : "วารสารล่าสุด"}
+                  </p>
                 </MDBRow>
                 <MDBRow className="pt-3 pb-2">
                   <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
                     {/* style={{ height: "508px", width: "412px" }} */}
                     <img
-                      src={journalimage}
+                      src={
+                        "http://10.35.29.179:1337" +
+                        publication.attributes.journal[0]?.uploadfiles.data[0]
+                          ?.attributes.fileupload?.data[1]?.attributes.url
+                      }
                       alt="Your image"
                       className="image-fluid"
                       style={{
@@ -128,19 +138,39 @@ function JournalDesktop() {
                   }}
                 >
                   {/* local data */}
-                  <p
-                    className="m-0 text-md px-1"
-                    style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+                  <Link
+                    to={publication.attributes.journal[0]?.url}
+                    target="_blank"
+                    style={{ color: "black", padding: "0px" }}
                   >
-                    KMUTT Research and Development Journal
-                    {/* {selectedLanguage === "en"
+                    <p
+                      className="m-0 text-md px-1"
+                      style={{
+                        color: "#EB562E",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontThaiSemiBold"
+                            : "FontThaiSemiBold",
+                      }}
+                    >
+                      {selectedLanguage === "en"
+                        ? `${publication.attributes.journal[0]?.title}`
+                        : `${publication.attributes.journal[0]?.title_th}`}
+                      {/* {selectedLanguage === "en"
                       ? `${publication.attributes.journal[0]?.title}`
                       : `${publication.attributes.journal[0]?.title_th}`} */}
-                  </p>
-
+                    </p>
+                  </Link>
                   <p
                     className="m-0 px-1 pt-2"
-                    style={{ color: "#474747", fontSize: "14px" }}
+                    style={{
+                      color: "#474747",
+                      fontSize: "14px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontRegular"
+                          : "FontThaiRegular",
+                    }}
                   >
                     {/* Volumn 46 No. 2 */}
                     {selectedLanguage === "en"
@@ -150,7 +180,14 @@ function JournalDesktop() {
                   </p>
                   <p
                     className="m-0 text-xs px-1"
-                    style={{ color: "#474747", fontSize: "14px" }}
+                    style={{
+                      color: "#474747",
+                      fontSize: "14px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontRegular"
+                          : "FontThaiRegular",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
@@ -162,15 +199,19 @@ function JournalDesktop() {
                 </MDBRow>
               </MDBCol>
             ))}
+            {/* ******************* */}
 
             <MDBCol md="10">
-              {/* Publication Policy  */}
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-4xl px-0 text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    fontSize: "48px",
+                  }}
                 >
-                  Journal
+                  {selectedLanguage === "en" ? "Journal" : "วารสาร"}
                 </p>
               </MDBRow>
               <MDBRow className="justify-content-start py-3">
@@ -191,9 +232,16 @@ function JournalDesktop() {
                   >
                     <p
                       className="text-2xl px-0 mb-0 text-white"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontSemiBold"
+                            : "FontThaiSemiBold",
+                      }}
                     >
-                      Search KMUTT Digital Library
+                      {selectedLanguage === "en"
+                        ? "Search KMUTT Digital Library"
+                        : "ค้นหาบทความในวารสารฯ"}
                     </p>
                     {/* <span>
                     <MDBIcon
@@ -212,7 +260,7 @@ function JournalDesktop() {
               </MDBRow>
               <MDBRow className="justify-content-start py-3">
                 <a
-                  href="https://ripo.kmutt.ac.th/publication/"
+                  href="https://digital.lib.kmutt.ac.th/journal/brows1.php"
                   target="_blank"
                   className="flex items-center text-white ps-0"
                 >
@@ -228,9 +276,16 @@ function JournalDesktop() {
                   >
                     <p
                       className="text-2xl px-0 mb-0 text-white"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontSemiBold"
+                            : "FontThaiSemiBold",
+                      }}
                     >
-                      Read KMUTT RIPO
+                      {selectedLanguage === "en"
+                        ? "Read KMUTT RIPO"
+                        : "อ่านวารสารวิจัยและพัฒนา มจธ."}
                     </p>
                     <span>
                       <NorthEastIcon

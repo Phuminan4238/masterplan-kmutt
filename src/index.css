@@ -1,38 +1,79 @@
 @font-face {
-  font-family: "IBM Plex Sans", sans-serif !important;
+  font-family: "IBM Plex Sans", "IBM Plex Sans Thai", sans-serif !important;
   src: url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
 }
 
+/* English Font */
 @font-face {
   font-family: "FontLight";
   src: url("./Fonts/IBMPlexSans-Light.ttf") format("truetype");
   font-style: light;
 }
 
+/* Thai Font */
+@font-face {
+  font-family: "FontThaiLight";
+  src: url("./Fonts/IBMPlexSansThai-Light.ttf") format("truetype");
+  font-style: medium;
+}
+
+/* English Font */
 @font-face {
   font-family: "FontRegular";
   src: url("./Fonts/IBMPlexSans-Regular.ttf") format("truetype");
   font-style: medium;
 }
 
+/* Thai Font */
+@font-face {
+  font-family: "FontThaiRegular";
+  src: url("./Fonts/IBMPlexSansThai-Regular.ttf") format("truetype");
+  font-style: medium;
+}
+
+/* English Font */
 @font-face {
   font-family: "FontMedium";
   src: url("./Fonts/IBMPlexSans-Medium.ttf") format("truetype");
   font-style: medium;
 }
 
+/* Thai Font */
+@font-face {
+  font-family: "FontThaiMedium";
+  src: url("./Fonts/IBMPlexSansThai-Medium.ttf") format("truetype");
+  font-style: medium;
+}
+
+/* English Font */
 @font-face {
   font-family: "FontSemiBold";
   src: url("./Fonts/IBMPlexSans-SemiBold.ttf") format("truetype");
-  font-style: bold;
+  font-style: medium;
 }
 
+/* Thai Font */
+@font-face {
+  font-family: "FontThaiSemiBold";
+  src: url("./Fonts/IBMPlexSansThai-SemiBold.ttf") format("truetype");
+  font-style: medium;
+}
+
+/* English Font */
 @font-face {
   font-family: "FontBold";
   src: url("./Fonts/IBMPlexSans-Bold.ttf") format("truetype");
-  font-style: bold;
+  font-style: medium;
 }
 
+/* Thai Font */
+@font-face {
+  font-family: "FontThaiBold";
+  src: url("./Fonts/IBMPlexSansThai-Bold.ttf") format("truetype");
+  font-style: medium;
+}
+
+/* Anakotmai font */
 @font-face {
   font-family: "FontLightTH";
   src: url("./Fonts/Anakotmai-Light.ttf") format("truetype");

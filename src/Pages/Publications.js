@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useState, useEffect, useRef, setIsLoaded } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import {
   MDBContainer,
@@ -138,6 +139,15 @@ function PublicationDesktop() {
       .then(({ data }) => setPeridiocities(data.data))
       .catch((error) => setError(error));
   }, []);
+  const [editorialmember, setEditorialMembers] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=editorialmember"
+      )
+      .then(({ data }) => setEditorialMembers(data.data))
+      .catch((error) => setError(error));
+  }, []);
 
   // Member
   const [member, setMembers] = useState([]);
@@ -203,19 +213,28 @@ function PublicationDesktop() {
                     borderLeft: "0.4rem solid  #EB562E ",
                     display: "flex",
                     alignItems: "center",
-                    fontFamily: "FontSemiBold",
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                     color: "#474747",
                     fontSize: "36px",
                   }}
                 >
-                  <p className="m-0 ">Latest</p>
-                  <p className="m-0 ">Journal</p>
+                  <p className="m-0 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? "Latest Journal"
+                      : "วารสารล่าสุด"}
+                  </p>
                 </MDBRow>
                 <MDBRow className="pt-3 pb-2">
                   <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
                     {/* style={{ height: "508px", width: "412px" }} */}
                     <img
-                      src={journalimage}
+                      src={
+                        "http://10.35.29.179:1337" +
+                        publication.attributes.journal[0]?.uploadfiles.data[0]
+                          ?.attributes.fileupload?.data[1]?.attributes.url
+                      }
                       alt="Your image"
                       className="image-fluid"
                       style={{
@@ -234,19 +253,39 @@ function PublicationDesktop() {
                   }}
                 >
                   {/* local data */}
-                  <p
-                    className="m-0 text-md px-1"
-                    style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+                  <Link
+                    to={publication.attributes.journal[0]?.url}
+                    target="_blank"
+                    style={{ color: "black", padding: "0px" }}
                   >
-                    KMUTT Research and Development Journal
-                    {/* {selectedLanguage === "en"
+                    <p
+                      className="m-0 text-md px-1"
+                      style={{
+                        color: "#EB562E",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontThaiSemiBold"
+                            : "FontThaiSemiBold",
+                      }}
+                    >
+                      {selectedLanguage === "en"
+                        ? `${publication.attributes.journal[0]?.title}`
+                        : `${publication.attributes.journal[0]?.title_th}`}
+                      {/* {selectedLanguage === "en"
                       ? `${publication.attributes.journal[0]?.title}`
                       : `${publication.attributes.journal[0]?.title_th}`} */}
-                  </p>
-
+                    </p>
+                  </Link>
                   <p
                     className="m-0 px-1 pt-2"
-                    style={{ color: "#474747", fontSize: "14px" }}
+                    style={{
+                      color: "#474747",
+                      fontSize: "14px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontRegular"
+                          : "FontThaiRegular",
+                    }}
                   >
                     {/* Volumn 46 No. 2 */}
                     {selectedLanguage === "en"
@@ -256,7 +295,14 @@ function PublicationDesktop() {
                   </p>
                   <p
                     className="m-0 text-xs px-1"
-                    style={{ color: "#474747", fontSize: "14px" }}
+                    style={{
+                      color: "#474747",
+                      fontSize: "14px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontRegular"
+                          : "FontThaiRegular",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
@@ -278,11 +324,17 @@ function PublicationDesktop() {
                   <MDBRow className="justify-content-center ">
                     <p
                       className="text-4xl px-0 text-black"
-                      style={{ fontFamily: "FontBold", fontSize: "48px" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                        fontSize: "48px",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? "Publication"
-                        : "Publication"}
+                        : "การจัดพิมพ์"}
                     </p>
                   </MDBRow>
                   <MDBRow
@@ -299,7 +351,13 @@ function PublicationDesktop() {
                     <MDBCol
                       md="6"
                       className="w-fit ps-4 text-black"
-                      style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                        fontSize: "1.75rem",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${policy[0].attributes.header_en} `
@@ -309,7 +367,12 @@ function PublicationDesktop() {
                   <MDBRow className="justify-content-center ">
                     <p
                       className="text-md px-0"
-                      style={{ fontFamily: "FontRegular" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontRegular"
+                            : "FontThaiRegular",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${policy[0].attributes.content_en} `
@@ -330,7 +393,13 @@ function PublicationDesktop() {
                     <MDBCol
                       md="6"
                       className="text-2xl w-fit px-0 pe-4 text-black"
-                      style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                        fontSize: "1.75rem",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${ethic[0].attributes.header_en} `
@@ -347,7 +416,12 @@ function PublicationDesktop() {
                   <MDBRow className="justify-content-center">
                     <p
                       className="text-md px-0"
-                      style={{ fontFamily: "FontRegular" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontRegular"
+                            : "FontThaiRegular",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${ethic[0].attributes.content_en} `
@@ -359,7 +433,12 @@ function PublicationDesktop() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black"
-                        style={{ fontFamily: "FontBold" }}
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontBold"
+                              : "FontThaiBold",
+                        }}
                       >
                         {selectedLanguage === "en" ? (
                           <p>
@@ -376,7 +455,15 @@ function PublicationDesktop() {
                         )}
                       </p>
                       <ul className="list-disc text-md">
-                        <li className="text-md">
+                        <li
+                          className="text-md"
+                          style={{
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? "FontRegular"
+                                : "FontThaiRegular",
+                          }}
+                        >
                           {selectedLanguage === "en" ? (
                             <p>
                               {ethic[0].attributes.role &&
@@ -399,7 +486,12 @@ function PublicationDesktop() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black"
-                        style={{ fontFamily: "FontBold" }}
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontBold"
+                              : "FontThaiBold",
+                        }}
                       >
                         {selectedLanguage === "en" ? (
                           <p>
@@ -422,7 +514,15 @@ function PublicationDesktop() {
                       {ethic[0].attributes.role &&
                         ethic[0].attributes.role[1] && (
                           <ul className="list-disc text-md">
-                            <li className="text-md">
+                            <li
+                              className="text-md"
+                              style={{
+                                fontFamily:
+                                  selectedLanguage === "en"
+                                    ? "FontRegular"
+                                    : "FontThaiRegular",
+                              }}
+                            >
                               {selectedLanguage === "en" ? (
                                 <p>
                                   {ethic[0].attributes.role[1].content_role}
@@ -465,7 +565,15 @@ function PublicationDesktop() {
                       {ethic[0].attributes.role &&
                         ethic[0].attributes.role[2] && (
                           <ul className="list-disc text-md">
-                            <li className="text-md">
+                            <li
+                              className="text-md"
+                              style={{
+                                fontFamily:
+                                  selectedLanguage === "en"
+                                    ? "FontRegular"
+                                    : "FontThaiRegular",
+                              }}
+                            >
                               {selectedLanguage === "en" ? (
                                 <p>
                                   {ethic[0].attributes.role[2].content_role}
@@ -494,7 +602,13 @@ function PublicationDesktop() {
                     <MDBCol
                       md="6"
                       className="text-2xl w-fit px-0 pe-4 text-black"
-                      style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                        fontSize: "1.75rem",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${distribution[0].attributes.header_en}`
@@ -511,7 +625,12 @@ function PublicationDesktop() {
                   <MDBRow className="justify-content-center">
                     <p
                       className="text-md px-0"
-                      style={{ fontFamily: "FontRegular" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontRegular"
+                            : "FontThaiRegular",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${distribution[0].attributes.content_en}`
@@ -532,7 +651,13 @@ function PublicationDesktop() {
                     <MDBCol
                       md="6"
                       className="text-2xl w-fit px-0 pe-4 text-black"
-                      style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                        fontSize: "1.75rem",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${periodicity[0].attributes.header_en}`
@@ -549,7 +674,12 @@ function PublicationDesktop() {
                   <MDBRow className="justify-content-center">
                     <p
                       className="text-md px-0"
-                      style={{ fontFamily: "FontRegular" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontRegular"
+                            : "FontThaiRegular",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${periodicity[0].attributes.content_en}`
@@ -561,25 +691,33 @@ function PublicationDesktop() {
               {/* ******************* */}
 
               {/* Editorial Board Member  */}
-              <MDBRow
-                ref={boardmemberRef}
-                className="d-flex justify-content-between fluid py-3"
-              >
-                <MDBCol
-                  md="6"
-                  className="text-2xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
+              {editorialmember[0] && (
+                <MDBRow
+                  ref={boardmemberRef}
+                  className="d-flex justify-content-between fluid py-3"
                 >
-                  Editorial Board Members
-                </MDBCol>
-                <MDBCol
-                  className=""
-                  style={{
-                    borderTop: "1px solid black ",
-                    marginTop: "1rem",
-                  }}
-                ></MDBCol>
-              </MDBRow>
+                  <MDBCol
+                    md="6"
+                    className="text-2xl w-fit px-0 pe-4 text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                      fontSize: "1.75rem",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${editorialmember[0].attributes.header_en}`
+                      : `${editorialmember[0].attributes.header_th}`}
+                  </MDBCol>
+                  <MDBCol
+                    className=""
+                    style={{
+                      borderTop: "1px solid black ",
+                      marginTop: "1rem",
+                    }}
+                  ></MDBCol>
+                </MDBRow>
+              )}
               {/* Honorary Member  */}
               {honorarymember[0] && (
                 <div>
@@ -587,7 +725,12 @@ function PublicationDesktop() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black italic"
-                        style={{ fontFamily: "FontMedium" }}
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                        }}
                       >
                         {honorarymember[0].attributes.position_en}
                       </p>
@@ -679,104 +822,187 @@ function PublicationDesktop() {
                     className="text-4xl px-0 text-white"
                     style={{ fontFamily: "FontBold" }}
                   >
-                    Publication
+                    "
                   </p>
                 </MDBRow>
                 <MDBRow className="d-flex justify-content-between fluid py-3">
                   <ul
                     className=""
-                    style={{ color: "#474747", fontSize: "16px" }}
+                    style={{
+                      color: "#474747",
+                      fontSize: "15px",
+                    }}
                   >
                     <li style={styles.listItem}>
-                      <a
-                        className={`${
-                          activeTopic === "policy" ? "active" : ""
-                        }`}
-                        style={{
-                          ...styles.listItemLink,
-                          ...(activeTopic === "policy"
-                            ? styles.activeLink
-                            : {}),
-                        }}
-                        onClick={() => {
-                          scrollToRef(policyRef);
-                          setActiveTopic("policy");
-                        }}
-                      >
-                        Publication Policy
-                      </a>
+                      {policy[0] && (
+                        <a
+                          className={`${
+                            activeTopic === "policy" ? "active" : ""
+                          }`}
+                          style={{
+                            ...styles.listItemLink,
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? activeTopic === "policy"
+                                  ? "FontSemiBold"
+                                  : "FontRegular"
+                                : activeTopic === "policy"
+                                ? "FontThaiSemiBold"
+                                : "FontThaiRegular",
+                            // Apply the appropriate font family
+                            fontWeight:
+                              activeTopic === "policy" ? "bold" : "normal",
+                            ...(activeTopic === "policy"
+                              ? styles.activeLink
+                              : {}),
+                          }}
+                          onClick={() => {
+                            scrollToRef(policyRef);
+                            setActiveTopic("policy");
+                          }}
+                        >
+                          {/* Publication Policy */}
+                          {selectedLanguage === "en"
+                            ? `${policy[0].attributes.header_en} `
+                            : `${policy[0].attributes.header_th}`}
+                        </a>
+                      )}
                     </li>
                     <li style={styles.listItem}>
-                      <a
-                        className={`${activeTopic === "ethic" ? "active" : ""}`}
-                        style={{
-                          ...styles.listItemLink,
-                          ...(activeTopic === "ethic" ? styles.activeLink : {}),
-                        }}
-                        onClick={() => {
-                          scrollToRef(ethicRef);
-                          setActiveTopic("ethic");
-                        }}
-                      >
-                        Publication Ethics
-                      </a>
+                      {ethic[0] && (
+                        <a
+                          className={`${
+                            activeTopic === "ethic" ? "active" : ""
+                          }`}
+                          style={{
+                            ...styles.listItemLink,
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? activeTopic === "ethic"
+                                  ? "FontSemiBold"
+                                  : "FontRegular"
+                                : activeTopic === "ethic"
+                                ? "FontThaiSemiBold"
+                                : "FontThaiRegular",
+                            // Apply the appropriate font family
+                            fontWeight:
+                              activeTopic === "ethic" ? "bold" : "normal",
+                            ...(activeTopic === "ethic"
+                              ? styles.activeLink
+                              : {}),
+                          }}
+                          onClick={() => {
+                            scrollToRef(ethicRef);
+                            setActiveTopic("ethic");
+                          }}
+                        >
+                          {selectedLanguage === "en"
+                            ? `${ethic[0].attributes.header_en} `
+                            : `${ethic[0].attributes.header_th}`}
+                        </a>
+                      )}
                     </li>
                     <li style={styles.listItem}>
-                      <a
-                        className={`${
-                          activeTopic === "distribute" ? "active" : ""
-                        }`}
-                        style={{
-                          ...styles.listItemLink,
-                          ...(activeTopic === "distribute"
-                            ? styles.activeLink
-                            : {}),
-                        }}
-                        onClick={() => {
-                          scrollToRef(distributeRef);
-                          setActiveTopic("distribute");
-                        }}
-                      >
-                        Distribution
-                      </a>
+                      {distribution[0] && (
+                        <a
+                          className={`${
+                            activeTopic === "distribute" ? "active" : ""
+                          }`}
+                          style={{
+                            ...styles.listItemLink,
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? activeTopic === "distribute"
+                                  ? "FontSemiBold"
+                                  : "FontRegular"
+                                : activeTopic === "distribute"
+                                ? "FontThaiSemiBold"
+                                : "FontThaiRegular",
+                            // Apply the appropriate font family
+                            fontWeight:
+                              activeTopic === "distribute" ? "bold" : "normal",
+                            ...(activeTopic === "distribute"
+                              ? styles.activeLink
+                              : {}),
+                          }}
+                          onClick={() => {
+                            scrollToRef(distributeRef);
+                            setActiveTopic("distribute");
+                          }}
+                        >
+                          {selectedLanguage === "en"
+                            ? `${distribution[0].attributes.header_en} `
+                            : `${distribution[0].attributes.header_th}`}
+                        </a>
+                      )}
                     </li>
                     <li style={styles.listItem}>
-                      <a
-                        className={`${
-                          activeTopic === "periodicity" ? "active" : ""
-                        }`}
-                        style={{
-                          ...styles.listItemLink,
-                          ...(activeTopic === "periodicity"
-                            ? styles.activeLink
-                            : {}),
-                        }}
-                        onClick={() => {
-                          scrollToRef(periodicityRef);
-                          setActiveTopic("periodicity");
-                        }}
-                      >
-                        Periodicity
-                      </a>
+                      {periodicity[0] && (
+                        <a
+                          className={`${
+                            activeTopic === "periodicity" ? "active" : ""
+                          }`}
+                          style={{
+                            ...styles.listItemLink,
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? activeTopic === "periodicity"
+                                  ? "FontSemiBold"
+                                  : "FontRegular"
+                                : activeTopic === "periodicity"
+                                ? "FontThaiSemiBold"
+                                : "FontThaiRegular",
+                            // Apply the appropriate font family
+                            fontWeight:
+                              activeTopic === "periodicity" ? "bold" : "normal",
+                            ...(activeTopic === "periodicity"
+                              ? styles.activeLink
+                              : {}),
+                          }}
+                          onClick={() => {
+                            scrollToRef(periodicityRef);
+                            setActiveTopic("periodicity");
+                          }}
+                        >
+                          {selectedLanguage === "en"
+                            ? `${periodicity[0].attributes.header_en} `
+                            : `${periodicity[0].attributes.header_th}`}
+                        </a>
+                      )}
                     </li>
                     <li style={styles.listItem}>
-                      <a
-                        className={`${
-                          activeTopic === "boardmember" ? "active" : ""
-                        }`}
-                        style={{
-                          ...styles.listItemLink,
-                          ...(activeTopic === "boardmember"
-                            ? styles.activeLink
-                            : {}),
-                        }}
-                        onClick={() => {
-                          scrollToRef(boardmemberRef);
-                          setActiveTopic("boardmember");
-                        }}
-                      >
-                        Editorial Board Members
-                      </a>
+                      {editorialmember[0] && (
+                        <a
+                          className={`${
+                            activeTopic === "boardmember" ? "active" : ""
+                          }`}
+                          style={{
+                            ...styles.listItemLink,
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? activeTopic === "boardmember"
+                                  ? "FontSemiBold"
+                                  : "FontRegular"
+                                : activeTopic === "boardmember"
+                                ? "FontThaiSemiBold"
+                                : "FontThaiRegular",
+                            // Apply the appropriate font family
+                            fontWeight:
+                              activeTopic === "boardmember" ? "bold" : "normal",
+                            ...(activeTopic === "boardmember"
+                              ? styles.activeLink
+                              : {}),
+                          }}
+                          onClick={() => {
+                            scrollToRef(boardmemberRef);
+                            setActiveTopic("boardmember");
+                          }}
+                        >
+                          {selectedLanguage === "en"
+                            ? `${editorialmember[0].attributes.header_en} `
+                            : `${editorialmember[0].attributes.header_th}`}
+                        </a>
+                      )}
                     </li>
                   </ul>
                 </MDBRow>
@@ -798,6 +1024,41 @@ function PublicationDesktop() {
 }
 
 function PublicationMobile() {
+  const [publications, setPublications] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const instance = axios.create({
+      baseURL: "http://10.35.29.179:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "publications?populate=journal.uploadfiles.fileupload,journal.year,journal.months"
+        );
+        if (isMounted) {
+          setPublications(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (publications.length === 0) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [publications]);
+
   // Ref
   const policyRef = useRef(null);
   const ethicRef = useRef(null);
@@ -950,40 +1211,71 @@ function PublicationMobile() {
               color: "#474747",
             }}
           >
-            <p className="m-0 text-2xl">Latest Journal</p>
+            <p className="m-0 text-2xl">
+              {selectedLanguage === "en" ? "Latest Journal" : "วารสารล่าสุด"}
+            </p>
           </MDBRow>
-          <MDBRow className="py-2">
-            <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
-              <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
-                {/* style={{ height: "508px", width: "412px" }} */}
-                <img
-                  src={journalimage}
-                  alt="Your image"
-                  className="image-fluid"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
+          {publications.map((publication) => (
+            <MDBRow className="py-2">
+              <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
+                <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
+                  {/* style={{ height: "508px", width: "412px" }} */}
+
+                  <img
+                    src={
+                      "http://10.35.29.179:1337" +
+                      publication.attributes.journal[0]?.uploadfiles.data[0]
+                        ?.attributes.fileupload?.data[1]?.attributes.url
+                    }
+                    alt="Your image"
+                    className="image-fluid"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </MDBCol>
               </MDBCol>
-            </MDBCol>
-            <MDBCol
-              className="d-flex flex-col justify-content-between py-2"
-              style={{}}
-            >
-              <p
-                className="m-0 text-md px-1 text-xl"
-                style={{ color: "#EB562E", fontFamily: "FontBold" }}
+              <MDBCol
+                className="d-flex flex-col justify-content-between py-2"
+                style={{}}
               >
-                KMUTT Research and Development Journal
-              </p>
-              <span>
-                <p className="m-0 text-sm px-1 ">Volume 46 No. 2</p>
-                <p className="m-0 text-sm px-1 ">April - June</p>{" "}
-              </span>
-            </MDBCol>
-          </MDBRow>
+                {" "}
+                <Link
+                  to={publication.attributes.journal[0]?.url}
+                  target="_blank"
+                  style={{ color: "black", padding: "0px" }}
+                >
+                  <p
+                    className="m-0 text-md px-1 text-xl"
+                    style={{ color: "#EB562E", fontFamily: "FontBold" }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.title}`
+                      : `${publication.attributes.journal[0]?.title_th}`}
+                  </p>
+                </Link>
+                <span>
+                  <p className="m-0 text-sm px-1 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? `Volumn ${publication.attributes.journal[0]?.volumn} No. ${publication.attributes.journal[0]?.number}`
+                      : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
+                  </p>
+                  <p className="m-0 text-sm px-1 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
+                  </p>{" "}
+                </span>
+              </MDBCol>
+            </MDBRow>
+          ))}
         </MDBContainer>
 
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>

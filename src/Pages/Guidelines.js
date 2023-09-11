@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useState, useEffect, useRef, setIsLoaded } from "react";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 import {
   MDBContainer,
   MDBRow,
@@ -183,19 +184,28 @@ function GuidelinesDesktop() {
                     borderLeft: "0.4rem solid  #EB562E ",
                     display: "flex",
                     alignItems: "center",
-                    fontFamily: "FontSemiBold",
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                     color: "#474747",
                     fontSize: "36px",
                   }}
                 >
-                  <p className="m-0 ">Latest</p>
-                  <p className="m-0 ">Journal</p>
+                  <p className="m-0 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? "Latest Journal"
+                      : "วารสารล่าสุด"}
+                  </p>
                 </MDBRow>
                 <MDBRow className="pt-3 pb-2">
                   <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
                     {/* style={{ height: "508px", width: "412px" }} */}
                     <img
-                      src={journalimage}
+                      src={
+                        "http://10.35.29.179:1337" +
+                        publication.attributes.journal[0]?.uploadfiles.data[0]
+                          ?.attributes.fileupload?.data[1]?.attributes.url
+                      }
                       alt="Your image"
                       className="image-fluid"
                       style={{
@@ -214,19 +224,39 @@ function GuidelinesDesktop() {
                   }}
                 >
                   {/* local data */}
-                  <p
-                    className="m-0 text-md px-1"
-                    style={{ color: "#EB562E", fontFamily: "FontSemiBold" }}
+                  <Link
+                    to={publication.attributes.journal[0]?.url}
+                    target="_blank"
+                    style={{ color: "black", padding: "0px" }}
                   >
-                    KMUTT Research and Development Journal
-                    {/* {selectedLanguage === "en"
+                    <p
+                      className="m-0 text-md px-1"
+                      style={{
+                        color: "#EB562E",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontThaiSemiBold"
+                            : "FontThaiSemiBold",
+                      }}
+                    >
+                      {selectedLanguage === "en"
+                        ? `${publication.attributes.journal[0]?.title}`
+                        : `${publication.attributes.journal[0]?.title_th}`}
+                      {/* {selectedLanguage === "en"
                       ? `${publication.attributes.journal[0]?.title}`
                       : `${publication.attributes.journal[0]?.title_th}`} */}
-                  </p>
-
+                    </p>
+                  </Link>
                   <p
                     className="m-0 px-1 pt-2"
-                    style={{ color: "#474747", fontSize: "14px" }}
+                    style={{
+                      color: "#474747",
+                      fontSize: "14px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontRegular"
+                          : "FontThaiRegular",
+                    }}
                   >
                     {/* Volumn 46 No. 2 */}
                     {selectedLanguage === "en"
@@ -236,7 +266,14 @@ function GuidelinesDesktop() {
                   </p>
                   <p
                     className="m-0 text-xs px-1"
-                    style={{ color: "#474747", fontSize: "14px" }}
+                    style={{
+                      color: "#474747",
+                      fontSize: "14px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontRegular"
+                          : "FontThaiRegular",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
@@ -255,9 +292,13 @@ function GuidelinesDesktop() {
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-4xl px-0 text-black"
-                  style={{ fontFamily: "FontBold", fontSize: "48px" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    fontSize: "48px",
+                  }}
                 >
-                  {selectedLanguage === "en" ? "Guidelines" : "Guidelines"}
+                  {selectedLanguage === "en" ? "Guidelines" : "ข้อแนะนำ"}
                 </p>
               </MDBRow>
 
@@ -275,9 +316,15 @@ function GuidelinesDesktop() {
                 <MDBCol
                   md="2"
                   className="text-2xl w-fit ps-4 text-black"
-                  style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    fontSize: "1.75rem",
+                  }}
                 >
-                  Manuscript Preparation Guidelines
+                  {selectedLanguage === "en"
+                    ? " Manuscript Preparation Guidelines"
+                    : "ข้อแนะนำในการเตรียมต้นฉบับ"}
                 </MDBCol>
               </MDBRow>
               <MDBRow className="justify-content-center ">
@@ -711,18 +758,36 @@ function GuidelinesDesktop() {
                     className="text-4xl px-0 text-white"
                     style={{ fontFamily: "FontBold" }}
                   >
-                    Publication
+                    ""
                   </p>
                 </MDBRow>
                 <MDBRow className="d-flex justify-content-between fluid py-3">
-                  <ul className=" text-sm">
+                  <ul
+                    className=""
+                    style={{
+                      color: "#474747",
+                      fontSize: "15px",
+                    }}
+                  >
                     <li style={styles.listItem}>
+                      {/* {policy[0] && ( */}
                       <a
                         className={`${
                           activeTopic === "preparation" ? "active" : ""
                         }`}
                         style={{
                           ...styles.listItemLink,
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? activeTopic === "preparation"
+                                ? "FontMedium"
+                                : "FontRegular"
+                              : activeTopic === "preparation"
+                              ? "FontThaiSemiBold"
+                              : "FontThaiRegular",
+                          // Apply the appropriate font family
+                          fontWeight:
+                            activeTopic === "preparation" ? "bold" : "normal",
                           ...(activeTopic === "preparation"
                             ? styles.activeLink
                             : {}),
@@ -732,16 +797,35 @@ function GuidelinesDesktop() {
                           setActiveTopic("preparation");
                         }}
                       >
-                        Manuscript Preparation Guidelines
+                        {/*                    
+                          {selectedLanguage === "en"
+                            ? `${policy[0].attributes.header_en} `
+                            : `${policy[0].attributes.header_th}`} */}
+
+                        {selectedLanguage === "en"
+                          ? "Manuscript Preparation Guidelines"
+                          : "ข้อแนะนำในการเตรียมต้นฉบับ"}
                       </a>
                     </li>
                     <li style={styles.listItem}>
+                      {/* {policy[0] && ( */}
                       <a
                         className={`${
                           activeTopic === "template" ? "active" : ""
                         }`}
                         style={{
                           ...styles.listItemLink,
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? activeTopic === "template"
+                                ? "FontSemiBold"
+                                : "FontRegular"
+                              : activeTopic === "template"
+                              ? "FontThaiSemiBold"
+                              : "FontThaiRegular",
+                          // Apply the appropriate font family
+                          fontWeight:
+                            activeTopic === "template" ? "bold" : "normal",
                           ...(activeTopic === "template"
                             ? styles.activeLink
                             : {}),
@@ -751,16 +835,35 @@ function GuidelinesDesktop() {
                           setActiveTopic("template");
                         }}
                       >
-                        Manuscript Template
+                        {/*                    
+                          {selectedLanguage === "en"
+                            ? `${policy[0].attributes.header_en} `
+                            : `${policy[0].attributes.header_th}`} */}
+
+                        {selectedLanguage === "en"
+                          ? "Manuscript Template"
+                          : "รูปแบบการพิมพ์"}
                       </a>
                     </li>
                     <li style={styles.listItem}>
+                      {/* {policy[0] && ( */}
                       <a
                         className={`${
                           activeTopic === "submission" ? "active" : ""
                         }`}
                         style={{
                           ...styles.listItemLink,
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? activeTopic === "submission"
+                                ? "FontSemiBold"
+                                : "FontRegular"
+                              : activeTopic === "submission"
+                              ? "FontThaiSemiBold"
+                              : "FontThaiRegular",
+                          // Apply the appropriate font family
+                          fontWeight:
+                            activeTopic === "submission" ? "bold" : "normal",
                           ...(activeTopic === "submission"
                             ? styles.activeLink
                             : {}),
@@ -770,16 +873,34 @@ function GuidelinesDesktop() {
                           setActiveTopic("submission");
                         }}
                       >
-                        Manuscript Submission
-                      </a>{" "}
+                        {/*                    
+                          {selectedLanguage === "en"
+                            ? `${policy[0].attributes.header_en} `
+                            : `${policy[0].attributes.header_th}`} */}
+                        {selectedLanguage === "en"
+                          ? "Manuscript Submission"
+                          : "การส่งบทความเพื่อรับการพิจารณา"}
+                      </a>
                     </li>
                     <li style={styles.listItem}>
+                      {/* {policy[0] && ( */}
                       <a
                         className={`${
                           activeTopic === "instruction" ? "active" : ""
                         }`}
                         style={{
                           ...styles.listItemLink,
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? activeTopic === "instruction"
+                                ? "FontSemiBold"
+                                : "FontRegular"
+                              : activeTopic === "instruction"
+                              ? "FontThaiSemiBold"
+                              : "FontThaiRegular",
+                          // Apply the appropriate font family
+                          fontWeight:
+                            activeTopic === "instruction" ? "bold" : "normal",
                           ...(activeTopic === "instruction"
                             ? styles.activeLink
                             : {}),
@@ -789,8 +910,15 @@ function GuidelinesDesktop() {
                           setActiveTopic("instruction");
                         }}
                       >
-                        Instructions on the Use of Editorial Manager
-                      </a>{" "}
+                        {/*                    
+                          {selectedLanguage === "en"
+                            ? `${policy[0].attributes.header_en} `
+                            : `${policy[0].attributes.header_th}`} */}
+
+                        {selectedLanguage === "en"
+                          ? "Instructions on the Use of Editorial Manager"
+                          : "คู่มือสำหรับการใช้ระบบ Editorial Manager"}
+                      </a>
                     </li>
                   </ul>
                 </MDBRow>
