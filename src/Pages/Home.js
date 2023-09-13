@@ -73,11 +73,13 @@ function HomeDesktop() {
   };
 
   const secondContainerStyle = {
-    position: "absolute",
-    top: "68%",
-    left: "54%",
-    transform: "translate(-50%, -50%)", // Center both horizontally and vertically
+    // position: "absolute",
+    // top: "68%",
+    // left: "54%",
+    // transform: "translate(-50%, -50%)", // Center both horizontally and vertically
     zIndex: 1,
+    padding: "5rem",
+    paddingTop: "4rem",
     // maxWidth: "1300px",
   };
 
@@ -101,7 +103,7 @@ function HomeDesktop() {
           id="cluster-container"
           style={{
             background: "#474747",
-            height: "540px",
+            height: "460px",
           }}
         >
           <MDBContainer
@@ -126,16 +128,20 @@ function HomeDesktop() {
                       publication.attributes.journal[0]?.uploadfiles.data[0]
                         ?.attributes.fileupload?.data[1]?.attributes.url
                     }
-                    style={{ width: "100%" }}
+                    style={{
+                      width: "100%",
+                      height: "",
+                      maxHeight: "528px",
+                    }}
                   />
                   {/* <h2>{publication.attributes.journal[0]?.title}</h2> */}
                 </MDBCol>
               ))}
               {publications.map((publication) => (
-                <MDBCol md="7" className="ms-4" key={publication.id}>
+                <MDBCol md="7" className="md:ms-4 pb-5" key={publication.id}>
                   <div className="d-flex flex-column w-100">
                     <p
-                      className="font-bold mb-2 px-2 py-1 xs:text-sm md:text-sm w-fit uppercase"
+                      className="font-bold mb-0 px-2 py-1 xs:text-sm md:text-sm w-fit uppercase"
                       style={{
                         fontFamily: "FontMediumTH",
                         backgroundColor: "#fce2db",
@@ -157,7 +163,7 @@ function HomeDesktop() {
                         KMUTT Research
                       </p> */}
                       <p
-                        className="m-0 py-3 text-white"
+                        className="m-0 pt-3 pb-2 text-white"
                         style={{
                           fontSize: "2rem",
                           fontFamily: "FontMediumTH",
@@ -464,7 +470,7 @@ function HomeDesktop() {
             >
               <div
                 className="d-flex flex-row justify-content-between align-items-end w-100 gap-4 p-6"
-                style={{ backgroundColor: "#000", height: "70%" }}
+                style={{ backgroundColor: "#000", height: "100%" }}
               >
                 <Link
                   to={`/guidelines`}
@@ -502,8 +508,9 @@ function HomeDesktop() {
                 </span>
               </div>
               <div
-                className="d-flex flex-row flex-wrap justify-content-between align-items-center w-100 gap-4 p-6"
-                style={{ backgroundColor: "#EB562E", minHeight: "10vh" }}
+                className="d-flex flex-row flex-wrap justify-content-between align-items-center w-100 gap-4 p-6 py-4"
+                style={{ backgroundColor: "#EB562E" }}
+                // minHeight: "10vh"
               >
                 <Link
                   to={`/journal`}

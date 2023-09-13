@@ -197,7 +197,7 @@ export default function Navbar(props) {
 
     return (
       <div>
-        <MDBNavbar
+        {/* <MDBNavbar
           className="justify-content-center"
           style={{
             backgroundColor: "#EB562E",
@@ -209,8 +209,7 @@ export default function Navbar(props) {
         >
           {" "}
           King Mongkut’s University of Technology Thonburi (KMUTT)
-        </MDBNavbar>
-
+        </MDBNavbar> */}
         <MDBNavbar style={navbarStyle}>
           <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
             <MDBNavbarBrand href="/">
@@ -285,7 +284,7 @@ export default function Navbar(props) {
 
     return (
       <div>
-        <MDBNavbar
+        {/* <MDBNavbar
           className="justify-content-center"
           style={{
             backgroundColor: "#EB562E",
@@ -296,7 +295,7 @@ export default function Navbar(props) {
         >
           {" "}
           King Mongkut’s University of Technology Thonburi (KMUTT)
-        </MDBNavbar>
+        </MDBNavbar> */}
 
         <MDBNavbar style={navbarStyle}>
           <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
@@ -374,7 +373,7 @@ export default function Navbar(props) {
     return (
       <React.Fragment>
         <CssBaseline />
-        <MDBNavbar
+        {/* <MDBNavbar
           className="justify-content-center text-xs p-2"
           style={{
             backgroundColor: "#EB562E",
@@ -386,7 +385,7 @@ export default function Navbar(props) {
           }}
         >
           King Mongkut’s University of Technology Thonburi (KMUTT)
-        </MDBNavbar>
+        </MDBNavbar> */}
         <HideOnScroll {...props}>
           <AppBar
             className="px-1"
@@ -551,7 +550,7 @@ export default function Navbar(props) {
     return (
       <React.Fragment>
         <CssBaseline />
-        <MDBNavbar
+        {/* <MDBNavbar
           className="justify-content-center text-xs p-2"
           style={{
             backgroundColor: "#EB562E",
@@ -562,7 +561,7 @@ export default function Navbar(props) {
         >
           {" "}
           King Mongkut’s University of Technology Thonburi (KMUTT)
-        </MDBNavbar>
+        </MDBNavbar> */}
         <HideOnScroll {...props}>
           <AppBar
             className="px-1"
