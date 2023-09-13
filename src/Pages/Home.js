@@ -74,7 +74,7 @@ function HomeDesktop() {
 
   const secondContainerStyle = {
     position: "absolute",
-    top: "70%",
+    top: "68%",
     left: "54%",
     transform: "translate(-50%, -50%)", // Center both horizontally and vertically
     zIndex: 1,
@@ -101,7 +101,7 @@ function HomeDesktop() {
           id="cluster-container"
           style={{
             background: "#474747",
-            height: "510px",
+            height: "540px",
           }}
         >
           <MDBContainer
