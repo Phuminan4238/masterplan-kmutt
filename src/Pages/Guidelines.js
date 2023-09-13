@@ -73,7 +73,9 @@ function GuidelinesDesktop() {
 
     async function fetchData() {
       try {
-        const response = await instance.get("guidelines/?populate=*");
+        const response = await instance.get(
+          "guidelines/?populate=*&filters[topic][$eq]=guidelines"
+        );
         if (isMounted) {
           setGuidelines(response.data.data);
         }
@@ -146,6 +148,46 @@ function GuidelinesDesktop() {
       .catch((error) => setError(error));
   }, []);
 
+  const [templates, setTemplate] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/guidelines?populate=*&filters[topic][$eq]=template"
+      )
+      .then(({ data }) => setTemplate(data.data))
+      .catch((error) => setError(error));
+  }, []);
+
+  const [submissions, setSubmission] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/guidelines?populate=*&filters[topic][$eq]=submission"
+      )
+      .then(({ data }) => setSubmission(data.data))
+      .catch((error) => setError(error));
+  }, []);
+
+  const [instructions, setInstruction] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/guidelines?populate=*&filters[topic][$eq]=instructions"
+      )
+      .then(({ data }) => setInstruction(data.data))
+      .catch((error) => setError(error));
+  }, []);
+
+  const [subscriptions, setSubscription] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/guidelines?populate=*&filters[topic][$eq]=subscription"
+      )
+      .then(({ data }) => setSubscription(data.data))
+      .catch((error) => setError(error));
+  }, []);
+
   // Style
   const isDesktop = useMediaQuery({ minWidth: 940 });
   const containerStyle = {
@@ -173,7 +215,7 @@ function GuidelinesDesktop() {
     <div className="App">
       <section>
         <MDBContainer className={`fluid px-3 ${containerStyle["6xl"]}`}>
-          <MDBRow className="d-flex justify-content-between py-6 fluid gx-6">
+          <MDBRow className="d-flex justify-content-between py-6 fluid gx-6 w-fit">
             {/* Left */}
             {publications2.map((publication) => (
               <MDBCol md="2">
@@ -313,19 +355,21 @@ function GuidelinesDesktop() {
                     marginTop: "1rem",
                   }}
                 ></MDBCol>
-                <MDBCol
-                  md="2"
-                  className="text-2xl w-fit ps-4 text-black"
-                  style={{
-                    fontFamily:
-                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-                    fontSize: "1.75rem",
-                  }}
-                >
-                  {selectedLanguage === "en"
-                    ? " Manuscript Preparation Guidelines"
-                    : "ข้อแนะนำในการเตรียมต้นฉบับ"}
-                </MDBCol>
+                {guidelines.map((guideline) => (
+                  <MDBCol
+                    md="2"
+                    className="text-2xl w-fit ps-4 text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                      fontSize: "1.75rem",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${guideline.attributes.header_en} `
+                      : `${guideline.attributes.header_th}`}
+                  </MDBCol>
+                ))}
               </MDBRow>
               <MDBRow className="justify-content-center ">
                 <p
@@ -348,167 +392,6 @@ function GuidelinesDesktop() {
                   />
                 ))}
               </MDBRow>
-
-              {/* <MDBRow className="pt-0 pb-4">
-                <table style={tableStyle}>
-                  <tbody>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        <div style={cellContentStyle}>Title</div>
-                      </td>
-                      <td>
-                        Title should be concise and cover the main theme of the
-                        article
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Authorship</div>
-                      </td>
-                      <td>
-                        List all authors’ information including names, academic
-                        positions and affiliations
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        <div style={cellContentStyle}>Abstract</div>
-                      </td>
-                      <td>
-                        Abstract must be available BOTH in Thai and in English
-                        (but on a separate page). Abstract should consist of the
-                        research motivation and/or objectives, scope as well as
-                        key results.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        <div style={cellContentStyle}>Introduction</div>
-                      </td>
-                      <td>
-                        Introduction should give the background and literature
-                        relevant to the research problem of the article. The
-                        research objectives and scope should also be stated.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        <div style={cellContentStyle}>Material and method</div>
-                      </td>
-                      <td>
-                        This section should be comprehensive enough to allow the
-                        reader to repeat the work if necessary.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Results</div>
-                      </td>
-                      <td>
-                        Results should be given via the use of appropriate
-                        figures and tables along with adequate captions.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Discussion</div>
-                      </td>
-                      <td>
-                        Emphasize on the main findings and, if applicable,
-                        discuss the work in relation to the literature.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Conclusion</div>
-                      </td>
-                      <td>
-                        Summarize the main findings that should be emphasized.
-                        Recommendation and/or suggestion can also be made.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td sx={{ verticalAlign: "top" }}>
-                        <div
-                          style={cellContentStyle}
-                          sx={{ verticalAlign: "top" }}
-                        >
-                          References
-                        </div>
-                      </td>
-                      <td>
-                        Use the number system by giving the reference number(s)
-                        in a bracket (e.g. [1], [1,2] or [1-3]) after the
-                        referenced statement or author(s).
-                        <br />
-                        <br />
-                        <strong>
-                          In the Reference section, follow the following
-                          recommended formats:
-                        </strong>
-                        <br />
-                        <br />
-                        Journal
-                        <br />
-                        Pongmalai, P., Devahastin, S., Chiewchan, N. and
-                        Soponronnarit, S., 2015, “Enhancement of
-                        Microwave-Assisted Extraction of Bioactive Compounds
-                        from Cabbage Outer Leaves via the Application of
-                        Ultrasonic Pretreatment,” Separation and Purification
-                        Technology, 144, pp. 37-45.
-                        <br />
-                        <br />
-                        Book
-                        <br />
-                        Farmer, R.C., Cheng, G.C., Chen, Y-S. and Pike, R.W.,
-                        2009, Computational Transport Phenomena for Engineering
-                        Analysis, CRC Press, Boca Raton.
-                        <br />
-                        <br />
-                        Book Chapter
-                        <br />
-                        Devahastin, S. and Mujumdar, A.S. 2014, “Superheated
-                        Steam Drying of Foods and Biomaterials,” pp. 57-84, in
-                        E. Tsotsas and A.S. Mujumdar (Eds.) Modern Drying
-                        Technology, Vol. 5, Wiley-VCH, Weinheim.
-                        <br />
-                        <br />
-                        Proceedings
-                        <br />
-                        Pongmalai, P., Devahastin, S., Chiewchan, N. and
-                        Soponronnarit, S., 2013, “Effect of Ultrasonic
-                        Pretreatment on Extractability of Glucosinolates from
-                        Cabbage Outer Leaves,” Proceedings of the 6th TSAE
-                        International Conference, Hua Hin, Thailand, pp.
-                        119-122.
-                        <br />
-                        <br />
-                        Tables and Figures
-                        <br />
-                        All Tables and Figures should NOT be directly inserted
-                        in the text. Tables and Figures should be summarized at
-                        the end of the manuscript, one table/figure per
-                        manuscript page.
-                        <br />
-                        <br />
-                        Tables
-                        <br />
-                        Add table number, followed by the title of the table,
-                        above the table.
-                        <br />
-                        Figures
-                        <br />
-                        Add figure number, followed by the title of the figure,
-                        under the figure.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </MDBRow> */}
               {/* ******************* */}
 
               <MDBRow className="d-flex justify-content-between fluid ">
@@ -548,15 +431,23 @@ function GuidelinesDesktop() {
               {/* Manuscript Template */}
               <MDBRow
                 ref={templateRef}
-                className="d-flex justify-content-between fluid py-3"
+                className="d-flex justify-content-between fluid pb-3 pt-4"
               >
-                <MDBCol
-                  md="6"
-                  className="text-2xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
-                >
-                  Manuscript Template
-                </MDBCol>
+                {templates.map((template) => (
+                  <MDBCol
+                    md="6"
+                    className="text-2xl w-fit px-0 pe-4 text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                      fontSize: "1.75rem",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${template.attributes.header_en} `
+                      : `${template.attributes.header_th}`}
+                  </MDBCol>
+                ))}
                 <MDBCol
                   className=""
                   style={{
@@ -573,11 +464,15 @@ function GuidelinesDesktop() {
                       borderColor: "#EB562E",
                       color: "white",
                       backgroundColor: "#EB562E",
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                     }}
-                    className="me-3 text-sm px-3 capitalize font-bold rounded-0"
+                    className="me-3 text-sm px-3 capitalize rounded-0"
                     size="sm"
                   >
-                    Download Word File
+                    {selectedLanguage === "en"
+                      ? "         Download Word File"
+                      : "ดาวน์โหลด ไฟล์ Word "}
                   </MDBBtn>
                   <MDBBtn
                     outline
@@ -585,11 +480,15 @@ function GuidelinesDesktop() {
                       borderColor: "white",
                       color: "#EB562E",
                       backgroundColor: "white",
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                     }}
                     className="text-sm py-1 px-2 py-2 capitalize font-bold rounded-0"
                     size="sm"
                   >
-                    Download PDF File
+                    {selectedLanguage === "en"
+                      ? "         Download PDF File"
+                      : "ดาวน์โหลด ไฟล์ PDF "}
                   </MDBBtn>
                 </div>
               </MDBRow>
@@ -598,15 +497,23 @@ function GuidelinesDesktop() {
               {/* Manuscript Submission */}
               <MDBRow
                 ref={submissionRef}
-                className="d-flex justify-content-between fluid py-3"
+                className="d-flex justify-content-between fluid pb-3 pt-4"
               >
-                <MDBCol
-                  md="6"
-                  className="text-2xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
-                >
-                  Manuscript Submission
-                </MDBCol>
+                {submissions.map((submission) => (
+                  <MDBCol
+                    md="6"
+                    className="text-2xl w-fit px-0 pe-4 text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                      fontSize: "1.75rem",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${submission.attributes.header_en} `
+                      : `${submission.attributes.header_th}`}
+                  </MDBCol>
+                ))}
                 <MDBCol
                   className=""
                   style={{
@@ -616,33 +523,48 @@ function GuidelinesDesktop() {
                 ></MDBCol>
               </MDBRow>
               <MDBRow>
-                <ul className="list-decimal text-md ms-2 mb-0">
-                  <li className="text-md">
-                    Send a manuscript file to journal@kmutt.ac.th. Please also
-                    suggest 3 possible reviewers, with full names and e-mail
-                    addresses, who can serve as reviewers of the manuscript.
-                  </li>
-                  <li className="text-md">
-                    Manuscript review and publication of an accepted article are
-                    free of charge. No article processing charge needs to be
-                    paid. Subscription to the journal prior to manuscript
-                    submission is not necessary.
-                  </li>
-                </ul>
+                {submissions.map((submission) => (
+                  <ul className="list-decimal text-md ms-2 mb-0">
+                    {selectedLanguage === "en" ||
+                    !submission.attributes.content_th
+                      ? submission.attributes.content_en
+                          .split("\n")
+                          .map((item, index) => (
+                            <li key={index} className="text-md">
+                              {item.trim()}
+                            </li>
+                          ))
+                      : submission.attributes.content_th
+                          .split("\n")
+                          .map((item, index) => (
+                            <li key={index} className="text-md">
+                              {item.trim()}
+                            </li>
+                          ))}
+                  </ul>
+                ))}
               </MDBRow>
               {/* ******************* */}
 
               {/* Manuscript Template */}
               <MDBRow
                 ref={instructionRef}
-                className="d-flex justify-content-between fluid py-3"
+                className="d-flex justify-content-between fluid pb-3 pt-4"
               >
-                <MDBCol
-                  className="text-2xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontBold", fontSize: "1.75rem" }}
-                >
-                  Instructions on the Use of Editorial Manager
-                </MDBCol>
+                {instructions.map((instruction) => (
+                  <MDBCol
+                    className="text-2xl w-fit px-0 pe-4 text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                      fontSize: "1.75rem",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${instruction.attributes.header_en} `
+                      : `${instruction.attributes.header_th}`}
+                  </MDBCol>
+                ))}
               </MDBRow>
               <MDBRow>
                 <div className="d-flex mt-1 text-red px-0">
@@ -652,11 +574,16 @@ function GuidelinesDesktop() {
                       borderColor: "#EB562E",
                       color: "white",
                       backgroundColor: "#EB562E",
+                      fontSize: "16px",
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                     }}
-                    className="me-3 text-sm px-3 py-2 capitalize font-bold rounded-0"
+                    className="me-3 px-3 py-2 capitalize rounded-0"
                     size="sm"
                   >
-                    Instructions for Authors
+                    {selectedLanguage === "en"
+                      ? "  Instructions for Authors"
+                      : "คู่มือสำหรับผู้เขียน"}
                   </MDBBtn>
                   <MDBBtn
                     outline
@@ -664,26 +591,41 @@ function GuidelinesDesktop() {
                       borderColor: "#EB562E",
                       color: "white",
                       backgroundColor: "#EB562E",
+                      fontSize: "16px",
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                     }}
-                    className="me-3 text-sm px-3 py-2 capitalize font-bold rounded-0"
+                    className="me-3  px-3 py-2 capitalize  rounded-0"
                     size="sm"
                   >
-                    Instructions for Reviewers
+                    {selectedLanguage === "en"
+                      ? "    Instructions for Reviewers"
+                      : "คู่มือสำหรับผู้ประเมิน"}
                   </MDBBtn>
                 </div>
               </MDBRow>
 
               <MDBRow
                 // ref={submissionRef}
-                className="d-flex justify-content-between fluid py-3"
+                className="d-flex justify-content-between fluid pb-3 pt-4"
               >
-                <MDBCol
-                  md="6"
-                  className="text-2xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontMediumTH", fontSize: "1.75rem" }}
-                >
-                  การสมัครสมาชิกวารสาร
-                </MDBCol>
+                {subscriptions.map((subscription) => (
+                  <MDBCol
+                    md="6"
+                    className="text-2xl w-fit px-0 pe-4 text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiBold"
+                          : "FontThaiBold",
+                      fontSize: "1.75rem",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${subscription.attributes.header_en} `
+                      : `${subscription.attributes.header_th}`}
+                  </MDBCol>
+                ))}
                 <MDBCol
                   className=""
                   style={{
@@ -693,17 +635,24 @@ function GuidelinesDesktop() {
                 ></MDBCol>
               </MDBRow>
               <MDBRow>
-                <ul className="list-none text-md mb-0 ps-0">
-                  <li
-                    className=""
-                    style={{ fontFamily: "FontMedium", fontSize: "16px" }}
-                  >
-                    ขอให้ผู้ที่ประสงค์จะสมัครสมาชิกหรือต่ออายุสมาชิกโอนเงินจำนวน
-                    300 บาทเข้าบัญชีธนาคารกรุงศรีอยุธยา จำกัด (มหาชน)
-                    สาขาถนนประชาอุทิศ ชื่อบัญชี “มจธ.-การวิจัย”
-                    บัญชีออมทรัพย์เลขที่ 330-1-17205-8
-                  </li>
-                </ul>
+                {subscriptions.map((subscription) => (
+                  <ul className="list-none text-md mb-0 ps-0">
+                    <li
+                      className=""
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontThaiRegular"
+                            : "FontThaiRegular",
+                        fontSize: "16px",
+                      }}
+                    >
+                      {selectedLanguage === "en"
+                        ? `${subscription.attributes.content_en} `
+                        : `${subscription.attributes.content_th}`}
+                    </li>
+                  </ul>
+                ))}
               </MDBRow>
               <MDBRow className="py-3 ">
                 <div className="d-flex text-red px-0">
@@ -713,9 +662,13 @@ function GuidelinesDesktop() {
                       borderColor: "#EB562E",
                       color: "white",
                       backgroundColor: "#EB562E",
-                      fontFamily: "FontMediumTH",
+                      fontSize: "16px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiBold"
+                          : "FontThaiBold",
                     }}
-                    className="me-3 text-sm px-3 py-2 capitalize font-bold rounded-0"
+                    className="me-3 text-sm px-3 py-2 capitalize  rounded-0"
                     size="sm"
                   >
                     ดาวน์โหลด ใบสมัครสมาชิก
@@ -723,10 +676,19 @@ function GuidelinesDesktop() {
                 </div>
               </MDBRow>
               <MDBRow>
+                {/* Local  */}
                 <ul className="list-none text-md mb-0 ps-0">
-                  <li className="text-md">
+                  <li
+                    className="text-md"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiRegular"
+                          : "FontThaiRegular",
+                    }}
+                  >
                     หลังจากโอนเงิน ให้ส่ง ใบสมัครสมาชิก และหลักฐานการโอนเงิน
-                    (pay-in-slip) มาที่ e-mail: journal@kmutt.ac.th หรือ
+                    (pay-in-slip) มาที่ e-mail: <u>journal@kmutt.ac.th</u> หรือ
                     โทรสารหมายเลข 0-2872-9083 ทางวารสารฯ
                     จะส่งใบเสร็จรับเงินไปตามรายละเอียดในใบสมัคร
                   </li>
@@ -939,6 +901,77 @@ function GuidelinesDesktop() {
 }
 
 function GuidelinesMobile() {
+  const [publications2, setPublications2] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const instance = axios.create({
+      baseURL: "http://10.35.29.179:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "publications?populate=journal.uploadfiles.fileupload,journal.year,journal.months"
+        );
+        if (isMounted) {
+          setPublications2(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (publications2.length === 0) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [publications2]);
+
+  // Guidelines
+  const [guidelines, setGuidelines] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const instance = axios.create({
+      baseURL: "http://10.35.29.179:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "guidelines/?populate=*&filters[topic][$eq]=guidelines"
+        );
+        if (isMounted) {
+          setGuidelines(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (guidelines.length === 0) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [guidelines]);
+
   // Ref
   const preparationRef = useRef(null);
   const templateRef = useRef(null);
@@ -994,6 +1027,46 @@ function GuidelinesMobile() {
       .catch((error) => setError(error));
   }, []);
 
+  const [templates, setTemplate] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/guidelines?populate=*&filters[topic][$eq]=template"
+      )
+      .then(({ data }) => setTemplate(data.data))
+      .catch((error) => setError(error));
+  }, []);
+
+  const [submissions, setSubmission] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/guidelines?populate=*&filters[topic][$eq]=submission"
+      )
+      .then(({ data }) => setSubmission(data.data))
+      .catch((error) => setError(error));
+  }, []);
+
+  const [instructions, setInstruction] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/guidelines?populate=*&filters[topic][$eq]=instructions"
+      )
+      .then(({ data }) => setInstruction(data.data))
+      .catch((error) => setError(error));
+  }, []);
+
+  const [subscriptions, setSubscription] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/guidelines?populate=*&filters[topic][$eq]=subscription"
+      )
+      .then(({ data }) => setSubscription(data.data))
+      .catch((error) => setError(error));
+  }, []);
+
   // Style
   const isDesktop = useMediaQuery({ minWidth: 940 });
   const containerStyle = {
@@ -1009,13 +1082,13 @@ function GuidelinesMobile() {
     borderBottom: "1px solid black",
     padding: "0.5rem 0px 0.5rem 0px",
   };
-  const tableRowMobile = {
-    borderBottom: "1px solid black",
-  };
   const cellContentStyle = {
     padding: "0.5rem 0px 0.5rem 0px",
     verticalAlign: "top",
   };
+
+  const { selectedLanguage, handleLanguageSwitch } =
+    useContext(LanguageContext);
 
   return (
     <div className="App pt-2">
@@ -1031,57 +1104,106 @@ function GuidelinesMobile() {
               borderLeft: "0.4rem solid  #EB562E ",
               display: "flex",
               alignItems: "center",
-              fontFamily: "FontBold",
+              fontFamily:
+                selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
               color: "#474747",
             }}
           >
-            <p className="m-0 text-2xl">Latest Journal</p>
+            <p className="m-0 text-2xl">
+              {selectedLanguage === "en" ? "Latest Journal" : "วารสารล่าสุด"}
+            </p>
           </MDBRow>
-          <MDBRow className="py-2">
-            <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
-              <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
-                {/* style={{ height: "508px", width: "412px" }} */}
-                <img
-                  src={journalimage}
-                  alt="Your image"
-                  className="image-fluid"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
+          {publications2.map((publication) => (
+            <MDBRow className="py-2">
+              <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
+                <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
+                  {/* style={{ height: "508px", width: "412px" }} */}
+
+                  <img
+                    src={
+                      "http://10.35.29.179:1337" +
+                      publication.attributes.journal[0]?.uploadfiles.data[0]
+                        ?.attributes.fileupload?.data[1]?.attributes.url
+                    }
+                    alt="Your image"
+                    className="image-fluid"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </MDBCol>
               </MDBCol>
-            </MDBCol>
-            <MDBCol
-              className="d-flex flex-col justify-content-between py-2"
-              style={{}}
-            >
-              <p
-                className="m-0 text-xl px-1"
-                style={{ color: "#EB562E", fontFamily: "FontBold" }}
+              <MDBCol
+                className="d-flex flex-col justify-content-between py-2"
+                style={{}}
               >
-                KMUTT Research and Development Journal
-              </p>
-              <span>
-                <p className="m-0 text-sm px-1 ">Volume 46 No. 2</p>
-                <p className="m-0 text-sm px-1 ">April - June</p>{" "}
-              </span>
-            </MDBCol>
-          </MDBRow>
+                {" "}
+                <Link
+                  to={publication.attributes.journal[0]?.url}
+                  target="_blank"
+                  style={{ color: "black", padding: "0px" }}
+                >
+                  <p
+                    className="m-0 text-md px-1 text-xl"
+                    style={{
+                      color: "#EB562E",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiBold"
+                          : "FontThaiBold",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.title}`
+                      : `${publication.attributes.journal[0]?.title_th}`}
+                  </p>
+                </Link>
+                <span
+                  style={{
+                    color: "#474747",
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
+                >
+                  <p className="m-0 text-sm px-1 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? `Volumn ${publication.attributes.journal[0]?.volumn} No. ${publication.attributes.journal[0]?.number}`
+                      : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
+                  </p>
+                  <p className="m-0 text-sm px-1 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
+                  </p>{" "}
+                </span>
+              </MDBCol>
+            </MDBRow>
+          ))}
         </MDBContainer>
+        {/* ******************* */}
 
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>
+          {/* Publication Policy  */}
           <MDBRow className="d-flex justify-content-between px-5 py-4 fluid">
-            {/* Middle  */}
             <MDBCol md="8" className="px-0">
-              {/* Publication Policy  */}
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-4xl px-0 text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                  }}
                 >
-                  Guidelines
+                  {selectedLanguage === "en" ? "Guidelines" : "ข้อแนะนำ"}
                 </p>
               </MDBRow>
               <MDBRow
@@ -1095,184 +1217,40 @@ function GuidelinesMobile() {
                     marginTop: "1rem",
                   }}
                 ></MDBCol>
-                <MDBCol
-                  className="text-xl w-fit  text-black"
-                  style={{ fontFamily: "FontBold" }}
-                >
-                  Manuscript Preparation Guidelines
-                </MDBCol>
+                {guidelines.map((guideline) => (
+                  <MDBCol
+                    className="text-xl w-fit  text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${guideline.attributes.header_en} `
+                      : `${guideline.attributes.header_th}`}
+                  </MDBCol>
+                ))}
               </MDBRow>
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-md px-0 text-black"
                   style={{ fontFamily: "FontMedium" }}
                 >
-                  Authors of a manuscript should adhere to the following
-                  Guidelines
+                  Authors of a manuscript should <br></br> adhere to the
+                  following Guidelines
                 </p>
               </MDBRow>
-
-              <MDBRow className="pt-0 pb-4">
-                <table style={tableStyle}>
-                  {/* Style table  */}
-                  <tbody className="text-sm">
-                    <tr style={tableRowStyle} className="py-4">
-                      <td style={{ verticalAlign: "top" }}>Title</td>
-                      <td style={{ width: "60%", verticalAlign: "top" }}>
-                        Title should be concise and cover the main theme of the
-                        article
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Authorship</div>
-                      </td>
-                      <td>
-                        List all authors’ information including names, academic
-                        positions and affiliations
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Abstract</div>
-                      </td>
-                      <td>
-                        Abstract must be available BOTH in Thai and in English
-                        (but on a separate page). Abstract should consist of the
-                        research motivation and/or objectives, scope as well as
-                        key results.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Introduction</div>
-                      </td>
-                      <td>
-                        Introduction should give the background and literature
-                        relevant to the research problem of the article. The
-                        research objectives and scope should also be stated.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Material and method</div>
-                      </td>
-                      <td>
-                        This section should be comprehensive enough to allow the
-                        reader to repeat the work if necessary.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Results</div>
-                      </td>
-                      <td>
-                        Results should be given via the use of appropriate
-                        figures and tables along with adequate captions.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Discussion</div>
-                      </td>
-                      <td>
-                        Emphasize on the main findings and, if applicable,
-                        discuss the work in relation to the literature.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td>
-                        {" "}
-                        <div style={cellContentStyle}>Conclusion</div>
-                      </td>
-                      <td>
-                        Summarize the main findings that should be emphasized.
-                        Recommendation and/or suggestion can also be made.
-                      </td>
-                    </tr>
-                    <tr style={tableRowStyle}>
-                      <td sx={{ verticalAlign: "top" }}>
-                        <div
-                          style={cellContentStyle}
-                          sx={{ verticalAlign: "top" }}
-                        >
-                          References
-                        </div>
-                      </td>
-                      <td>
-                        Use the number system by giving the reference number(s)
-                        in a bracket (e.g. [1], [1,2] or [1-3]) after the
-                        referenced statement or author(s).
-                        <br />
-                        <br />
-                        <strong>
-                          In the Reference section, follow the following
-                          recommended formats:
-                        </strong>
-                        <br />
-                        <br />
-                        Journal
-                        <br />
-                        Pongmalai, P., Devahastin, S., Chiewchan, N. and
-                        Soponronnarit, S., 2015, “Enhancement of
-                        Microwave-Assisted Extraction of Bioactive Compounds
-                        from Cabbage Outer Leaves via the Application of
-                        Ultrasonic Pretreatment,” Separation and Purification
-                        Technology, 144, pp. 37-45.
-                        <br />
-                        <br />
-                        Book
-                        <br />
-                        Farmer, R.C., Cheng, G.C., Chen, Y-S. and Pike, R.W.,
-                        2009, Computational Transport Phenomena for Engineering
-                        Analysis, CRC Press, Boca Raton.
-                        <br />
-                        <br />
-                        Book Chapter
-                        <br />
-                        Devahastin, S. and Mujumdar, A.S. 2014, “Superheated
-                        Steam Drying of Foods and Biomaterials,” pp. 57-84, in
-                        E. Tsotsas and A.S. Mujumdar (Eds.) Modern Drying
-                        Technology, Vol. 5, Wiley-VCH, Weinheim.
-                        <br />
-                        <br />
-                        Proceedings
-                        <br />
-                        Pongmalai, P., Devahastin, S., Chiewchan, N. and
-                        Soponronnarit, S., 2013, “Effect of Ultrasonic
-                        Pretreatment on Extractability of Glucosinolates from
-                        Cabbage Outer Leaves,” Proceedings of the 6th TSAE
-                        International Conference, Hua Hin, Thailand, pp.
-                        119-122.
-                        <br />
-                        <br />
-                        Tables and Figures
-                        <br />
-                        All Tables and Figures should NOT be directly inserted
-                        in the text. Tables and Figures should be summarized at
-                        the end of the manuscript, one table/figure per
-                        manuscript page.
-                        <br />
-                        <br />
-                        Tables
-                        <br />
-                        Add table number, followed by the title of the table,
-                        above the table.
-                        <br />
-                        Figures
-                        <br />
-                        Add figure number, followed by the title of the figure,
-                        under the figure.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <MDBRow className="pt-0 pb-2">
+                {guidelines.map((guideline) => (
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        selectedLanguage === "en"
+                          ? guideline.attributes.guideline
+                          : guideline.attributes.guideline,
+                    }}
+                  />
+                ))}
               </MDBRow>
               {/* ******************* */}
 
@@ -1280,29 +1258,29 @@ function GuidelinesMobile() {
                 <MDBCol className=" w-fit px-0 ">
                   <p
                     className="mb-2 text-black text-sm"
-                    style={{ fontFamily: "FontMedium" }}
+                    style={{ fontFamily: "FontMedium", fontSize: "16px" }}
                   >
                     The authors should also ensure that the following important
                     points have been taken into account:
                   </p>
-                  <ul className="list-decimal text-sm mb-0 ps-3">
-                    <li className="text-sm pb-2">
+                  <ul className="list-decimal text-md mb-0 ps-3">
+                    <li className="text-md pb-2">
                       The submission has not been previously published, nor it
                       is under consideration by any other journal.
                     </li>
-                    <li className="text-sm pb-2">
+                    <li className="text-md pb-2">
                       The submission file should be in OpenOffice, Microsoft
                       Word, RTF, or WordPerfect document file format.
                     </li>
-                    <li className="text-sm pb-2">
+                    <li className="text-md pb-2">
                       Where applicable, URLs for the references have been
                       provided.
                     </li>
-                    <li className="text-sm pb-2">
+                    <li className="text-md pb-2">
                       Thai manuscript and English manuscript should be prepared
                       using TH Sarabun New size 16 pt.
                     </li>
-                    <li className="text-sm pb-2">
+                    <li className="text-md pb-2">
                       The text adheres to the stylistic and bibliographic
                       requirements of the Journal.
                     </li>
@@ -1315,15 +1293,22 @@ function GuidelinesMobile() {
                 ref={templateRef}
                 className="d-flex justify-content-between fluid py-3"
               >
+                {templates.map((template) => (
+                  <MDBCol
+                    md=""
+                    className="text-xl w-fit px-0  text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${template.attributes.header_en} `
+                      : `${template.attributes.header_th}`}
+                  </MDBCol>
+                ))}
                 <MDBCol
-                  md="6"
-                  className="text-xl w-fit px-0  text-black"
-                  style={{ fontFamily: "FontBold" }}
-                >
-                  Manuscript Template
-                </MDBCol>
-                <MDBCol
-                  className=""
+                  className="col-2"
                   style={{
                     borderTop: "1px solid black ",
                     marginTop: "1rem",
@@ -1339,11 +1324,14 @@ function GuidelinesMobile() {
                         borderColor: "#EB562E",
                         color: "white",
                         backgroundColor: "#EB562E",
+                        fontSize: "16px",
                       }}
-                      className="me-3 text-sm px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                      className="me-3  px-3 py-2 capitalize font-bold rounded-0 w-fit"
                       size="sm"
                     >
-                      Download Word File
+                      {selectedLanguage === "en"
+                        ? "         Download Word File"
+                        : "ดาวน์โหลด ไฟล์ Word "}
                     </MDBBtn>
                   </MDBCol>
                   <MDBCol>
@@ -1353,11 +1341,14 @@ function GuidelinesMobile() {
                         borderColor: "#EB562E",
                         color: "white",
                         backgroundColor: "#EB562E",
+                        fontSize: "16px",
                       }}
-                      className="text-sm px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                      className=" px-3 py-2 capitalize font-bold rounded-0 w-fit"
                       size="sm"
                     >
-                      Download PDF File
+                      {selectedLanguage === "en"
+                        ? "         Download PDF File"
+                        : "ดาวน์โหลด ไฟล์ PDF "}
                     </MDBBtn>
                   </MDBCol>
                 </div>
@@ -1369,13 +1360,21 @@ function GuidelinesMobile() {
                 ref={submissionRef}
                 className="d-flex justify-content-between fluid py-3"
               >
-                <MDBCol
-                  md="6"
-                  className="text-xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontBold" }}
-                >
-                  Manuscript Submission
-                </MDBCol>
+                {submissions.map((submission) => (
+                  <MDBCol
+                    md="6"
+                    className="text-xl w-fit px-0 pe-4 text-black"
+                    style={{
+                      // fontSize: "20px",
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${submission.attributes.header_en} `
+                      : `${submission.attributes.header_th}`}
+                  </MDBCol>
+                ))}
                 <MDBCol
                   className=""
                   style={{
@@ -1386,14 +1385,14 @@ function GuidelinesMobile() {
               </MDBRow>
               <MDBRow>
                 <ul className="list-decimal text-md ms-2 mb-0">
-                  <li className="text-sm pb-2">
+                  <li className="text-md pb-2">
                     Send a manuscript file to{" "}
                     <span className="underline"> journal@kmutt.ac.th.</span>{" "}
                     Please also suggest 3 possible reviewers, with full names
                     and e-mail addresses, who can serve as reviewers of the
                     manuscript.
                   </li>
-                  <li className="text-sm">
+                  <li className="text-md">
                     Manuscript review and publication of an accepted article are
                     free of charge. No article processing charge needs to be
                     paid. Subscription to the journal prior to manuscript
@@ -1406,14 +1405,21 @@ function GuidelinesMobile() {
               {/* Manuscript Template */}
               <MDBRow
                 ref={instructionRef}
-                className="d-flex justify-content-between fluid py-3"
+                className="d-flex justify-content-between fluid py-3 pt-4"
               >
-                <MDBCol
-                  className="text-xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontBold" }}
-                >
-                  Instructions on the Use of Editorial Manager
-                </MDBCol>
+                {instructions.map((instruction) => (
+                  <MDBCol
+                    className="text-xl w-fit px-0 pe-4 text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${instruction.attributes.header_en} `
+                      : `${instruction.attributes.header_th}`}
+                  </MDBCol>
+                ))}
               </MDBRow>
               <MDBRow>
                 <div className="d-flex flex-col justify-between gap-3 mt-1 text-red px-0">
@@ -1424,11 +1430,18 @@ function GuidelinesMobile() {
                         borderColor: "#EB562E",
                         color: "white",
                         backgroundColor: "#EB562E",
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
                       }}
-                      className="me-3 text-sm px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                      className="me-3 px-3 py-2 capitalize font-bold rounded-0 w-fit"
                       size="sm"
                     >
-                      Instructions for Authors
+                      {selectedLanguage === "en"
+                        ? "  Instructions for Authors"
+                        : "คู่มือสำหรับผู้เขียน"}
                     </MDBBtn>
                   </MDBCol>
                   <MDBCol>
@@ -1438,15 +1451,112 @@ function GuidelinesMobile() {
                         borderColor: "#EB562E",
                         color: "white",
                         backgroundColor: "#EB562E",
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
                       }}
-                      className="text-sm px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                      className="px-3 py-2 capitalize font-bold rounded-0 w-fit"
                       size="sm"
                     >
-                      Instructions for Reviewers
+                      {selectedLanguage === "en"
+                        ? "    Instructions for Reviewers"
+                        : "คู่มือสำหรับผู้ประเมิน"}
                     </MDBBtn>
                   </MDBCol>
                 </div>
               </MDBRow>
+
+              <MDBRow
+                // ref={submissionRef}
+                className="d-flex justify-content-between fluid pb-3 pt-4"
+              >
+                {subscriptions.map((subscription) => (
+                  <MDBCol
+                    md="6"
+                    className="text-xl w-fit px-0 pe-4 text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiBold"
+                          : "FontThaiBold",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${subscription.attributes.header_en} `
+                      : `${subscription.attributes.header_th}`}
+                  </MDBCol>
+                ))}
+                <MDBCol
+                  className=""
+                  style={{
+                    borderTop: "1px solid black ",
+                    marginTop: "1rem",
+                  }}
+                ></MDBCol>
+              </MDBRow>
+              <MDBRow>
+                {subscriptions.map((subscription) => (
+                  <ul className="list-none text-md mb-0 ps-0">
+                    <li
+                      className=""
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontThaiRegular"
+                            : "FontThaiRegular",
+                        fontSize: "16px",
+                      }}
+                    >
+                      {selectedLanguage === "en"
+                        ? `${subscription.attributes.content_en} `
+                        : `${subscription.attributes.content_th}`}
+                    </li>
+                  </ul>
+                ))}
+              </MDBRow>
+              <MDBRow className="py-3 ">
+                <div className="d-flex text-red px-0">
+                  <MDBBtn
+                    outline
+                    style={{
+                      borderColor: "#EB562E",
+                      color: "white",
+                      backgroundColor: "#EB562E",
+                      fontSize: "16px",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiBold"
+                          : "FontThaiBold",
+                    }}
+                    className="me-3 text-sm px-3 py-2 capitalize  rounded-0"
+                    size="sm"
+                  >
+                    ดาวน์โหลด ใบสมัครสมาชิก
+                  </MDBBtn>
+                </div>
+              </MDBRow>
+              <MDBRow>
+                {/* Local  */}
+                <ul className="list-none text-md mb-0 ps-0">
+                  <li
+                    className="text-md"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiRegular"
+                          : "FontThaiRegular",
+                    }}
+                  >
+                    หลังจากโอนเงิน ให้ส่ง ใบสมัครสมาชิก และหลักฐานการโอนเงิน
+                    (pay-in-slip) มาที่ e-mail: <u>journal@kmutt.ac.th</u> หรือ
+                    โทรสารหมายเลข 0-2872-9083 ทางวารสารฯ
+                    จะส่งใบเสร็จรับเงินไปตามรายละเอียดในใบสมัคร
+                  </li>
+                </ul>
+              </MDBRow>
+              {/* ******************* */}
             </MDBCol>
             {/* ******************* */}
           </MDBRow>

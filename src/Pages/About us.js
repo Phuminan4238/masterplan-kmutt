@@ -228,7 +228,11 @@ function AboutUsDesktop() {
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-4xl px-0 text-black"
-                  style={{ fontFamily: "FontBold", fontSize: "48px" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    fontSize: "48px",
+                  }}
                 >
                   {selectedLanguage === "en"
                     ? `${aboutData?.topic}`
@@ -238,7 +242,10 @@ function AboutUsDesktop() {
               <MDBRow className="d-flex justify-content-between fluid py-3">
                 <MDBCol
                   className="text-2xl w-fit ps-0 text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                  }}
                 >
                   {selectedLanguage === "en"
                     ? `${aboutData?.header_en}`
@@ -248,7 +255,12 @@ function AboutUsDesktop() {
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-md px-0 "
-                  style={{ fontFamily: "FontRegular" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
                   dangerouslySetInnerHTML={{
                     __html:
                       selectedLanguage === "en"
@@ -263,7 +275,10 @@ function AboutUsDesktop() {
                 <MDBCol
                   md="6"
                   className="text-2xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                  }}
                 >
                   {selectedLanguage === "en"
                     ? `${officeData?.header_en}`
@@ -280,7 +295,12 @@ function AboutUsDesktop() {
               <MDBRow className="justify-content-center">
                 <p
                   className="text-md px-0"
-                  style={{ fontFamily: "FontRegular" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
                   dangerouslySetInnerHTML={{
                     __html:
                       selectedLanguage === "en"
@@ -292,7 +312,10 @@ function AboutUsDesktop() {
               <MDBRow>
                 <p
                   className="text-lg px-0 mb-0  text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                  }}
                 >
                   {selectedLanguage === "en"
                     ? `${locationData?.header_en}`
@@ -300,7 +323,12 @@ function AboutUsDesktop() {
                 </p>
                 <p
                   className="text-md px-0 "
-                  style={{ fontFamily: "FontRegular" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
                   dangerouslySetInnerHTML={{
                     __html:
                       selectedLanguage === "en"
@@ -323,7 +351,16 @@ function AboutUsDesktop() {
               <MDBRow className="d-flex justify-content-between fluid py-3">
                 <ul className="ps-0 text-sm text-white">
                   <li>
-                    <a style={{ fontFamily: "FontSemiBold" }}> </a>
+                    <a
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontSemiBold"
+                            : "FontThaiSemiBold",
+                      }}
+                    >
+                      {" "}
+                    </a>
                   </li>
                 </ul>
               </MDBRow>
@@ -343,6 +380,39 @@ function AboutUsDesktop() {
 }
 
 function AboutUsMobile() {
+  const [publications, setPublications] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://10.35.29.179:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "publications?populate=journal.uploadfiles.fileupload,journal.year,journal.months"
+        );
+        if (isMounted) {
+          setPublications(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (publications.length === 0) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [publications]);
+
   const [error, setError] = useState(null);
   const [aboutData, setAboutData] = useState(null);
   const [officeData, setOfficeData] = useState(null);
@@ -407,44 +477,90 @@ function AboutUsMobile() {
               borderLeft: "0.4rem solid  #EB562E ",
               display: "flex",
               alignItems: "center",
-              fontFamily: "FontBold",
+              fontFamily:
+                selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
               color: "#474747",
             }}
           >
-            <p className="m-0 text-2xl">Latest Journal</p>
+            <p className="m-0 text-2xl">
+              {selectedLanguage === "en" ? "Latest Journal" : "วารสารล่าสุด"}
+            </p>
           </MDBRow>
-          <MDBRow className="py-2">
-            <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
-              <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
-                {/* style={{ height: "508px", width: "412px" }} */}
-                <img
-                  src={journalimage}
-                  alt="Your image"
-                  className="image-fluid"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
+          {publications.map((publication) => (
+            <MDBRow className="py-2">
+              <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
+                <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
+                  {/* style={{ height: "508px", width: "412px" }} */}
+
+                  <img
+                    src={
+                      "http://10.35.29.179:1337" +
+                      publication.attributes.journal[0]?.uploadfiles.data[0]
+                        ?.attributes.fileupload?.data[1]?.attributes.url
+                    }
+                    alt="Your image"
+                    className="image-fluid"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </MDBCol>
               </MDBCol>
-            </MDBCol>
-            <MDBCol
-              className="d-flex flex-col justify-content-between py-2"
-              style={{}}
-            >
-              <p
-                className="m-0 text-md px-1 text-xl"
-                style={{ color: "#EB562E", fontFamily: "FontBold" }}
+              <MDBCol
+                className="d-flex flex-col justify-content-between py-2"
+                style={{}}
               >
-                KMUTT Research and Development Journal
-              </p>
-              <span>
-                <p className="m-0 text-sm px-1 ">Volume 46 No. 2</p>
-                <p className="m-0 text-sm px-1 ">April - June</p>{" "}
-              </span>
-            </MDBCol>
-          </MDBRow>
+                {" "}
+                <Link
+                  to={publication.attributes.journal[0]?.url}
+                  target="_blank"
+                  style={{ color: "black", padding: "0px" }}
+                >
+                  <p
+                    className="m-0 text-md px-1 text-xl"
+                    style={{
+                      color: "#EB562E",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiBold"
+                          : "FontThaiBold",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.title}`
+                      : `${publication.attributes.journal[0]?.title_th}`}
+                  </p>
+                </Link>
+                <span
+                  style={{
+                    color: "#474747",
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
+                >
+                  <p className="m-0 text-sm px-1 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? `Volumn ${publication.attributes.journal[0]?.volumn} No. ${publication.attributes.journal[0]?.number}`
+                      : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
+                  </p>
+                  <p className="m-0 text-sm px-1 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
+                  </p>{" "}
+                </span>
+              </MDBCol>
+            </MDBRow>
+          ))}
         </MDBContainer>
 
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>
@@ -455,11 +571,12 @@ function AboutUsMobile() {
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-4xl px-0 text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                  }}
                 >
-                  {selectedLanguage === "en"
-                    ? `${aboutData?.topic}`
-                    : `${aboutData?.topic}`}
+                  {selectedLanguage === "en" ? "About us" : "เกี่ยวกับเรา"}
                 </p>
               </MDBRow>
               <MDBRow className="d-flex justify-content-between fluid py-3">
@@ -472,7 +589,10 @@ function AboutUsMobile() {
                 ></MDBCol>
                 <MDBCol
                   className="text-xl w-fit  text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                  }}
                 >
                   {selectedLanguage === "en"
                     ? `${aboutData?.header_en}`
@@ -482,7 +602,13 @@ function AboutUsMobile() {
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-sm px-0 "
-                  style={{ fontFamily: "FontRegular" }}
+                  style={{
+                    fontSize: "16px",
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
                 >
                   {selectedLanguage === "en"
                     ? `${aboutData?.content_en}`
@@ -495,7 +621,10 @@ function AboutUsMobile() {
                 <MDBCol
                   md="6"
                   className="text-xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                  }}
                 >
                   {selectedLanguage === "en"
                     ? `${officeData?.header_en}`
@@ -513,7 +642,13 @@ function AboutUsMobile() {
               <MDBRow className="justify-content-center">
                 <p
                   className="text-sm px-0 mb-2"
-                  style={{ fontFamily: "FontRegular" }}
+                  style={{
+                    fontSize: "16px",
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
                 >
                   {selectedLanguage === "en"
                     ? `${officeData?.content_en}`
@@ -523,13 +658,25 @@ function AboutUsMobile() {
               <MDBRow>
                 <p
                   className="text-md px-0 mb-0  text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                  }}
                 >
                   {selectedLanguage === "en"
                     ? `${locationData?.header_en}`
                     : `${locationData?.header_th}`}
                 </p>
-                <ul className="text-sm list-none ps-0">
+                <ul
+                  className="text-sm list-none ps-0"
+                  style={{
+                    fontSize: "16px",
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
+                >
                   <li>
                     {selectedLanguage === "en"
                       ? `${locationData?.content_en}`

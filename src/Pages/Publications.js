@@ -542,7 +542,12 @@ function PublicationDesktop() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black"
-                        style={{ fontFamily: "FontBold" }}
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontBold"
+                              : "FontThaiBold",
+                        }}
                       >
                         {selectedLanguage === "en" ? (
                           <p>
@@ -1025,7 +1030,6 @@ function PublicationDesktop() {
 
 function PublicationMobile() {
   const [publications, setPublications] = useState([]);
-
   useEffect(() => {
     let isMounted = true;
 
@@ -1143,6 +1147,15 @@ function PublicationMobile() {
       .then(({ data }) => setPeridiocities(data.data))
       .catch((error) => setError(error));
   }, []);
+  const [editorialmember, setEditorialMembers] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=editorialmember"
+      )
+      .then(({ data }) => setEditorialMembers(data.data))
+      .catch((error) => setError(error));
+  }, []);
 
   // Member
   const [member, setMembers] = useState([]);
@@ -1179,7 +1192,6 @@ function PublicationMobile() {
       .then(({ data }) => setBoardMembers(data.data))
       .catch((error) => setError(error));
   }, []);
-  //
 
   // Style
   const isDesktop = useMediaQuery({ minWidth: 940 });
@@ -1207,7 +1219,8 @@ function PublicationMobile() {
               borderLeft: "0.4rem solid  #EB562E ",
               display: "flex",
               alignItems: "center",
-              fontFamily: "FontBold",
+              fontFamily:
+                selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
               color: "#474747",
             }}
           >
@@ -1249,14 +1262,28 @@ function PublicationMobile() {
                 >
                   <p
                     className="m-0 text-md px-1 text-xl"
-                    style={{ color: "#EB562E", fontFamily: "FontBold" }}
+                    style={{
+                      color: "#EB562E",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiBold"
+                          : "FontThaiBold",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? `${publication.attributes.journal[0]?.title}`
                       : `${publication.attributes.journal[0]?.title_th}`}
                   </p>
                 </Link>
-                <span>
+                <span
+                  style={{
+                    color: "#474747",
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
+                >
                   <p className="m-0 text-sm px-1 ">
                     {" "}
                     {selectedLanguage === "en"
@@ -1288,11 +1315,16 @@ function PublicationMobile() {
                   <MDBRow className="justify-content-center ">
                     <p
                       className="text-4xl px-0 text-black"
-                      style={{ fontFamily: "FontBold" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? "Publication"
-                        : "Publication"}
+                        : "การจัดพิมพ์"}
                     </p>
                   </MDBRow>
                   <MDBRow
@@ -1309,7 +1341,12 @@ function PublicationMobile() {
                     <MDBCol
                       md="1"
                       className="text-xl w-fit  text-black"
-                      style={{ fontFamily: "FontBold" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${policy[0].attributes.header_en} `
@@ -1319,7 +1356,13 @@ function PublicationMobile() {
                   <MDBRow className="justify-content-center ">
                     <p
                       className="text-sm px-0"
-                      style={{ fontFamily: "FontRegular" }}
+                      style={{
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontRegular"
+                            : "FontThaiRegular",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${policy[0].attributes.content_en} `
@@ -1340,7 +1383,12 @@ function PublicationMobile() {
                     <MDBCol
                       md="6"
                       className="text-xl w-fit px-0 pe-4 text-black"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${ethic[0].attributes.header_en} `
@@ -1357,7 +1405,13 @@ function PublicationMobile() {
                   <MDBRow className="justify-content-center">
                     <p
                       className="text-sm px-0"
-                      style={{ fontFamily: "FontRegular" }}
+                      style={{
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontRegular"
+                            : "FontThaiRegular",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${ethic[0].attributes.content_en} `
@@ -1369,7 +1423,12 @@ function PublicationMobile() {
                     <MDBCol className=" w-fit px-0">
                       <p
                         className="mb-0 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontBold"
+                              : "FontThaiBold",
+                        }}
                       >
                         {selectedLanguage === "en" ? (
                           <p>
@@ -1386,7 +1445,16 @@ function PublicationMobile() {
                         )}
                       </p>
                       <ul className="list-disc text-md">
-                        <li className="text-sm">
+                        <li
+                          className="text-sm"
+                          style={{
+                            fontSize: "16px",
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? "FontRegular"
+                                : "FontThaiRegular",
+                          }}
+                        >
                           {selectedLanguage === "en" ? (
                             <p>
                               {ethic[0].attributes.role &&
@@ -1409,7 +1477,12 @@ function PublicationMobile() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontBold"
+                              : "FontThaiBold",
+                        }}
                       >
                         {selectedLanguage === "en" ? (
                           <p>
@@ -1432,7 +1505,16 @@ function PublicationMobile() {
                       {ethic[0].attributes.role &&
                         ethic[0].attributes.role[1] && (
                           <ul className="list-disc text-md">
-                            <li className="text-sm">
+                            <li
+                              className="text-sm"
+                              style={{
+                                fontSize: "16px",
+                                fontFamily:
+                                  selectedLanguage === "en"
+                                    ? "FontRegular"
+                                    : "FontThaiRegular",
+                              }}
+                            >
                               {selectedLanguage === "en" ? (
                                 <p>
                                   {ethic[0].attributes.role[1].content_role}
@@ -1452,7 +1534,12 @@ function PublicationMobile() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontBold"
+                              : "FontThaiBold",
+                        }}
                       >
                         {selectedLanguage === "en" ? (
                           <p>
@@ -1475,7 +1562,16 @@ function PublicationMobile() {
                       {ethic[0].attributes.role &&
                         ethic[0].attributes.role[2] && (
                           <ul className="list-disc text-md">
-                            <li className="text-sm">
+                            <li
+                              className="text-sm"
+                              style={{
+                                fontSize: "16px",
+                                fontFamily:
+                                  selectedLanguage === "en"
+                                    ? "FontRegular"
+                                    : "FontThaiRegular",
+                              }}
+                            >
                               {selectedLanguage === "en" ? (
                                 <p>
                                   {ethic[0].attributes.role[2].content_role}
@@ -1504,7 +1600,12 @@ function PublicationMobile() {
                     <MDBCol
                       md="6"
                       className="text-xl w-fit px-0 pe-4 text-black"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${distribution[0].attributes.header_en}`
@@ -1521,7 +1622,13 @@ function PublicationMobile() {
                   <MDBRow className="justify-content-center">
                     <p
                       className="text-sm px-0"
-                      style={{ fontFamily: "FontRegular" }}
+                      style={{
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontRegular"
+                            : "FontThaiRegular",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${distribution[0].attributes.content_en}`
@@ -1542,7 +1649,12 @@ function PublicationMobile() {
                     <MDBCol
                       md="6"
                       className="text-xl w-fit px-0 pe-4 text-black"
-                      style={{ fontFamily: "FontSemiBold" }}
+                      style={{
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${periodicity[0].attributes.header_en}`
@@ -1559,7 +1671,13 @@ function PublicationMobile() {
                   <MDBRow className="justify-content-center">
                     <p
                       className="text-sm px-0"
-                      style={{ fontFamily: "FontRegular" }}
+                      style={{
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontRegular"
+                            : "FontThaiRegular",
+                      }}
                     >
                       {selectedLanguage === "en"
                         ? `${periodicity[0].attributes.content_en}`
@@ -1571,38 +1689,54 @@ function PublicationMobile() {
               {/* ******************* */}
 
               {/* Editorial Board Member  */}
-              <MDBRow
-                ref={boardmemberRef}
-                className="d-flex justify-content-between fluid py-3"
-              >
-                <MDBCol
-                  md="6"
-                  className="text-xl w-fit px-0 pe-4 text-black"
-                  style={{ fontFamily: "FontSemiBold" }}
+              {editorialmember[0] && (
+                <MDBRow
+                  ref={boardmemberRef}
+                  className="d-flex justify-content-between fluid py-3"
                 >
-                  Editorial Board Members
-                </MDBCol>
-                <MDBCol
-                  className=""
-                  style={{
-                    borderTop: "1px solid black ",
-                    marginTop: "1rem",
-                  }}
-                ></MDBCol>
-              </MDBRow>
+                  <MDBCol
+                    md="6"
+                    className="text-xl w-fit px-0 pe-4 text-black"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${editorialmember[0].attributes.header_en}`
+                      : `${editorialmember[0].attributes.header_th}`}
+                  </MDBCol>
+                  <MDBCol
+                    className=""
+                    style={{
+                      borderTop: "1px solid black ",
+                      marginTop: "1rem",
+                    }}
+                  ></MDBCol>
+                </MDBRow>
+              )}
+
               {/* Honorary Member  */}
               {honorarymember[0] && (
                 <div>
                   <MDBRow className="d-flex justify-content-between fluid mb-2">
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
-                        className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        className="mb-2 text-black italic"
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                        }}
                       >
                         {honorarymember[0].attributes.position_en}
                       </p>
                       {honorarymember.map((memberData) => (
-                        <ul className="list-disc text-sm mb-0">
+                        <ul
+                          className="list-disc text-sm mb-0"
+                          style={{ fontSize: "16px" }}
+                        >
                           <li key={memberData.id}>
                             {memberData.attributes.prefix_en} {""}
                             {memberData.attributes.name_en} {""}
@@ -1620,13 +1754,21 @@ function PublicationMobile() {
                   <MDBRow className="d-flex justify-content-between fluid mb-2">
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
-                        className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        className="mb-2 text-black italic"
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                        }}
                       >
                         {editormember[0].attributes.position_en}
                       </p>
                       {editormember.map((memberData) => (
-                        <ul className="list-disc text-sm mb-0">
+                        <ul
+                          className="list-disc text-sm mb-0"
+                          style={{ fontSize: "16px" }}
+                        >
                           <li key={memberData.id}>
                             {memberData.attributes.prefix_en} {""}
                             {memberData.attributes.name_en} {""}
@@ -1644,13 +1786,21 @@ function PublicationMobile() {
                   <MDBRow className="d-flex justify-content-between fluid mb-2">
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
-                        className="mb-2 text-black"
-                        style={{ fontFamily: "FontSemiBold" }}
+                        className="mb-2 text-black italic"
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                        }}
                       >
                         {boardmember[0].attributes.position_en}
                       </p>
                       {boardmember.map((memberData) => (
-                        <ul className="list-disc text-sm mb-0">
+                        <ul
+                          className="list-disc text-sm mb-0"
+                          style={{ fontSize: "16px" }}
+                        >
                           <li key={memberData.id}>
                             {memberData.attributes.prefix_en} {""}
                             {memberData.attributes.name_en} {""}

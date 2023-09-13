@@ -48,14 +48,6 @@ function JournalDesktop() {
   }, [publications]);
 
   const [error, setError] = useState(null);
-  // const [publications, setPublications] = useState([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://10.35.29.179:1337/api/publications/?populate=*")
-  //     .then(({ data }) => setPublications(data.data))
-  //     .catch((error) => setError(error));
-  // }, []);
 
   const isDesktop = useMediaQuery({ minWidth: 940 });
 
@@ -311,15 +303,40 @@ function JournalDesktop() {
 }
 
 function JournalMobile() {
-  const [error, setError] = useState(null);
   const [publications, setPublications] = useState([]);
-
   useEffect(() => {
-    axios
-      .get("http://10.35.29.179:1337/api/publications/?populate=*")
-      .then(({ data }) => setPublications(data.data))
-      .catch((error) => setError(error));
-  }, []);
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://10.35.29.179:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "publications?populate=journal.uploadfiles.fileupload,journal.year,journal.months"
+        );
+        if (isMounted) {
+          setPublications(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (publications.length === 0) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [publications]);
+
+  const [error, setError] = useState(null);
 
   const isDesktop = useMediaQuery({ minWidth: 940 });
 
@@ -344,6 +361,9 @@ function JournalMobile() {
     verticalAlign: "top",
   };
 
+  const { selectedLanguage, handleLanguageSwitch } =
+    useContext(LanguageContext);
+
   return (
     <div className="App pt-2">
       <section>
@@ -358,44 +378,90 @@ function JournalMobile() {
               borderLeft: "0.4rem solid  #EB562E ",
               display: "flex",
               alignItems: "center",
-              fontFamily: "FontBold",
+              fontFamily:
+                selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
               color: "#474747",
             }}
           >
-            <p className="m-0 text-2xl">Latest Journal</p>
+            <p className="m-0 text-2xl">
+              {selectedLanguage === "en" ? "Latest Journal" : "วารสารล่าสุด"}
+            </p>
           </MDBRow>
-          <MDBRow className="py-2">
-            <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
-              <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
-                {/* style={{ height: "508px", width: "412px" }} */}
-                <img
-                  src={journalimage}
-                  alt="Your image"
-                  className="image-fluid"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
+          {publications.map((publication) => (
+            <MDBRow className="py-2">
+              <MDBCol className=" d-flex flex-col col-4 p-0 py-2">
+                <MDBCol className="d-flex p-0" style={{ overflow: "hidden" }}>
+                  {/* style={{ height: "508px", width: "412px" }} */}
+
+                  <img
+                    src={
+                      "http://10.35.29.179:1337" +
+                      publication.attributes.journal[0]?.uploadfiles.data[0]
+                        ?.attributes.fileupload?.data[1]?.attributes.url
+                    }
+                    alt="Your image"
+                    className="image-fluid"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </MDBCol>
               </MDBCol>
-            </MDBCol>
-            <MDBCol
-              className="d-flex flex-col justify-content-between py-2"
-              style={{}}
-            >
-              <p
-                className="m-0 text-md px-1 text-xl"
-                style={{ color: "#EB562E", fontFamily: "FontBold" }}
+              <MDBCol
+                className="d-flex flex-col justify-content-between py-2"
+                style={{}}
               >
-                KMUTT Research and Development Journal
-              </p>
-              <span>
-                <p className="m-0 text-sm px-1 ">Volume 46 No. 2</p>
-                <p className="m-0 text-sm px-1 ">April - June</p>{" "}
-              </span>
-            </MDBCol>
-          </MDBRow>
+                {" "}
+                <Link
+                  to={publication.attributes.journal[0]?.url}
+                  target="_blank"
+                  style={{ color: "black", padding: "0px" }}
+                >
+                  <p
+                    className="m-0 text-md px-1 text-xl"
+                    style={{
+                      color: "#EB562E",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiBold"
+                          : "FontThaiBold",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.title}`
+                      : `${publication.attributes.journal[0]?.title_th}`}
+                  </p>
+                </Link>
+                <span
+                  style={{
+                    color: "#474747",
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
+                >
+                  <p className="m-0 text-sm px-1 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? `Volumn ${publication.attributes.journal[0]?.volumn} No. ${publication.attributes.journal[0]?.number}`
+                      : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
+                  </p>
+                  <p className="m-0 text-sm px-1 ">
+                    {" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
+                    {selectedLanguage === "en"
+                      ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
+                      : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
+                  </p>{" "}
+                </span>
+              </MDBCol>
+            </MDBRow>
+          ))}
         </MDBContainer>
 
         <MDBContainer className={`fluid  ${containerStyle["xl"]}`}>
@@ -403,15 +469,19 @@ function JournalMobile() {
             {/* Middle  */}
             <MDBCol md="8" className="px-0">
               {/* Publication Policy  */}
+
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-4xl px-0 text-black"
-                  style={{ fontFamily: "FontBold" }}
+                  style={{
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                  }}
                 >
-                  Journal
+                  {selectedLanguage === "en" ? "Journal" : "วารสาร"}
                 </p>
               </MDBRow>
-              <MDBRow className="justify-content-start py-3">
+              <MDBRow className="justify-content-start py-3 w-fit">
                 <MDBCol
                   md="5"
                   className="d-flex flex-col"
@@ -422,23 +492,40 @@ function JournalMobile() {
                   }}
                 >
                   <div className="text-end">
-                    <MDBIcon
-                      fas
-                      icon="chevron-right"
-                      style={{ color: "white" }}
-                    />
+                    <a
+                      href="https://digital.lib.kmutt.ac.th/journal/brows1.php"
+                      target="_blank"
+                      className="text-white ps-0 text-end"
+                    >
+                      <NorthEastIcon
+                        style={{ color: "white", fontSize: "3rem" }}
+                      ></NorthEastIcon>
+                    </a>
                   </div>
                   <div>
-                    <p
-                      className="text-md px-0 mb-0 text-white"
-                      style={{ fontFamily: "FontSemiBold" }}
+                    <a
+                      href="https://digital.lib.kmutt.ac.th/journal/brows1.php"
+                      target="_blank"
+                      className="flex items-center text-white ps-0"
                     >
-                      Search KMUTT Digital Library
-                    </p>
+                      <p
+                        className="text-xl px-0 mb-0 text-white"
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontSemiBold"
+                              : "FontThaiSemiBold",
+                        }}
+                      >
+                        {selectedLanguage === "en"
+                          ? "Search KMUTT Digital Library"
+                          : "ค้นหาบทความในวารสารฯ"}
+                      </p>
+                    </a>
                   </div>
                 </MDBCol>
               </MDBRow>
-              <MDBRow className="justify-content-start ">
+              <MDBRow className="justify-content-start w-fit">
                 <MDBCol
                   md="5"
                   className="d-flex flex-col"
@@ -449,19 +536,36 @@ function JournalMobile() {
                   }}
                 >
                   <div className="text-end">
-                    <MDBIcon
-                      fas
-                      icon="chevron-right"
-                      style={{ color: "white" }}
-                    />
+                    <a
+                      href="https://www.lib.kmutt.ac.th/en/"
+                      target="_blank"
+                      className="text-white ps-0 text-end"
+                    >
+                      <NorthEastIcon
+                        style={{ color: "white", fontSize: "3rem" }}
+                      ></NorthEastIcon>
+                    </a>
                   </div>
                   <div>
-                    <p
-                      className="text-md px-0 mb-0 text-white"
-                      style={{ fontFamily: "FontSemiBold" }}
+                    <a
+                      href="https://www.lib.kmutt.ac.th/en/"
+                      target="_blank"
+                      className="flex items-center text-white ps-0"
                     >
-                      Read KMUTT RIPO
-                    </p>
+                      <p
+                        className="text-xl px-0 mb-0 text-white"
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontSemiBold"
+                              : "FontThaiSemiBold",
+                        }}
+                      >
+                        {selectedLanguage === "en"
+                          ? "Read KMUTT RIPO"
+                          : "อ่านวารสารวิจัยและพัฒนา มจธ."}
+                      </p>
+                    </a>
                   </div>
                 </MDBCol>
               </MDBRow>

@@ -309,7 +309,7 @@ export default function Navbar(props) {
         <MDBNavbar style={menuStyle}>
           <MDBContainer className={`fluid p-0 px-3 ${containerStyle["6xl"]}`}>
             <MDBRow style={customRowStyle}>
-              {pages.map((page) => (
+              {pages.map((page, index) => (
                 <MDBCol key={page}>
                   <Link
                     to={
@@ -331,6 +331,10 @@ export default function Navbar(props) {
                       to={`/${page}`}
                       sx={{
                         fontWeight: "bold",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontSemiBold"
+                            : "FontThaiSemiBold",
                         padding: "20px",
                         ":hover": {
                           "& a, & > a": {
@@ -339,7 +343,7 @@ export default function Navbar(props) {
                         },
                       }}
                     >
-                      {page}
+                      {selectedLanguage === "en" ? page : pages_th[index]}
                     </a>
                   </Link>
                 </MDBCol>
@@ -374,7 +378,8 @@ export default function Navbar(props) {
           className="justify-content-center text-xs p-2"
           style={{
             backgroundColor: "#EB562E",
-            fontFamily: "FontSemiBold",
+            fontFamily:
+              selectedLanguage === "en" ? "FontSemiBold" : "FontThaiSemiBold",
             color: "white",
             textAlign: "center",
             fontSize: "0.6rem",
@@ -391,7 +396,7 @@ export default function Navbar(props) {
             }}
             position="sticky"
           >
-            <Container maxWidth="xl" style={{ height: " 100px" }}>
+            <Container maxWidth="xl" style={{ height: " 80px" }}>
               <Toolbar disableGutters style={{ height: "inherit" }}>
                 <Box sx={{ flexGrow: 1, display: { xs: "block", md: "flex" } }}>
                   <Typography variant="h6" noWrap component="div">
@@ -500,7 +505,10 @@ export default function Navbar(props) {
                             fontWeight: "bold",
                             // padding: "10px 20px 10px 20px",
                             borderBottom: "1px solid white",
-                            fontFamily: "FontRegular",
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? "FontMedium"
+                                : "FontThaiMedium",
                           }}
                         >
                           <a
@@ -516,7 +524,7 @@ export default function Navbar(props) {
                               // color: "inherit",
                             }}
                           >
-                            {page}
+                            {selectedLanguage === "en" ? page : pages_th[index]}
                           </a>
                         </MenuItem>
                       </Link>
@@ -635,7 +643,7 @@ export default function Navbar(props) {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                   >
-                    {pages.map((page) => (
+                    {pages.map((page, index) => (
                       <Link
                         to={`/${page.replace(/\s+/g, "-").toLowerCase()}`}
                         style={{ color: "inherit" }}
@@ -664,14 +672,20 @@ export default function Navbar(props) {
                             fontFamily: "FontRegular",
                             // padding: "10px 20px 10px 20px",
                             borderBottom: "1px solid white",
-                            color: "inherit", // set default link color to black
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? "FontMedium"
+                                : "FontThaiMedium",
                           }}
                         >
                           <a
                             textAlign="center"
                             to={`/${page}`}
                             sx={{
-                              fontWeight: "bold",
+                              fontFamily:
+                                selectedLanguage === "en"
+                                  ? "FontBold"
+                                  : "FontThaiBold",
                               padding: "20px",
 
                               ":hover": {
@@ -681,7 +695,7 @@ export default function Navbar(props) {
                               },
                             }}
                           >
-                            {page}
+                            {selectedLanguage === "en" ? page : pages_th[index]}
                           </a>
                         </MenuItem>
                       </Link>

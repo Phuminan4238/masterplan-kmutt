@@ -16,6 +16,7 @@ import { text } from "@fortawesome/fontawesome-svg-core";
 import { LanguageContext } from "../Components/LanguageContext";
 import Container from "@mui/material/Container";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import EastIcon from "@mui/icons-material/East";
 
 function HomeDesktop() {
   const [error, setError] = useState(null);
@@ -350,7 +351,7 @@ function HomeDesktop() {
                         fontFamily: "FontMediumTH",
                       }}
                     >
-                      Journal test
+                      Journal
                     </p>
                   </div>
                   <div className="d-flex  mt-1 text-red">
@@ -652,8 +653,11 @@ function HomeMobile() {
                   <p
                     className="font-bold mb-2 px-2 py-1 xs:text-lg w-fit uppercase"
                     style={{
-                      fontFamily: "FontMediumTH",
-                      backgroundColor: "#fce2db",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontMedium"
+                          : "FontThaiMedium",
+                      backgroundColor: "white",
                       color: "#EB562E",
                     }}
                   >
@@ -690,13 +694,9 @@ function HomeMobile() {
                           overflowWrap: "break-word", // Allow word wrapping within the title
                         }}
                       >
-                        {/* {selectedLanguage === "en"
+                        {selectedLanguage === "en"
                           ? `${publication.attributes.journal[0]?.title}`
-                          : `${publication.attributes.journal[0]?.title_th}`} */}
-                        KMUTT Research
-                        <br /> {/* Add a line break here */}
-                        and Development <br />
-                        Journal
+                          : `${publication.attributes.journal[0]?.title_th}`}
                       </p>
                       {/* <p
                         className="pb-2 text-white"
@@ -708,7 +708,10 @@ function HomeMobile() {
                         className="text-white mb-0"
                         style={{
                           fontSize: "1.1rem",
-                          fontFamily: "FontSemiBold",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
                         }}
                       >
                         {/* Volumn 46 No. 2 */}
@@ -720,13 +723,18 @@ function HomeMobile() {
                         className="text-white mb-3"
                         style={{
                           fontSize: "1.1rem",
-                          fontFamily: "FontSemiBold",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
                         }}
                       >
                         {selectedLanguage === "en"
                           ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
-                          : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}
-
+                          : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
+                        {selectedLanguage === "en"
+                          ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
+                          : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
                         {/* 
                         {publication.attributes.journal.map((journalEntry) => (
                           <div key={journalEntry.id}>
@@ -735,7 +743,6 @@ function HomeMobile() {
                             ))}
                           </div>
                         ))} */}
-
                         {/* {publication.attributes.journal.map((journalEntry) => (
                           <div key={journalEntry.id}>
                             {journalEntry.months?.data.map((tag) => (
@@ -747,17 +754,21 @@ function HomeMobile() {
                     </div>
 
                     <div
-                      className="d-flex flex-col align-items-center justify-content-center mb-2"
+                      className="d-flex flex-col align-items-center justify-content-center mb-2 py-2"
                       style={{
                         borderColor: "#EB562E",
                         color: "white",
                         backgroundColor: "#EB562E",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontSemiBold"
+                            : "FontThaiSemiBold",
                       }}
                     >
                       <Link
                         to={publication.attributes.journal[0]?.url}
                         target="_blank"
-                        style={{ color: "black" }}
+                        style={{ color: "white" }}
                       >
                         {selectedLanguage === "en"
                           ? "Read more"
@@ -771,14 +782,25 @@ function HomeMobile() {
                         borderColor: "white",
                         color: "#EB562E",
                         backgroundColor: "white",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontMedium"
+                            : "FontThaiMedium",
                       }}
                     >
                       <a
                         href="https://ripo.kmutt.ac.th/publication/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ width: "100%", color: "#EB562E" }} // Set the width to 100%
-                        className=" font-semibold text-center py-2"
+                        style={{
+                          width: "100%",
+                          color: "#EB562E",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontSemiBold"
+                              : "FontThaiSemiBold",
+                        }} // Set the width to 100%
+                        className=" text-center py-2"
                       >
                         {selectedLanguage === "en"
                           ? "Explore All"
@@ -849,7 +871,10 @@ function HomeMobile() {
                   <p
                     className="font-bold mb-0 xs:pt-0 md:pt-0 xs:text-md md:text-lg"
                     style={{
-                      fontFamily: "FontMedium",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontMedium"
+                          : "FontThaiMedium",
                       color: "white",
                       fontSize: "1.4rem",
                     }}
@@ -896,6 +921,10 @@ function HomeMobile() {
                       borderColor: "white",
                       color: "#EB562E",
                       backgroundColor: "white",
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontMedium"
+                          : "FontThaiMedium",
                     }}
                   >
                     <Link
@@ -939,8 +968,10 @@ function HomeMobile() {
               style={{ backgroundColor: "#474747", height: "inherit" }}
             >
               <div className="d-flex flex-col justify-content-between align-items-end w-100 gap-5">
-                <span style={{ fontSize: "1.5rem", color: "white" }}>
-                  <MDBIcon fas icon="chevron-right" />
+                <span>
+                  <EastIcon
+                    style={{ color: "white", fontSize: "4rem" }}
+                  ></EastIcon>
                 </span>
                 <Link
                   to={`/publications`}
@@ -952,7 +983,12 @@ function HomeMobile() {
                 >
                   <p
                     className="text-white mb-0 xs:text-3xl"
-                    style={{ fontFamily: "FontSemiBold" }}
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontSemiBold"
+                          : "FontThaiSemiBold",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? "Our Publication"
@@ -968,8 +1004,10 @@ function HomeMobile() {
               style={{ backgroundColor: "#000", height: "inherit" }}
             >
               <div className="d-flex flex-col justify-content-between align-items-end w-100 gap-5">
-                <span style={{ fontSize: "1.5rem", color: "white" }}>
-                  <MDBIcon fas icon="chevron-right" />
+                <span>
+                  <EastIcon
+                    style={{ color: "white", fontSize: "4rem" }}
+                  ></EastIcon>
                 </span>
                 <Link
                   to={`/guidelines`}
@@ -981,7 +1019,12 @@ function HomeMobile() {
                 >
                   <p
                     className="text-white mb-0 xs:text-3xl"
-                    style={{ fontFamily: "FontSemiBold" }}
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontSemiBold"
+                          : "FontThaiSemiBold",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? " Our Guidelines"
@@ -997,8 +1040,10 @@ function HomeMobile() {
               style={{ backgroundColor: "#EB562E", height: "inherit" }}
             >
               <div className="d-flex flex-col justify-content-between align-items-end w-100 gap-5">
-                <span style={{ fontSize: "1.5rem", color: "white" }}>
-                  <MDBIcon fas icon="chevron-right" />
+                <span>
+                  <EastIcon
+                    style={{ color: "white", fontSize: "4rem" }}
+                  ></EastIcon>
                 </span>
                 <Link
                   to={`/journal`}
@@ -1010,7 +1055,12 @@ function HomeMobile() {
                 >
                   <p
                     className="text-white mb-0 xs:text-3xl"
-                    style={{ fontFamily: "FontSemiBold" }}
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontSemiBold"
+                          : "FontThaiSemiBold",
+                    }}
                   >
                     {selectedLanguage === "en"
                       ? "           Explore Our Journal"

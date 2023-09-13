@@ -420,7 +420,7 @@ function FooterMobile() {
           <MDBRow>
             <MDBCol className="p-0">
               <p
-                className="text-lg px-0 mb-0 text-white"
+                className="text-md px-0 mb-0 text-white"
                 style={{ fontFamily: "FontRegular" }}
               >
                 Copyright 2023 RIPO, All rights reserved
