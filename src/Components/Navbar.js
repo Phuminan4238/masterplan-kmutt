@@ -111,7 +111,9 @@ export default function Navbar(props) {
   };
 
   const logoStyle = {
-    height: "124px",
+    height: "100px",
+    padding: "0.5rem",
+    margin: "0px",
   };
 
   const logoMobileStyle = {
@@ -219,7 +221,7 @@ export default function Navbar(props) {
         </MDBNavbar>
 
         <MDBNavbar style={menuStyle}>
-          <MDBContainer className={`fluid p-0 px-3 ${containerStyle["6xl"]}`}>
+          <MDBContainer className={`fluid p-0 px-2 ${containerStyle["6xl"]}`}>
             <MDBRow style={customRowStyle}>
               {pages.map((page, index) => (
                 <MDBCol key={page}>
@@ -306,7 +308,7 @@ export default function Navbar(props) {
         </MDBNavbar>
 
         <MDBNavbar style={menuStyle}>
-          <MDBContainer className={`fluid p-0 px-3 ${containerStyle["6xl"]}`}>
+          <MDBContainer className={`fluid p-0 px-2 ${containerStyle["6xl"]}`}>
             <MDBRow style={customRowStyle}>
               {pages.map((page, index) => (
                 <MDBCol key={page}>
@@ -494,11 +496,11 @@ export default function Navbar(props) {
                           sx={{
                             color: "black",
                             ":hover": {
-                              color: "white",
+                              color: "#EB562E",
                               bgcolor: "white",
                               opacity: "100%",
                               "& a, & > a": {
-                                color: "white",
+                                color: "#EB562E",
                               },
                             },
                             fontWeight: "bold",
@@ -659,12 +661,11 @@ export default function Navbar(props) {
                           sx={{
                             color: "black",
                             ":hover": {
-                              color: "white",
-
-                              bgcolor: "#EB562E",
+                              color: "#EB562E",
+                              bgcolor: "white",
                               opacity: "100%",
                               "& a, & > a": {
-                                color: "white",
+                                color: "#EB562E",
                               },
                             },
                             fontWeight: "bold",

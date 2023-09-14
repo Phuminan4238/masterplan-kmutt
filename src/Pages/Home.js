@@ -120,7 +120,7 @@ function HomeDesktop() {
               }}
             >
               {publications.map((publication) => (
-                <MDBCol md="4" className="ms-4 me-4" key={publication.id}>
+                <MDBCol md="4" className="ms-4 me-4 px-0" key={publication.id}>
                   <img
                     // src={journalimage}
                     src={
@@ -287,7 +287,7 @@ function HomeDesktop() {
             justifyContent: "center",
           }}
         >
-          <MDBContainer className={`fluid px-3 ${containerStyle["6xl"]}`}>
+          <MDBContainer className={`fluid px-2 ${containerStyle["6xl"]}`}>
             <MDBRow
               className="justify-content-center"
               style={{

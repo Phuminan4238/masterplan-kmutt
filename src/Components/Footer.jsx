@@ -69,7 +69,7 @@ function FooterDesktop() {
   return (
     <div>
       <MDBNavbar style={navbarStyle}>
-        <MDBContainer className="fluid px-4 py-5 max-w-6xl d-flex flex-col items-baseline">
+        <MDBContainer className="fluid px-3 py-5 max-w-6xl d-flex flex-col items-baseline">
           <MDBRow className="g-1">
             {/* <MDBNavbarBrand href="/">
             <img src={logojournal} style={logoStyle} alt="" loading="lazy" />
