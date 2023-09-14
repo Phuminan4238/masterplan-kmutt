@@ -499,7 +499,7 @@ function JournalMobile() {
                     >
                       <NorthEastIcon
                         style={{ color: "white", fontSize: "3rem" }}
-                      ></NorthEastIcon>
+                      ></NorthEastIcon> 
                     </a>
                   </div>
                   <div>

@@ -134,7 +134,7 @@ function HomeDesktop() {
                       maxHeight: "528px",
                     }}
                   />
-                  {/* <h2>{publication.attributes.journal[0]?.title}</h2> */}
+                  {/* <h2>{pu blication.attributes.journal[0]?.title}</h2> */}
                 </MDBCol>
               ))}
               {publications.map((publication) => (

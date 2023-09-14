@@ -737,14 +737,25 @@ function PublicationDesktop() {
                               : "FontThaiMedium",
                         }}
                       >
-                        {honorarymember[0].attributes.position_en}
+                        {selectedLanguage === "en"
+                          ? `${honorarymember[0].attributes.position_en}`
+                          : `${honorarymember[0].attributes.position_th}`}
                       </p>
                       {honorarymember.map((memberData) => (
-                        <ul className="list-disc text-md mb-0">
-                          <li key={memberData.id}>
-                            {memberData.attributes.prefix_en} {""}
-                            {memberData.attributes.name_en} {""}
-                            {memberData.attributes.surname_en}
+                        <ul
+                          className="list-disc text-md mb-0"
+                          key={memberData.id}
+                          style={{
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? "FontRegular"
+                                : "FontThaiRegular",
+                          }}
+                        >
+                          <li>
+                            {selectedLanguage === "en"
+                              ? `${memberData.attributes.prefix_en} ${memberData.attributes.name_en} ${memberData.attributes.surname_en}`
+                              : `${memberData.attributes.prefix_th} ${memberData.attributes.name_th} ${memberData.attributes.surname_th}`}
                           </li>
                         </ul>
                       ))}
@@ -759,16 +770,32 @@ function PublicationDesktop() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black italic"
-                        style={{ fontFamily: "FontMedium" }}
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                        }}
                       >
-                        {editormember[0].attributes.position_en}
+                        {selectedLanguage === "en"
+                          ? `${editormember[0].attributes.position_en}`
+                          : `${editormember[0].attributes.position_th}`}
                       </p>
                       {editormember.map((memberData) => (
-                        <ul className="list-disc text-md mb-0">
-                          <li key={memberData.id}>
-                            {memberData.attributes.prefix_en} {""}
-                            {memberData.attributes.name_en} {""}
-                            {memberData.attributes.surname_en}
+                        <ul
+                          className="list-disc text-md mb-0"
+                          key={memberData.id}
+                          style={{
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? "FontRegular"
+                                : "FontThaiRegular",
+                          }}
+                        >
+                          <li>
+                            {selectedLanguage === "en"
+                              ? `${memberData.attributes.prefix_en} ${memberData.attributes.name_en} ${memberData.attributes.surname_en}`
+                              : `${memberData.attributes.prefix_th} ${memberData.attributes.name_th} ${memberData.attributes.surname_th}`}
                           </li>
                         </ul>
                       ))}
@@ -783,18 +810,32 @@ function PublicationDesktop() {
                     <MDBCol className=" w-fit px-0 pe-4">
                       <p
                         className="mb-2 text-black italic"
-                        style={{ fontFamily: "FontMedium" }}
+                        style={{
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                        }}
                       >
-                        {boardmember[0].attributes.position_en}
+                        {selectedLanguage === "en"
+                          ? `${boardmember[0].attributes.position_en}`
+                          : `${boardmember[0].attributes.position_th}`}
                       </p>
                       {boardmember.map((memberData) => (
-                        <ul className="list-disc text-md mb-0">
-                          <li key={memberData.id}>
-                            {memberData.attributes.prefix_en} {""}
-                            {memberData.attributes.name_en} {""}
-                            {memberData.attributes.surname_en} {""} {"("}
-                            {memberData.attributes.organization_en}
-                            {")"}
+                        <ul
+                          className="list-disc text-md mb-0"
+                          key={memberData.id}
+                          style={{
+                            fontFamily:
+                              selectedLanguage === "en"
+                                ? "FontRegular"
+                                : "FontThaiRegular",
+                          }}
+                        >
+                          <li>
+                            {selectedLanguage === "en"
+                              ? `${memberData.attributes.prefix_en} ${memberData.attributes.name_en} ${memberData.attributes.surname_en} (${memberData.attributes.organization_en})`
+                              : `${memberData.attributes.prefix_th} ${memberData.attributes.name_th} ${memberData.attributes.surname_th} (${memberData.attributes.organization_th})`}
                           </li>
                         </ul>
                       ))}
