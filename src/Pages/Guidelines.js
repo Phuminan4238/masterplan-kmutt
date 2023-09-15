@@ -387,7 +387,7 @@ function GuidelinesDesktop() {
                       __html:
                         selectedLanguage === "en"
                           ? guideline.attributes.guideline
-                          : guideline.attributes.guideline,
+                          : guideline.attributes.guideline_th,
                     }}
                   />
                 ))}
@@ -396,6 +396,36 @@ function GuidelinesDesktop() {
 
               <MDBRow className="d-flex justify-content-between fluid ">
                 <MDBCol className=" w-fit px-0 pe-4">
+                  {/* <p
+                    className="mb-2 text-black"
+                    style={{ fontFamily: "FontSemiBold" }}
+                  ><strong> 
+                    The authors should also ensure that the following important
+                    points have been taken into account:
+                    </strong>
+                  </p>
+                  <ul className="list-decimal text-md mb-0">
+                    <li className="text-md">
+                      The submission has not been previously published, nor it
+                      is under consideration by any other journal.
+                    </li>
+                    <li className="text-md">
+                      The submission file should be in OpenOffice, Microsoft
+                      Word, RTF, or WordPerfect document file format.
+                    </li>
+                    <li className="text-md">
+                      Where applicable, URLs for the references have been
+                      provided.
+                    </li>
+                    <li className="text-md">
+                      Thai manuscript and English manuscript should be prepared
+                      using TH Sarabun New size 16 pt.
+                    </li>
+                    <li className="text-md">
+                      The text adheres to the stylistic and bibliographic
+                      requirements of the Journal.
+                    </li>
+                  </ul> */}
                   <p
                     className="mb-2 text-black"
                     style={{ fontFamily: "FontSemiBold" }}
@@ -458,38 +488,52 @@ function GuidelinesDesktop() {
               </MDBRow>
               <MDBRow>
                 <div className="d-flex mt-1 text-red px-0">
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "#EB562E",
-                      color: "white",
-                      backgroundColor: "#EB562E",
-                      fontFamily:
-                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-                    }}
-                    className="me-3 text-sm px-3 capitalize rounded-0"
-                    size="sm"
+                  <a
+                    href="https://journal.kmutt.ac.th/document/รูปแบบการพิมพ์.doc"
+                    target="_blank"
                   >
-                    {selectedLanguage === "en"
-                      ? "         Download Word File"
-                      : "ดาวน์โหลด ไฟล์ Word "}
-                  </MDBBtn>
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "white",
-                      color: "#EB562E",
-                      backgroundColor: "white",
-                      fontFamily:
-                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-                    }}
-                    className="text-sm py-1 px-2 py-2 capitalize font-bold rounded-0"
-                    size="sm"
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                      }}
+                      className="me-3 text-sm px-3 py-2 capitalize rounded-0"
+                      size="sm"
+                    >
+                      {selectedLanguage === "en"
+                        ? "         Download Word File"
+                        : "ดาวน์โหลด ไฟล์ Word "}
+                    </MDBBtn>
+                  </a>{" "}
+                  <a
+                    href="https://journal.kmutt.ac.th/document/รูปแบบการพิมพ์.pdf"
+                    target="_blank"
                   >
-                    {selectedLanguage === "en"
-                      ? "         Download PDF File"
-                      : "ดาวน์โหลด ไฟล์ PDF "}
-                  </MDBBtn>
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                      }}
+                      className="text-sm px-3 py-2 capitalize font-bold rounded-0"
+                      size="sm"
+                    >
+                      {selectedLanguage === "en"
+                        ? "         Download PDF File"
+                        : "ดาวน์โหลด ไฟล์ PDF "}
+                    </MDBBtn>
+                  </a>
                 </div>
               </MDBRow>
               {/* ******************* */}
@@ -524,7 +568,15 @@ function GuidelinesDesktop() {
               </MDBRow>
               <MDBRow>
                 {submissions.map((submission) => (
-                  <ul className="list-decimal text-md ms-2 mb-0">
+                  <ul
+                    className="list-decimal text-md ms-2 mb-0"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiRegular"
+                          : "FontThaiRegular",
+                    }}
+                  >
                     {selectedLanguage === "en" ||
                     !submission.attributes.content_th
                       ? submission.attributes.content_en
@@ -568,40 +620,54 @@ function GuidelinesDesktop() {
               </MDBRow>
               <MDBRow>
                 <div className="d-flex mt-1 text-red px-0">
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "#EB562E",
-                      color: "white",
-                      backgroundColor: "#EB562E",
-                      fontSize: "16px",
-                      fontFamily:
-                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-                    }}
-                    className="me-3 px-3 py-2 capitalize rounded-0"
-                    size="sm"
+                  <a
+                    href="https://journal.kmutt.ac.th/document/Instructions for Authors.doc"
+                    className="flex items-center text-white ps-0"
                   >
-                    {selectedLanguage === "en"
-                      ? "  Instructions for Authors"
-                      : "คู่มือสำหรับผู้เขียน"}
-                  </MDBBtn>
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "#EB562E",
-                      color: "white",
-                      backgroundColor: "#EB562E",
-                      fontSize: "16px",
-                      fontFamily:
-                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-                    }}
-                    className="me-3  px-3 py-2 capitalize  rounded-0"
-                    size="sm"
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                      }}
+                      className="me-3 px-3 py-2 capitalize rounded-0"
+                      size="sm"
+                    >
+                      {selectedLanguage === "en"
+                        ? "  Instructions for Authors"
+                        : "คู่มือสำหรับผู้เขียน"}
+                    </MDBBtn>
+                  </a>
+                  <a
+                    href="https://journal.kmutt.ac.th/document/Instructions for Reviewers.doc"
+                    className="flex items-center text-white ps-0"
                   >
-                    {selectedLanguage === "en"
-                      ? "    Instructions for Reviewers"
-                      : "คู่มือสำหรับผู้ประเมิน"}
-                  </MDBBtn>
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontBold"
+                            : "FontThaiBold",
+                      }}
+                      className="me-3  px-3 py-2 capitalize  rounded-0"
+                      size="sm"
+                    >
+                      {selectedLanguage === "en"
+                        ? "    Instructions for Reviewers"
+                        : "คู่มือสำหรับผู้ประเมิน"}
+                    </MDBBtn>
+                  </a>
                 </div>
               </MDBRow>
 
@@ -656,23 +722,28 @@ function GuidelinesDesktop() {
               </MDBRow>
               <MDBRow className="py-3 ">
                 <div className="d-flex text-red px-0">
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "#EB562E",
-                      color: "white",
-                      backgroundColor: "#EB562E",
-                      fontSize: "16px",
-                      fontFamily:
-                        selectedLanguage === "en"
-                          ? "FontThaiBold"
-                          : "FontThaiBold",
-                    }}
-                    className="me-3 text-sm px-3 py-2 capitalize  rounded-0"
-                    size="sm"
+                  <a
+                    href="https://journal.kmutt.ac.th/th/membership-application-form.jpg"
+                    className="flex items-center text-white ps-0"
                   >
-                    ดาวน์โหลด ใบสมัครสมาชิก
-                  </MDBBtn>
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontThaiBold"
+                            : "FontThaiBold",
+                      }}
+                      className="me-3 text-sm px-3 py-2 capitalize  rounded-0"
+                      size="sm"
+                    >
+                      ดาวน์โหลด ใบสมัครสมาชิก
+                    </MDBBtn>
+                  </a>
                 </div>
               </MDBRow>
               <MDBRow>
@@ -1247,7 +1318,7 @@ function GuidelinesMobile() {
                       __html:
                         selectedLanguage === "en"
                           ? guideline.attributes.guideline
-                          : guideline.attributes.guideline,
+                          : guideline.attributes.guideline_th,
                     }}
                   />
                 ))}
@@ -1318,38 +1389,48 @@ function GuidelinesMobile() {
               <MDBRow>
                 <div className="d-flex flex-col justify-between gap-3 mt-1 text-red px-0">
                   <MDBCol>
-                    <MDBBtn
-                      outline
-                      style={{
-                        borderColor: "#EB562E",
-                        color: "white",
-                        backgroundColor: "#EB562E",
-                        fontSize: "16px",
-                      }}
-                      className="me-3  px-3 py-2 capitalize font-bold rounded-0 w-fit"
-                      size="sm"
+                    <a
+                      href="https://journal.kmutt.ac.th/document/รูปแบบการพิมพ์.doc"
+                      target="_blank"
                     >
-                      {selectedLanguage === "en"
-                        ? "         Download Word File"
-                        : "ดาวน์โหลด ไฟล์ Word "}
-                    </MDBBtn>
+                      <MDBBtn
+                        outline
+                        style={{
+                          borderColor: "#EB562E",
+                          color: "white",
+                          backgroundColor: "#EB562E",
+                          fontSize: "16px",
+                        }}
+                        className="me-3  px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                        size="sm"
+                      >
+                        {selectedLanguage === "en"
+                          ? "         Download Word File"
+                          : "ดาวน์โหลด ไฟล์ Word "}
+                      </MDBBtn>
+                    </a>
                   </MDBCol>
                   <MDBCol>
-                    <MDBBtn
-                      outline
-                      style={{
-                        borderColor: "#EB562E",
-                        color: "white",
-                        backgroundColor: "#EB562E",
-                        fontSize: "16px",
-                      }}
-                      className=" px-3 py-2 capitalize font-bold rounded-0 w-fit"
-                      size="sm"
+                    <a
+                      href="https://journal.kmutt.ac.th/document/รูปแบบการพิมพ์.pdf"
+                      target="_blank"
                     >
-                      {selectedLanguage === "en"
-                        ? "         Download PDF File"
-                        : "ดาวน์โหลด ไฟล์ PDF "}
-                    </MDBBtn>
+                      <MDBBtn
+                        outline
+                        style={{
+                          borderColor: "#EB562E",
+                          color: "white",
+                          backgroundColor: "#EB562E",
+                          fontSize: "16px",
+                        }}
+                        className=" px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                        size="sm"
+                      >
+                        {selectedLanguage === "en"
+                          ? "         Download PDF File"
+                          : "ดาวน์โหลด ไฟล์ PDF "}
+                      </MDBBtn>
+                    </a>
                   </MDBCol>
                 </div>
               </MDBRow>
@@ -1384,21 +1465,34 @@ function GuidelinesMobile() {
                 ></MDBCol>
               </MDBRow>
               <MDBRow>
-                <ul className="list-decimal text-md ms-2 mb-0">
-                  <li className="text-md pb-2">
-                    Send a manuscript file to{" "}
-                    <span className="underline"> journal@kmutt.ac.th.</span>{" "}
-                    Please also suggest 3 possible reviewers, with full names
-                    and e-mail addresses, who can serve as reviewers of the
-                    manuscript.
-                  </li>
-                  <li className="text-md">
-                    Manuscript review and publication of an accepted article are
-                    free of charge. No article processing charge needs to be
-                    paid. Subscription to the journal prior to manuscript
-                    submission is not necessary.
-                  </li>
-                </ul>
+                {submissions.map((submission) => (
+                  <ul
+                    className="list-decimal text-md ms-2 mb-0"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontThaiRegular"
+                          : "FontThaiRegular",
+                    }}
+                  >
+                    {selectedLanguage === "en" ||
+                    !submission.attributes.content_th
+                      ? submission.attributes.content_en
+                          .split("\n")
+                          .map((item, index) => (
+                            <li key={index} className="text-md">
+                              {item.trim()}
+                            </li>
+                          ))
+                      : submission.attributes.content_th
+                          .split("\n")
+                          .map((item, index) => (
+                            <li key={index} className="text-md">
+                              {item.trim()}
+                            </li>
+                          ))}
+                  </ul>
+                ))}
               </MDBRow>
               {/* ******************* */}
 
@@ -1424,46 +1518,56 @@ function GuidelinesMobile() {
               <MDBRow>
                 <div className="d-flex flex-col justify-between gap-3 mt-1 text-red px-0">
                   <MDBCol>
-                    <MDBBtn
-                      outline
-                      style={{
-                        borderColor: "#EB562E",
-                        color: "white",
-                        backgroundColor: "#EB562E",
-                        fontSize: "16px",
-                        fontFamily:
-                          selectedLanguage === "en"
-                            ? "FontBold"
-                            : "FontThaiBold",
-                      }}
-                      className="me-3 px-3 py-2 capitalize font-bold rounded-0 w-fit"
-                      size="sm"
+                    <a
+                      href="https://journal.kmutt.ac.th/document/Instructions for Authors.doc"
+                      className="flex items-center text-white ps-0"
                     >
-                      {selectedLanguage === "en"
-                        ? "  Instructions for Authors"
-                        : "คู่มือสำหรับผู้เขียน"}
-                    </MDBBtn>
+                      <MDBBtn
+                        outline
+                        style={{
+                          borderColor: "#EB562E",
+                          color: "white",
+                          backgroundColor: "#EB562E",
+                          fontSize: "16px",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontBold"
+                              : "FontThaiBold",
+                        }}
+                        className="me-3 px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                        size="sm"
+                      >
+                        {selectedLanguage === "en"
+                          ? "  Instructions for Authors"
+                          : "คู่มือสำหรับผู้เขียน"}
+                      </MDBBtn>
+                    </a>
                   </MDBCol>
                   <MDBCol>
-                    <MDBBtn
-                      outline
-                      style={{
-                        borderColor: "#EB562E",
-                        color: "white",
-                        backgroundColor: "#EB562E",
-                        fontSize: "16px",
-                        fontFamily:
-                          selectedLanguage === "en"
-                            ? "FontBold"
-                            : "FontThaiBold",
-                      }}
-                      className="px-3 py-2 capitalize font-bold rounded-0 w-fit"
-                      size="sm"
+                    <a
+                      href="https://journal.kmutt.ac.th/document/Instructions for Reviewers.doc"
+                      className="flex items-center text-white ps-0"
                     >
-                      {selectedLanguage === "en"
-                        ? "    Instructions for Reviewers"
-                        : "คู่มือสำหรับผู้ประเมิน"}
-                    </MDBBtn>
+                      <MDBBtn
+                        outline
+                        style={{
+                          borderColor: "#EB562E",
+                          color: "white",
+                          backgroundColor: "#EB562E",
+                          fontSize: "16px",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontBold"
+                              : "FontThaiBold",
+                        }}
+                        className="px-3 py-2 capitalize font-bold rounded-0 w-fit"
+                        size="sm"
+                      >
+                        {selectedLanguage === "en"
+                          ? "    Instructions for Reviewers"
+                          : "คู่มือสำหรับผู้ประเมิน"}
+                      </MDBBtn>
+                    </a>
                   </MDBCol>
                 </div>
               </MDBRow>
@@ -1518,23 +1622,28 @@ function GuidelinesMobile() {
               </MDBRow>
               <MDBRow className="py-3 ">
                 <div className="d-flex text-red px-0">
-                  <MDBBtn
-                    outline
-                    style={{
-                      borderColor: "#EB562E",
-                      color: "white",
-                      backgroundColor: "#EB562E",
-                      fontSize: "16px",
-                      fontFamily:
-                        selectedLanguage === "en"
-                          ? "FontThaiBold"
-                          : "FontThaiBold",
-                    }}
-                    className="me-3 text-sm px-3 py-2 capitalize  rounded-0"
-                    size="sm"
+                  <a
+                    href="https://journal.kmutt.ac.th/th/membership-application-form.jpg"
+                    className="flex items-center text-white ps-0"
                   >
-                    ดาวน์โหลด ใบสมัครสมาชิก
-                  </MDBBtn>
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "#EB562E",
+                        color: "white",
+                        backgroundColor: "#EB562E",
+                        fontSize: "16px",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontThaiBold"
+                            : "FontThaiBold",
+                      }}
+                      className="me-3 text-sm px-3 py-2 capitalize  rounded-0"
+                      size="sm"
+                    >
+                      ดาวน์โหลด ใบสมัครสมาชิก
+                    </MDBBtn>
+                  </a>
                 </div>
               </MDBRow>
               <MDBRow>

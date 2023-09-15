@@ -119,7 +119,10 @@ function FooterDesktop() {
             >
               <p
                 className="text-xl px-0"
-                style={{ fontFamily: "FontMediumTH" }}
+                style={{
+                  fontFamily:
+                    selectedLanguage === "en" ? "FontMedium" : "FontThaiMedium",
+                }}
               >
                 {selectedLanguage === "en"
                   ? "Service Agencies"
@@ -160,7 +163,10 @@ function FooterDesktop() {
             >
               <p
                 className="text-xl px-0"
-                style={{ fontFamily: "FontMediumTH" }}
+                style={{
+                  fontFamily:
+                    selectedLanguage === "en" ? "FontMedium" : "FontThaiMedium",
+                }}
               >
                 {selectedLanguage === "en"
                   ? "Service Agencies"
@@ -201,9 +207,12 @@ function FooterDesktop() {
             >
               <p
                 className="text-xl px-0"
-                style={{ fontFamily: "FontMediumTH" }}
+                style={{
+                  fontFamily:
+                    selectedLanguage === "en" ? "FontMedium" : "FontThaiMedium",
+                }}
               >
-                ติดต่อเรา
+                {selectedLanguage === "en" ? "Contact us" : " ติดต่อเรา"}
               </p>
               <div className="text-md px-0">
                 KMUTT Research & Development Journal
@@ -227,7 +236,12 @@ function FooterDesktop() {
             <MDBCol className="p-0 pt-5">
               <p
                 className="text-md px-0 mb-0 text-white"
-                style={{ fontFamily: "FontRegular" }}
+                style={{
+                  fontFamily:
+                    selectedLanguage === "en"
+                      ? "FontRegular"
+                      : "FontThaiRegular",
+                }}
               >
                 Copyright 2023 RIPO, All rights reserved
               </p>

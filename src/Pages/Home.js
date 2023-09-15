@@ -455,11 +455,20 @@ function HomeDesktop() {
                 {/* <span style={{ fontSize: "1.5rem", color: "white" }}>
                   <MDBIcon fas icon="chevron-right" />
                 </span> */}
-                <span>
-                  <ArrowForwardIcon
-                    style={{ color: "white", fontSize: "4rem" }}
-                  ></ArrowForwardIcon>
-                </span>
+                <Link
+                  to={`/publications`}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    window.location.replace(`publications`);
+                  }}
+                  className="flex items-center text-white"
+                >
+                  <span>
+                    <ArrowForwardIcon
+                      style={{ color: "white", fontSize: "4rem" }}
+                    ></ArrowForwardIcon>
+                  </span>
+                </Link>
               </div>
             </MDBCol>
             <MDBCol
@@ -494,18 +503,21 @@ function HomeDesktop() {
                       : "คู่มือการใช้งาน"}
                   </p>
                 </Link>
-                {/* <span style={{ fontSize: "3rem" }}>
-                  <MDBIcon
-                    fas
-                    icon="chevron-right"
-                    style={{ color: "white" }}
-                  />
-                </span> */}
-                <span>
-                  <ArrowForwardIcon
-                    style={{ color: "white", fontSize: "4rem" }}
-                  ></ArrowForwardIcon>
-                </span>
+
+                <Link
+                  to={`/guidelines`}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    window.location.replace(`guidelines`);
+                  }}
+                  className="flex items-center text-white"
+                >
+                  <span>
+                    <ArrowForwardIcon
+                      style={{ color: "white", fontSize: "4rem" }}
+                    ></ArrowForwardIcon>
+                  </span>
+                </Link>
               </div>
               <div
                 className="d-flex flex-row flex-wrap justify-content-between align-items-center w-100 gap-4 p-6 py-4"
@@ -535,11 +547,20 @@ function HomeDesktop() {
                       : "วารสารเพิ่มเติม"}
                   </p>
                 </Link>
-                <span>
-                  <ArrowForwardIcon
-                    style={{ color: "white", fontSize: "4rem" }}
-                  ></ArrowForwardIcon>
-                </span>
+                <Link
+                  to={`/journal`}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    window.location.replace(`journal`);
+                  }}
+                  className=" items-center text-white"
+                >
+                  <span>
+                    <ArrowForwardIcon
+                      style={{ color: "white", fontSize: "4rem" }}
+                    ></ArrowForwardIcon>
+                  </span>
+                </Link>
               </div>
             </MDBCol>
           </MDBRow>
