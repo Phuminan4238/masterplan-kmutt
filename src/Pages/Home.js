@@ -8,6 +8,7 @@ import {
   MDBCol,
   MDBBtn,
   MDBIcon,
+  MDBCardImage,
 } from "mdb-react-ui-kit";
 import { useMediaQuery } from "react-responsive";
 import journalimage from "../Images/journal-image.png";
@@ -17,6 +18,7 @@ import { LanguageContext } from "../Components/LanguageContext";
 import Container from "@mui/material/Container";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import EastIcon from "@mui/icons-material/East";
+import plan from "../Images/plan.png";
 
 // Component
 import PublicationComponent from "../Components/Publication";
@@ -133,14 +135,9 @@ function HomeDesktop() {
   };
 
   const secondContainerStyle = {
-    // position: "absolute",
-    // top: "68%",
-    // left: "54%",
-    // transform: "translate(-50%, -50%)", // Center both horizontally and vertically
     zIndex: 1,
     padding: "5rem",
     paddingTop: "4rem",
-    // maxWidth: "1300px",
   };
 
   const rowStyle = {
@@ -153,12 +150,29 @@ function HomeDesktop() {
 
   return (
     <div className="App">
-      {/* <Container
-        maxWidth="xl"
-        disableGutters={true}
-        style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px 0px" }}
-      > */}
       <section>
+        <MDBContainer>
+          <MDBContainer style={secondContainerStyle}>
+            <MDBRow>
+              <MDBCol md="3">1</MDBCol>
+              <MDBCol md="3">2</MDBCol>
+              <MDBCol md="3">3</MDBCol>
+              <MDBCol md="3">4</MDBCol>
+            </MDBRow>
+            <MDBRow>
+              <img
+                src={plan}
+                alt="Your image"
+                className="image-fluid"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </MDBRow>
+          </MDBContainer>
+        </MDBContainer>
         <MDBContainer
           id="cluster-container"
           style={{

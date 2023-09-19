@@ -32,7 +32,7 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import logojournal from "../Images/journal-logo.svg";
-import logojournal3 from "../Images/journal-logo3.png";
+import logojournal3 from "../Images/logo.png";
 import { LanguageContext } from "./LanguageContext";
 import NorthEastIcon from "@mui/icons-material/NorthEast";
 
@@ -102,7 +102,7 @@ export default function Navbar(props) {
     // width: "1440px",
     height: "150px",
     flexShrink: 0,
-    background: "#474747",
+    background: "#2D3339",
   };
 
   const menuStyle = {
