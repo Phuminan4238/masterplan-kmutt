@@ -151,28 +151,6 @@ function HomeDesktop() {
   return (
     <div className="App">
       <section>
-        <MDBContainer>
-          <MDBContainer style={secondContainerStyle}>
-            <MDBRow>
-              <MDBCol md="3">1</MDBCol>
-              <MDBCol md="3">2</MDBCol>
-              <MDBCol md="3">3</MDBCol>
-              <MDBCol md="3">4</MDBCol>
-            </MDBRow>
-            <MDBRow>
-              <img
-                src={plan}
-                alt="Your image"
-                className="image-fluid"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-            </MDBRow>
-          </MDBContainer>
-        </MDBContainer>
         <MDBContainer
           id="cluster-container"
           style={{
