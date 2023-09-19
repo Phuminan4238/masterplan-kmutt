@@ -224,7 +224,6 @@ function AboutUsDesktop() {
             {/* ******************* */}
 
             <MDBCol md="8">
-              {/* Publication Policy  */}
               <MDBRow className="justify-content-center ">
                 <p
                   className="text-4xl px-0 text-black"
@@ -239,7 +238,7 @@ function AboutUsDesktop() {
                     : `${aboutData?.topic}`}
                 </p>
               </MDBRow>
-              <MDBRow className="d-flex justify-content-between fluid py-3">
+              {/* <MDBRow className="d-flex justify-content-between fluid py-3">
                 <MDBCol
                   className="text-2xl w-fit ps-0 text-black"
                   style={{
@@ -268,14 +267,16 @@ function AboutUsDesktop() {
                         : aboutData?.content_markdown_th,
                   }}
                 />
-              </MDBRow>
+              </MDBRow> */}
               {/* ******************* */}
+              <MDBRow style={{ height: "5vh" }}></MDBRow>
               {/* Publication Ethics  */}
               <MDBRow className="d-flex justify-content-between fluid pt-0 pb-3">
                 <MDBCol
                   md="6"
-                  className="text-2xl w-fit px-0 pe-4 text-black"
+                  className="text-2xl w-fit px-0 pe-4 "
                   style={{
+                    color: "#EB562E",
                     fontFamily:
                       selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                   }}

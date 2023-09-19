@@ -18,13 +18,14 @@ import Container from "@mui/material/Container";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import EastIcon from "@mui/icons-material/East";
 
+// Component
+import PublicationComponent from "../Components/Publication";
+
 function HomeDesktop() {
   const [error, setError] = useState(null);
   const [publications, setPublications] = useState([]);
-
   useEffect(() => {
     let isMounted = true;
-
     const instance = axios.create({
       baseURL: "http://10.35.29.179:1337/api/",
       headers: {
@@ -32,7 +33,6 @@ function HomeDesktop() {
         Accept: "application/json",
       },
     });
-
     async function fetchData() {
       try {
         const response = await instance.get(
@@ -45,17 +45,77 @@ function HomeDesktop() {
         console.error(error);
       }
     }
-
     if (publications.length === 0) {
       fetchData();
     }
-
     return () => {
       isMounted = false;
     };
   }, [publications]);
-
   console.log(publications);
+
+  const [uploadfiles, setUploadfiles] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://10.35.29.179:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "uploadfiles/?populate=*&filters[filetype][$eq]=image"
+        );
+        if (isMounted) {
+          setUploadfiles(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (uploadfiles.length === 0) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [uploadfiles]);
+
+  // About
+  const [aboutData, setAboutData] = useState(null);
+  const [officeData, setOfficeData] = useState(null);
+  const [locationData, setLocationData] = useState(null);
+  const [hasDataFetched, setHasDataFetched] = useState(false);
+  useEffect(() => {
+    if (!hasDataFetched) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            "http://10.35.29.179:1337/api/contacts/?populate=*"
+          );
+          const data = response.data.data;
+          if (data && data.length > 0) {
+            // Filter data for each type based on the ID
+            const aboutInfo = data.find((item) => item.id === 1);
+            const officeInfo = data.find((item) => item.id === 2);
+            const locationInfo = data.find((item) => item.id === 3);
+
+            setAboutData(aboutInfo ? aboutInfo.attributes : null);
+            setOfficeData(officeInfo ? officeInfo.attributes : null);
+            setLocationData(locationInfo ? locationInfo.attributes : null);
+          }
+          setHasDataFetched(true);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }
+  }, [hasDataFetched]);
+
   const isDesktop = useMediaQuery({ minWidth: 940 });
 
   const containerStyle = {
@@ -194,9 +254,16 @@ function HomeDesktop() {
                         {/* Volumn 46 No. 2 */}
                         {selectedLanguage === "en"
                           ? `Volumn ${publication.attributes.journal[0]?.volumn} No. ${publication.attributes.journal[0]?.number}`
-                          : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}
+                          : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}{" "}
+                        {""}
+                        {selectedLanguage === "en"
+                          ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
+                          : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
+                        {selectedLanguage === "en"
+                          ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
+                          : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
                       </p>
-                      <p
+                      {/* <p
                         className="text-white mb-0"
                         style={{
                           fontSize: "1.5rem",
@@ -214,9 +281,9 @@ function HomeDesktop() {
                             ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
                             : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
                         </p>
-                      </p>
+                      </p> */}
                     </div>
-                    <div className="d-flex  mt-1 text-red">
+                    <div className="d-flex pt-4">
                       <Link
                         to={publication.attributes.journal[0]?.url}
                         target="_blank"
@@ -241,7 +308,6 @@ function HomeDesktop() {
                             : "อ่านเพิ่มเติม"}
                         </MDBBtn>
                       </Link>
-
                       <a
                         href="https://ripo.kmutt.ac.th/publication/"
                         target="_blank"
@@ -276,7 +342,78 @@ function HomeDesktop() {
         </MDBContainer>
       </section>
 
+      {/* Middle  */}
       <section>
+        <MDBContainer>
+          <MDBRow style={{ height: "20vh" }}></MDBRow>
+          <MDBRow
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            {uploadfiles.map((uploadfile) => (
+              <MDBCol md="4" className="ms-4 me-4 px-0" key={uploadfile.id}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center", // Horizontally center the image
+                    alignItems: "center", // Vertically center the image
+                  }}
+                >
+                  {uploadfile.attributes.image_square?.data?.attributes
+                    ?.url && (
+                    <img
+                      src={`http://10.35.29.179:1337${uploadfile.attributes.image_square.data.attributes.url}`}
+                      style={{
+                        width: "80%",
+                        height: "auto",
+                        // maxHeight: "528px",
+                      }}
+                    />
+                  )}
+                </div>
+              </MDBCol>
+            ))}
+          </MDBRow>
+          <MDBRow style={{ height: "20vh" }}></MDBRow>
+        </MDBContainer>
+      </section>
+      <section>
+        <MDBContainer className={`fluid px-3  ${containerStyle["6xl"]}`}>
+          <MDBRow className="d-flex justify-content-between pt-2 pb-6 fluid gx-6">
+            <MDBCol
+              className="text-3xl w-fit ps-0 text-center"
+              style={{
+                color: "#EB562E",
+                fontFamily:
+                  selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+              }}
+            >
+              {selectedLanguage === "en"
+                ? `${aboutData?.header_en}`
+                : `${aboutData?.header_th}`}
+            </MDBCol>
+          </MDBRow>
+          <MDBRow className="justify-content-center ">
+            <p
+              className="text-md px-0 "
+              style={{
+                fontFamily:
+                  selectedLanguage === "en" ? "FontRegular" : "FontThaiRegular",
+              }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  selectedLanguage === "en"
+                    ? aboutData?.content_markdown
+                    : aboutData?.content_markdown_th,
+              }}
+            />
+          </MDBRow>
+        </MDBContainer>
+        {/* 
         <MDBContainer
           className="fluid p-0 px-0"
           style={{
@@ -394,7 +531,6 @@ function HomeDesktop() {
                 className="d-flex p-0"
                 style={{ overflow: "hidden" }}
               >
-                {/* style={{ height: "508px", width: "412px" }} */}
                 <img
                   src={welcomecover}
                   alt="Your image"
@@ -407,10 +543,78 @@ function HomeDesktop() {
                 />
               </MDBCol>
             </MDBRow>
-          </MDBContainer>
+          </MDBContainer> */}
+        {/* </MDBContainer> */}
+      </section>
+      <PublicationComponent></PublicationComponent>
+      <section>
+        <MDBContainer className={`fluid px-2 pb-5 ${containerStyle["6xl"]}`}>
+          <MDBRow className="d-flex justify-content-between fluid pt-0 pb-3">
+            <MDBCol
+              md="6"
+              className="text-2xl w-fit px-0 pe-4"
+              style={{
+                color: "#EB562E",
+                fontSize: "1.75rem",
+                fontFamily:
+                  selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+              }}
+            >
+              {selectedLanguage === "en"
+                ? `${officeData?.header_en}`
+                : `${officeData?.header_th}`}
+            </MDBCol>
+            <MDBCol
+              className=""
+              style={{
+                borderTop: "1px solid black ",
+                marginTop: "1rem",
+              }}
+            ></MDBCol>
+          </MDBRow>
+          <MDBRow className="justify-content-center">
+            <p
+              className="text-md px-0"
+              style={{
+                fontFamily:
+                  selectedLanguage === "en" ? "FontRegular" : "FontThaiRegular",
+              }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  selectedLanguage === "en"
+                    ? officeData?.content_markdown
+                    : officeData?.content_markdown_th,
+              }}
+            />
+          </MDBRow>
+          <MDBRow>
+            <p
+              className="text-lg px-0 mb-0  text-black"
+              style={{
+                fontFamily:
+                  selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+              }}
+            >
+              {selectedLanguage === "en"
+                ? `${locationData?.header_en}`
+                : `${locationData?.header_th}`}
+            </p>
+            <p
+              className="text-md px-0 "
+              style={{
+                fontFamily:
+                  selectedLanguage === "en" ? "FontRegular" : "FontThaiRegular",
+              }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  selectedLanguage === "en"
+                    ? locationData?.content_markdown
+                    : locationData?.content_markdown_th,
+              }}
+            />
+          </MDBRow>
         </MDBContainer>
       </section>
-
       <section>
         <MDBContainer
           className="fluid p-0 px-0"
@@ -423,52 +627,205 @@ function HomeDesktop() {
             id="cluster-gutter"
             style={{ height: "inherit" }}
           >
-            <MDBCol
+            {/* <MDBCol
               md="6"
               order="1"
-              className={"d-flex p-6"}
-              style={{ backgroundColor: "#474747", height: "inherit" }}
+              className="d-flex flex-col justify-content-center"
+              style={{ height: "inherit" }}
             >
-              <div className="d-flex flex-row justify-content-between align-items-end w-100 gap-4">
-                <Link
-                  to={`/publications`}
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    window.location.replace(`publications`);
-                  }}
-                  className="flex items-center text-white"
+              <div
+                className="d-flex flex-col  w-100 gap-4 p-6"
+                style={{ backgroundColor: "#EB562E", height: "100%" }}
+              >
+                <div
+                  className="d-flex justify-content-between flex-col mt-auto xs:text-base text-sm py-4 text-white"
+                  id="news-underline"
+                  style={{ backgroundColor: "#EB562E" }}
                 >
                   <p
-                    className="text-white mb-0 xs:text-xl md:text-5xl"
+                    className="font-bold mb-3 xs:pt-0 md:pt-0 xs:text-md md:text-lg"
                     style={{
                       fontFamily:
                         selectedLanguage === "en"
-                          ? "FontSemiBold"
-                          : "FontThaiSemiBold",
+                          ? "FontMedium"
+                          : "FontThaiMedium",
+                      color: "white",
+                      fontSize: "1.4rem",
                     }}
                   >
                     {selectedLanguage === "en"
-                      ? "Our Publications"
-                      : "งานตีพิมพ์ของเรา"}
+                      ? "Welcome to"
+                      : "ยินดีต้อนรับสู่"}
                   </p>
-                </Link>
-                {/* <span style={{ fontSize: "1.5rem", color: "white" }}>
-                  <MDBIcon fas icon="chevron-right" />
-                </span> */}
-                <Link
-                  to={`/publications`}
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    window.location.replace(`publications`);
-                  }}
-                  className="flex items-center text-white"
+                  <p
+                    className="pb-2"
+                    style={{
+                      fontSize: "2.8rem",
+                      fontFamily: "FontMediumTH",
+                    }}
+                  >
+                    KMUTT Research
+                  </p>
+                  <p
+                    className="pb-2"
+                    style={{
+                      fontSize: "2.8rem",
+                      fontFamily: "FontMediumTH",
+                    }}
+                  >
+                    and Development
+                  </p>
+                  <p
+                    className=""
+                    style={{
+                      fontSize: "2.8rem",
+                      fontFamily: "FontMediumTH",
+                    }}
+                  >
+                    Journal
+                  </p>
+                </div>
+                <div className="d-flex  mt-1 text-red">
+                  <Link
+                    to={`/about-us`}
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                      window.location.replace(`about-us`);
+                    }}
+                    className="flex items-center text-white"
+                  >
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "white",
+                        color: "#EB562E",
+                        backgroundColor: "white",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontMedium"
+                            : "FontThaiMedium",
+                      }}
+                      className=" text-sm px-btn capitalize font-extrabold rounded-0"
+                      size="lg"
+                    >
+                      {selectedLanguage === "en" ? "Contact us" : "ติดต่อเรา"}
+                    </MDBBtn>
+                  </Link>
+                </div>
+              </div>
+            </MDBCol> */}
+            <MDBCol
+              md="6"
+              order="1"
+              className="d-flex flex-col"
+              style={{ height: "inherit" }}
+            >
+              <div
+                className="d-flex flex-row justify-content-between align-items-center w-100 gap-4 p-6"
+                style={{ backgroundColor: "#EB562E", height: "100%" }}
+              >
+                <div
+                  className="d-flex flex-col xs:text-base text-sm py-4 text-white"
+                  id="news-underline"
+                  style={{ backgroundColor: "#EB562E" }}
                 >
-                  <span>
-                    <ArrowForwardIcon
-                      style={{ color: "white", fontSize: "4rem" }}
-                    ></ArrowForwardIcon>
-                  </span>
-                </Link>
+                  <p
+                    className="font-bold xs:pt-0 md:pt-0 xs:text-md md:text-lg"
+                    style={{
+                      fontFamily:
+                        selectedLanguage === "en"
+                          ? "FontMedium"
+                          : "FontThaiMedium",
+                      color: "white",
+                      fontSize: "1.4rem",
+                    }}
+                  >
+                    {selectedLanguage === "en"
+                      ? "Welcome to"
+                      : "ยินดีต้อนรับสู่"}
+                  </p>
+                  <div className="py-3">
+                    <p
+                      className="pb-2"
+                      style={{
+                        fontSize: "2.8rem",
+                        fontFamily: "FontMediumTH",
+                      }}
+                    >
+                      KMUTT Research
+                    </p>
+                    <p
+                      className="pb-2"
+                      style={{
+                        fontSize: "2.8rem",
+                        fontFamily: "FontMediumTH",
+                      }}
+                    >
+                      and Development
+                    </p>
+                    <p
+                      className=""
+                      style={{
+                        fontSize: "2.8rem",
+                        fontFamily: "FontMediumTH",
+                      }}
+                    >
+                      Journal
+                    </p>
+                  </div>
+                  <Link
+                    to={`/about-us`}
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                      window.location.replace(`about-us`);
+                    }}
+                    className="flex items-center text-white "
+                  >
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "white",
+                        color: "#EB562E",
+                        backgroundColor: "white",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontMedium"
+                            : "FontThaiMedium",
+                      }}
+                      className=" text-sm px-btn capitalize font-extrabold rounded-0"
+                      size="lg"
+                    >
+                      {selectedLanguage === "en" ? "Contact us" : "ติดต่อเรา"}
+                    </MDBBtn>
+                  </Link>
+                </div>
+                {/* <div className="d-flex mt-1 text-red">
+                  <Link
+                    to={`/about-us`}
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                      window.location.replace(`about-us`);
+                    }}
+                    className="flex items-center text-white"
+                  >
+                    <MDBBtn
+                      outline
+                      style={{
+                        borderColor: "white",
+                        color: "#EB562E",
+                        backgroundColor: "white",
+                        fontFamily:
+                          selectedLanguage === "en"
+                            ? "FontMedium"
+                            : "FontThaiMedium",
+                      }}
+                      className=" text-sm px-btn capitalize font-extrabold rounded-0"
+                      size="lg"
+                    >
+                      {selectedLanguage === "en" ? "Contact us" : "ติดต่อเรา"}
+                    </MDBBtn>
+                  </Link>
+                </div> */}
               </div>
             </MDBCol>
             <MDBCol
@@ -499,11 +856,10 @@ function HomeDesktop() {
                     }}
                   >
                     {selectedLanguage === "en"
-                      ? " Our Guidelines"
+                      ? "Our Guidelines"
                       : "คู่มือการใช้งาน"}
                   </p>
                 </Link>
-
                 <Link
                   to={`/guidelines`}
                   onClick={() => {
@@ -521,7 +877,7 @@ function HomeDesktop() {
               </div>
               <div
                 className="d-flex flex-row flex-wrap justify-content-between align-items-center w-100 gap-4 p-6 py-4"
-                style={{ backgroundColor: "#EB562E" }}
+                style={{ backgroundColor: "#474747" }}
                 // minHeight: "10vh"
               >
                 <Link
@@ -543,7 +899,7 @@ function HomeDesktop() {
                     }}
                   >
                     {selectedLanguage === "en"
-                      ? "Explore Our Journal"
+                      ? "Read KMUTT R&D Journal Online"
                       : "วารสารเพิ่มเติม"}
                   </p>
                 </Link>
@@ -569,7 +925,7 @@ function HomeDesktop() {
 
       <section>
         <MDBContainer>
-          <MDBRow style={{ height: "5vh" }}></MDBRow>
+          <MDBRow style={{ height: "1vh" }}></MDBRow>
         </MDBContainer>
       </section>
       {/* <ul>

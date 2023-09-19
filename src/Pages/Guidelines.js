@@ -358,8 +358,9 @@ function GuidelinesDesktop() {
                 {guidelines.map((guideline) => (
                   <MDBCol
                     md="2"
-                    className="text-2xl w-fit ps-4 text-black"
+                    className="text-2xl w-fit ps-4"
                     style={{
+                      color: "#EB562E",
                       fontFamily:
                         selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                       fontSize: "1.75rem",
@@ -466,8 +467,9 @@ function GuidelinesDesktop() {
                 {templates.map((template) => (
                   <MDBCol
                     md="6"
-                    className="text-2xl w-fit px-0 pe-4 text-black"
+                    className="text-2xl w-fit px-0 pe-4 "
                     style={{
+                      color: "#EB562E",
                       fontFamily:
                         selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                       fontSize: "1.75rem",
@@ -546,8 +548,9 @@ function GuidelinesDesktop() {
                 {submissions.map((submission) => (
                   <MDBCol
                     md="6"
-                    className="text-2xl w-fit px-0 pe-4 text-black"
+                    className="text-2xl w-fit px-0 pe-4"
                     style={{
+                      color: "#EB562E",
                       fontFamily:
                         selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                       fontSize: "1.75rem",
@@ -605,8 +608,9 @@ function GuidelinesDesktop() {
               >
                 {instructions.map((instruction) => (
                   <MDBCol
-                    className="text-2xl w-fit px-0 pe-4 text-black"
+                    className="text-2xl w-fit px-0 pe-4"
                     style={{
+                      color: "#EB562E",
                       fontFamily:
                         selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                       fontSize: "1.75rem",
@@ -678,8 +682,9 @@ function GuidelinesDesktop() {
                 {subscriptions.map((subscription) => (
                   <MDBCol
                     md="6"
-                    className="text-2xl w-fit px-0 pe-4 text-black"
+                    className="text-2xl w-fit px-0 pe-4 "
                     style={{
+                      color: "#EB562E",
                       fontFamily:
                         selectedLanguage === "en"
                           ? "FontThaiBold"

@@ -8,7 +8,7 @@ import Home from "./Pages/Home";
 import Publication from "./Pages/Publications";
 import Guidelines from "./Pages/Guidelines";
 import Journal from "./Pages/Journal";
-import AboutUs from "./Pages/About us";
+import AboutUs from "./Pages/Contact us";
 // Components
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer.jsx";
@@ -22,10 +22,10 @@ function App() {
         {nav}
         <Routes>
           <Route path="" element={<Home />} />
-          <Route path="/Publications" element={<Publication />} />
+          {/* <Route path="/Publications" element={<Publication />} /> */}
           <Route path="/Guidelines" element={<Guidelines />} />
-          <Route path="/Journal" element={<Journal />} />
-          <Route path="/About-us" element={<AboutUs />} />
+          {/* <Route path="/Journal" element={<Journal />} />  */}
+          <Route path="/Contact-us" element={<AboutUs />} />
         </Routes>
         <Footer />
       </div>
