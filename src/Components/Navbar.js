@@ -36,7 +36,7 @@ import logojournal3 from "../Images/journal-logo3.png";
 import { LanguageContext } from "./LanguageContext";
 import NorthEastIcon from "@mui/icons-material/NorthEast";
 
-const pages = ["Home", , "Guidelines", "Contact us"];
+const pages = ["Home", "Guidelines", "Contact us"];
 const pages_th = [
   "หน้าแรก",
   // "การจัดพิมพ์",
