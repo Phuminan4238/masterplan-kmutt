@@ -236,7 +236,6 @@ function AboutUsDesktop() {
                   {selectedLanguage === "en"
                     ? `${aboutData?.topic}`
                     : `${aboutData?.topic_th}`}
-                  test
                 </p>
               </MDBRow>
               {/* <MDBRow className="d-flex justify-content-between fluid py-3">
