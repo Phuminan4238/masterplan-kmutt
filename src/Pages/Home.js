@@ -337,7 +337,7 @@ function HomeDesktop() {
       {/* Middle  */}
       <section>
         <MDBContainer>
-          <MDBRow style={{ height: "20vh" }}></MDBRow>
+          <MDBRow style={{ height: "25vh" }}></MDBRow>
           <MDBRow
             style={{
               display: "flex",
@@ -360,7 +360,7 @@ function HomeDesktop() {
                     <img
                       src={`http://10.35.29.179:1337${uploadfile.attributes.image_square.data.attributes.url}`}
                       style={{
-                        width: "80%",
+                        width: "70%",
                         height: "auto",
                         // maxHeight: "528px",
                       }}
