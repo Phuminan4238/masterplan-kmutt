@@ -230,7 +230,8 @@ function AboutUsDesktop() {
                   style={{
                     fontFamily:
                       selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-                    fontSize: "48px",
+                    fontSize: "47px",
+                    // comment
                   }}
                 >
                   {selectedLanguage === "en"
