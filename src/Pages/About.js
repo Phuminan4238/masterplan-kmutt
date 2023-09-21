@@ -354,9 +354,7 @@ function PublicationDesktop() {
                         fontSize: "48px",
                       }}
                     >
-                      {selectedLanguage === "en"
-                        ? "Publication"
-                        : "การจัดพิมพ์"}
+                      {selectedLanguage === "en" ? "About" : "เกี่ยวกับวารสาร"}
                     </p>
                   </MDBRow>
                   <MDBRow
