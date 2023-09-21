@@ -86,6 +86,17 @@ function HomeDesktop() {
     };
   }, [uploadfiles]);
 
+  // Policy
+  const [policy, setPolicies] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=policy"
+      )
+      .then(({ data }) => setPolicies(data.data))
+      .catch((error) => setError(error));
+  }, []);
+
   // About
   const [aboutData, setAboutData] = useState(null);
   const [officeData, setOfficeData] = useState(null);
@@ -135,9 +146,8 @@ function HomeDesktop() {
   };
 
   const secondContainerStyle = {
-    zIndex: 1,
-    padding: "5rem",
-    paddingTop: "4rem",
+    // zIndex: 1,
+    padding: "4rem",
   };
 
   const rowStyle = {
@@ -155,7 +165,7 @@ function HomeDesktop() {
           id="cluster-container"
           style={{
             background: "#474747",
-            height: "460px",
+            // height: "460px",
           }}
         >
           <MDBContainer
@@ -254,6 +264,21 @@ function HomeDesktop() {
                         {selectedLanguage === "en"
                           ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
                           : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
+                        {""}
+                      </p>
+                      <p
+                        className="text-white mb-0"
+                        style={{
+                          fontSize: "1.5rem",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                        }}
+                      >
+                        {selectedLanguage === "en"
+                          ? `${publication.attributes.journal[0]?.isn}`
+                          : `${publication.attributes.journal[0]?.isn}`}
                       </p>
                       {/* <p
                         className="text-white mb-0"
@@ -292,7 +317,7 @@ function HomeDesktop() {
                                 ? "FontMedium"
                                 : "FontThaiMedium",
                           }}
-                          className="me-3 text-sm px-3 capitalize font-bold rounded-0"
+                          className="me-3 text-sm px-3 py-2 capitalize font-bold rounded-0"
                           size="sm"
                         >
                           {selectedLanguage === "en"
@@ -317,7 +342,7 @@ function HomeDesktop() {
                                 ? "FontMedium"
                                 : "FontThaiMedium",
                           }}
-                          className="text-sm py-1 px-2 capitalize font-bold rounded-0"
+                          className="text-sm py-1 px-2 py-2 capitalize font-bold rounded-0"
                           size="sm"
                         >
                           {selectedLanguage === "en"
@@ -337,7 +362,7 @@ function HomeDesktop() {
       {/* Middle  */}
       <section>
         <MDBContainer>
-          <MDBRow style={{ height: "25vh" }}></MDBRow>
+          <MDBRow style={{ height: "10vh" }}></MDBRow>
           <MDBRow
             style={{
               display: "flex",
@@ -347,7 +372,7 @@ function HomeDesktop() {
             }}
           >
             {uploadfiles.map((uploadfile) => (
-              <MDBCol md="4" className="ms-4 me-4 px-0" key={uploadfile.id}>
+              <MDBCol md="3" className="px-0" key={uploadfile.id}>
                 <div
                   style={{
                     display: "flex",
@@ -360,7 +385,7 @@ function HomeDesktop() {
                     <img
                       src={`http://10.35.29.179:1337${uploadfile.attributes.image_square.data.attributes.url}`}
                       style={{
-                        width: "70%",
+                        width: "60%",
                         height: "auto",
                         // maxHeight: "528px",
                       }}
@@ -370,12 +395,12 @@ function HomeDesktop() {
               </MDBCol>
             ))}
           </MDBRow>
-          <MDBRow style={{ height: "20vh" }}></MDBRow>
+          <MDBRow style={{ height: "8vh" }}></MDBRow>
         </MDBContainer>
       </section>
       <section>
-        <MDBContainer className={`fluid px-3  ${containerStyle["6xl"]}`}>
-          <MDBRow className="d-flex justify-content-between pt-2 pb-6 fluid gx-6">
+        <MDBContainer className={`fluid px-5  ${containerStyle["6xl"]}`}>
+          <MDBRow className="d-flex justify-content-between pt-2 pb-3 fluid gx-6">
             <MDBCol
               className="text-3xl w-fit ps-0 text-center"
               style={{
@@ -391,7 +416,7 @@ function HomeDesktop() {
           </MDBRow>
           <MDBRow className="justify-content-center ">
             <p
-              className="text-md px-0 "
+              className="text-md px-0 text-black"
               style={{
                 fontFamily:
                   selectedLanguage === "en" ? "FontRegular" : "FontThaiRegular",
@@ -404,8 +429,62 @@ function HomeDesktop() {
               }}
             />
           </MDBRow>
+
+          {/* Policy  */}
+          {policy[0] && (
+            <div>
+              <MDBRow className="d-flex justify-content-between fluid pb-3">
+                <MDBCol
+                  md="6"
+                  className="text-2xl w-fit px-0 pe-4"
+                  style={{
+                    color: "#EB562E",
+                    fontFamily:
+                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
+                    fontSize: "1.75rem",
+                  }}
+                >
+                  {selectedLanguage === "en"
+                    ? `${policy[0].attributes.header_en} `
+                    : `${policy[0].attributes.header_th}`}
+                </MDBCol>
+                <MDBCol
+                  className=""
+                  style={{
+                    borderTop: "1px solid #474747 ",
+                    marginTop: "1rem",
+                  }}
+                ></MDBCol>
+              </MDBRow>
+              <MDBRow className="justify-content-center ">
+                <p
+                  className="text-md px-0"
+                  style={{
+                    color: "black",
+                    fontFamily:
+                      selectedLanguage === "en"
+                        ? "FontRegular"
+                        : "FontThaiRegular",
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      selectedLanguage === "en"
+                        ? policy[0].attributes.markdown_en
+                        : policy[0].attributes.markdown_th,
+                  }}
+                />
+              </MDBRow>
+              <MDBRow style={{ height: "10vh" }}></MDBRow>
+            </div>
+          )}
         </MDBContainer>
-        {/* 
+      </section>
+      {/* ******************* */}
+
+      {/* Publication Hide */}
+      {/* <PublicationComponent></PublicationComponent> */}
+
+      {/* 
         <MDBContainer
           className="fluid p-0 px-0"
           style={{
@@ -536,10 +615,10 @@ function HomeDesktop() {
               </MDBCol>
             </MDBRow>
           </MDBContainer> */}
-        {/* </MDBContainer> */}
-      </section>
-      <PublicationComponent></PublicationComponent>
-      <section>
+      {/* </MDBContainer> */}
+
+      {/* About Hide  */}
+      {/* <section>
         <MDBContainer className={`fluid px-2 pb-5 ${containerStyle["6xl"]}`}>
           <MDBRow className="d-flex justify-content-between fluid pt-0 pb-3">
             <MDBCol
@@ -606,7 +685,8 @@ function HomeDesktop() {
             />
           </MDBRow>
         </MDBContainer>
-      </section>
+      </section> */}
+      {/* Welcome hide  */}
       <section>
         <MDBContainer
           className="fluid p-0 px-0"
@@ -736,9 +816,9 @@ function HomeDesktop() {
                       ? "Welcome to"
                       : "ยินดีต้อนรับสู่"}
                   </p>
-                  <div className="py-3">
+                  <div className="py-4">
                     <p
-                      className="pb-2"
+                      className="pb-3"
                       style={{
                         fontSize: "2.8rem",
                         fontFamily: "FontMediumTH",
@@ -747,7 +827,7 @@ function HomeDesktop() {
                       KMUTT Research
                     </p>
                     <p
-                      className="pb-2"
+                      className="pb-3"
                       style={{
                         fontSize: "2.8rem",
                         fontFamily: "FontMediumTH",
@@ -781,10 +861,10 @@ function HomeDesktop() {
                         backgroundColor: "white",
                         fontFamily:
                           selectedLanguage === "en"
-                            ? "FontMedium"
-                            : "FontThaiMedium",
+                            ? "FontBold"
+                            : "FontThaiBold",
                       }}
-                      className=" text-sm px-btn capitalize font-extrabold rounded-0"
+                      className="text-lg px-btn capitalize rounded-0"
                       size="lg"
                     >
                       {selectedLanguage === "en" ? "Contact us" : "ติดต่อเรา"}

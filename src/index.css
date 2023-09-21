@@ -189,6 +189,14 @@ code {
   z-index: 1000; /* Adjust the z-index as needed */
 }
 
+ol,
+ul,
+menu {
+  list-style: disc !important;
+  margin: 0;
+  padding: 0;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

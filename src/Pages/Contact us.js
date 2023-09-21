@@ -277,6 +277,7 @@ function AboutUsDesktop() {
                   className="text-2xl w-fit px-0 pe-4 "
                   style={{
                     color: "#EB562E",
+                    fontSize: "1.75rem",
                     fontFamily:
                       selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
                   }}
@@ -295,7 +296,7 @@ function AboutUsDesktop() {
               </MDBRow>
               <MDBRow className="justify-content-center">
                 <p
-                  className="text-md px-0"
+                  className="text-md px-0 text-black"
                   style={{
                     fontFamily:
                       selectedLanguage === "en"
@@ -323,7 +324,7 @@ function AboutUsDesktop() {
                     : `${locationData?.header_th}`}
                 </p>
                 <p
-                  className="text-md px-0 "
+                  className="text-md px-0 text-black"
                   style={{
                     fontFamily:
                       selectedLanguage === "en"

@@ -207,18 +207,6 @@ function PublicationDesktop() {
             {/* Publication Policy  */}
             {policy[0] && (
               <div>
-                {/* <MDBRow className="justify-content-center ">
-                  <p
-                    className="text-4xl px-0 text-black"
-                    style={{
-                      fontFamily:
-                        selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-                      fontSize: "48px",
-                    }}
-                  >
-                    {selectedLanguage === "en" ? "Publication" : "การจัดพิมพ์"}
-                  </p>
-                </MDBRow> */}
                 <MDBRow
                   ref={policyRef}
                   className="d-flex justify-content-between fluid py-3"

@@ -263,7 +263,7 @@ function FooterDesktop() {
               <div className="text-md px-0">
                 Tel. +66-2470-9652 Fax. +66-2872-9083
               </div>
-              <p className="text-md py-2 text-white">
+              <p className="text-md pt-2 mb-0 text-white">
                 Copyright 2023 RIPO, All rights reserved
               </p>
             </MDBCol>

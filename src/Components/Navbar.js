@@ -32,17 +32,17 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import logojournal from "../Images/journal-logo.svg";
-import logojournal3 from "../Images/journal-logo3.png";
+import logojournal3 from "../Images/journal-logo.png";
 import { LanguageContext } from "./LanguageContext";
 import NorthEastIcon from "@mui/icons-material/NorthEast";
 
-const pages = ["Home", "Guidelines", "Contact us"];
+const pages = ["Home", "About", "Guidelines", "Contact us"];
 const pages_th = [
   "หน้าแรก",
-  // "การจัดพิมพ์",
+  "เกี่ยวกับวารสาร",
   "ข้อแนะนำ",
   // "วารสาร",
-  "เกี่ยวกับเรา",
+  "ติดต่อเรา",
 ];
 const drawerWidth = 250;
 
@@ -113,7 +113,7 @@ export default function Navbar(props) {
   };
 
   const logoStyle = {
-    height: "100px",
+    height: "80px",
     padding: "0.5rem",
     margin: "0px",
   };
@@ -250,11 +250,11 @@ export default function Navbar(props) {
                   />
                 </MDBNavbarBrand>
               </MDBCol>
-              <MDBCol className="col-6 pt-5">
+              <MDBCol className="col-6 pt-2">
                 <MDBRow className="row-cols-2 justify-content-end">
-                  <MDBCol className="col-6 d-flex justify-content-end align-items-center w-fit">
+                  <MDBCol className="col-6 d-flex justify-content-end align-items-center w-fit pe-0">
                     <a
-                      href="https://ripo.kmutt.ac.th/publication/"
+                      href="https://digital.lib.kmutt.ac.th/journal/brows1.php"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-white"
@@ -280,7 +280,7 @@ export default function Navbar(props) {
                         <p className="mb-0" style={{ marginRight: "10px" }}>
                           {selectedLanguage === "en"
                             ? "Read KMUTT R&D Journal Online"
-                            : "ค้นหาทั้งหมด"}
+                            : "อ่านวารสารวิจัยและพัฒนา มจธ."}
                         </p>
                         <span>
                           <NorthEastIcon
@@ -293,7 +293,7 @@ export default function Navbar(props) {
 
                   <MDBCol className="col-6 d-flex justify-content-end align-items-center w-fit">
                     <a
-                      href="https://www.lib.kmutt.ac.th/en/"
+                      href="https://digital.lib.kmutt.ac.th/journal/brows1.php"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-white"
@@ -319,7 +319,7 @@ export default function Navbar(props) {
                         <p className="mb-0" style={{ marginRight: "10px" }}>
                           {selectedLanguage === "en"
                             ? "Search KMUTT R&D Journal"
-                            : "ค้นหาทั้งหมด"}
+                            : "ค้นหาบทความในวารสาร"}
                         </p>
                         <span>
                           <NorthEastIcon
