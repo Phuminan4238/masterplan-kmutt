@@ -182,7 +182,7 @@ function HomeDesktop() {
               }}
             >
               {publications.map((publication) => (
-                <MDBCol md="4" className="ms-4 me-4 px-0" key={publication.id}>
+                <MDBCol md="3" className="ms-4 me-4 px-0" key={publication.id}>
                   <img
                     // src={journalimage}
                     src={
@@ -200,7 +200,7 @@ function HomeDesktop() {
                 </MDBCol>
               ))}
               {publications.map((publication) => (
-                <MDBCol md="7" className="md:ms-4 pb-5" key={publication.id}>
+                <MDBCol md="6" className="md:ms-4 pb-5" key={publication.id}>
                   <div className="d-flex flex-column w-100">
                     <p
                       className="font-bold mb-0 px-2 py-1 xs:text-sm md:text-sm w-fit uppercase"
