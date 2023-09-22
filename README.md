@@ -138,3 +138,4 @@ Sep 01 08:28:39 boss-dev-vm bash[19474]: To manage your project 🚀, go to the 
 Sep 01 08:28:39 boss-dev-vm bash[19474]: http://localhost:1337/admin
 Sep 01 08:28:39 boss-dev-vm bash[19474]: To access the server ⚡️, go to:
 Sep 01 08:28:39 boss-dev-vm bash[19474]: http://localhost:1337
+# masterplan-kmutt

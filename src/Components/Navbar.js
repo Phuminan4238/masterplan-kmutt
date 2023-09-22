@@ -29,18 +29,20 @@ import {
   MDBNavbar,
   MDBNavbarBrand,
   MDBRow,
+  MDBBtn,
 } from "mdb-react-ui-kit";
 import logojournal from "../Images/journal-logo.svg";
-import logojournal3 from "../Images/journal-logo3.png";
+import logojournal3 from "../Images/journal-logo.png";
 import { LanguageContext } from "./LanguageContext";
+import NorthEastIcon from "@mui/icons-material/NorthEast";
 
-const pages = ["Home", "Publications", "Guidelines", "Journal", "About us"];
+const pages = ["Home", "About", "Guidelines", "Contact us"];
 const pages_th = [
   "หน้าแรก",
-  "การจัดพิมพ์",
+  "เกี่ยวกับวารสาร",
   "ข้อแนะนำ",
-  "วารสาร",
-  "เกี่ยวกับเรา",
+  // "วารสาร",
+  "ติดต่อเรา",
 ];
 const drawerWidth = 250;
 
@@ -111,7 +113,7 @@ export default function Navbar(props) {
   };
 
   const logoStyle = {
-    height: "100px",
+    height: "80px",
     padding: "0.5rem",
     margin: "0px",
   };
@@ -191,34 +193,147 @@ export default function Navbar(props) {
   const RenderNavbar1 = () => {
     const { selectedLanguage, handleLanguageSwitch } =
       useContext(LanguageContext);
+    const location = useLocation();
+
+    const [publications, setPublications] = useState([]);
+    const [loading, setLoading] = useState(true); // Add loading state
+    useEffect(() => {
+      let isMounted = true;
+      const instance = axios.create({
+        baseURL: "http://10.35.29.179:1337/api/",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      async function fetchData() {
+        try {
+          const response = await instance.get(
+            "publications?populate=journal.uploadfiles.fileupload,journal.year,journal.months"
+          );
+          if (isMounted) {
+            setPublications(response.data.data);
+            setLoading(false); // Update loading state when data is fetched
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      // Fetch data only if publications is empty
+      if (publications.length === 0) {
+        fetchData();
+      }
+      return () => {
+        isMounted = false;
+      };
+    }, [publications]);
+    if (loading) {
+      return <div></div>;
+    }
 
     const toggleLanguage = () => {
       handleLanguageSwitch(selectedLanguage === "en" ? "th" : "en");
     };
-    const location = useLocation();
 
     return (
       <div>
-        {/* <MDBNavbar
-          className="justify-content-center"
-          style={{
-            backgroundColor: "#EB562E",
-            fontFamily:
-              selectedLanguage === "en" ? "FontSemiBold" : "FontThaiSemiBold",
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          {" "}
-          King Mongkut’s University of Technology Thonburi (KMUTT)
-        </MDBNavbar> */}
-        <MDBNavbar style={navbarStyle}>
-          <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
-            <MDBNavbarBrand href="/">
-              <img src={logojournal3} style={logoStyle} alt="" loading="lazy" />
-            </MDBNavbarBrand>
-          </MDBContainer>
-        </MDBNavbar>
+        {publications.map((publication) => (
+          <MDBNavbar style={navbarStyle}>
+            <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
+              <MDBCol className="col-6">
+                <MDBNavbarBrand href="/">
+                  <img
+                    src={logojournal3}
+                    style={logoStyle}
+                    alt=""
+                    loading="lazy"
+                  />
+                </MDBNavbarBrand>
+              </MDBCol>
+              <MDBCol className="col-6 pt-2">
+                <MDBRow className="row-cols-2 justify-content-end">
+                  <MDBCol className="col-6 d-flex justify-content-end align-items-center w-fit pe-0">
+                    <a
+                      href="https://digital.lib.kmutt.ac.th/journal/brows1.php"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-white"
+                    >
+                      <MDBBtn
+                        outline
+                        style={{
+                          borderColor: "white",
+                          color: "#EB562E",
+                          backgroundColor: "white",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                          width: "100%", // Set the width to 100%
+                          display: "flex", // Add this to enable flex layout
+                          justifyContent: "space-between", // Spread content horizontally
+                          alignItems: "center", // Center content vertically
+                        }}
+                        className="text-sm py-1 px-2 capitalize font-bold rounded-0"
+                        size="sm"
+                      >
+                        <p className="mb-0" style={{ marginRight: "10px" }}>
+                          {selectedLanguage === "en"
+                            ? "Read KMUTT R&D Journal Online"
+                            : "อ่านวารสารวิจัยและพัฒนา มจธ."}
+                        </p>
+                        <span>
+                          <NorthEastIcon
+                            style={{ color: "#EB562E", fontSize: "1rem" }}
+                          />
+                        </span>
+                      </MDBBtn>
+                    </a>
+                  </MDBCol>
+
+                  <MDBCol className="col-6 d-flex justify-content-end align-items-center w-fit">
+                    <a
+                      href="https://digital.lib.kmutt.ac.th/journal/brows1.php"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-white"
+                    >
+                      <MDBBtn
+                        outline
+                        style={{
+                          borderColor: "#EB562E",
+                          color: "white",
+                          backgroundColor: "#EB562E",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                          width: "100%", // Set the width to 100%
+                          display: "flex", // Add this to enable flex layout
+                          justifyContent: "space-between", // Spread content horizontally
+                          alignItems: "center", // Center content vertically
+                        }}
+                        className="text-sm py-1 px-2 capitalize font-bold rounded-0"
+                        size="sm"
+                      >
+                        <p className="mb-0" style={{ marginRight: "10px" }}>
+                          {selectedLanguage === "en"
+                            ? "Search KMUTT R&D Journal"
+                            : "ค้นหาบทความในวารสาร"}
+                        </p>
+                        <span>
+                          <NorthEastIcon
+                            style={{ color: "white", fontSize: "1rem" }}
+                          />
+                        </span>
+                      </MDBBtn>
+                    </a>
+                  </MDBCol>
+                </MDBRow>
+              </MDBCol>
+            </MDBContainer>
+          </MDBNavbar>
+        ))}
 
         <MDBNavbar style={menuStyle}>
           <MDBContainer className={`fluid p-0 px-2 ${containerStyle["6xl"]}`}>
@@ -278,34 +393,125 @@ export default function Navbar(props) {
   const RenderNavbar2 = () => {
     const { selectedLanguage, handleLanguageSwitch } =
       useContext(LanguageContext);
+    const location = useLocation();
+
+    const [publications, setPublications] = useState([]);
+    const [loading, setLoading] = useState(true); // Add loading state
+    useEffect(() => {
+      let isMounted = true;
+      const instance = axios.create({
+        baseURL: "http://10.35.29.179:1337/api/",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      async function fetchData() {
+        try {
+          const response = await instance.get(
+            "publications?populate=journal.uploadfiles.fileupload,journal.year,journal.months"
+          );
+          if (isMounted) {
+            setPublications(response.data.data);
+            setLoading(false); // Update loading state when data is fetched
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      // Fetch data only if publications is empty
+      if (publications.length === 0) {
+        fetchData();
+      }
+      return () => {
+        isMounted = false;
+      };
+    }, [publications]);
+    if (loading) {
+      return <div>Loading...</div>;
+    }
 
     const toggleLanguage = () => {
       handleLanguageSwitch(selectedLanguage === "en" ? "th" : "en");
     };
-    const location = useLocation();
 
     return (
       <div>
-        {/* <MDBNavbar
-          className="justify-content-center"
-          style={{
-            backgroundColor: "#EB562E",
-            fontFamily: "FontSemiBold",
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          {" "}
-          King Mongkut’s University of Technology Thonburi (KMUTT)
-        </MDBNavbar> */}
-
-        <MDBNavbar style={navbarStyle}>
-          <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
-            <MDBNavbarBrand href="/">
-              <img src={logojournal3} style={logoStyle} alt="" loading="lazy" />
-            </MDBNavbarBrand>
-          </MDBContainer>
-        </MDBNavbar>
+        {publications.map((publication) => (
+          <MDBNavbar style={navbarStyle}>
+            <MDBContainer className={`fluid p-0 px-0 ${containerStyle["6xl"]}`}>
+              <MDBCol className="col-6">
+                <MDBNavbarBrand href="/">
+                  <img
+                    src={logojournal3}
+                    style={logoStyle}
+                    alt=""
+                    loading="lazy"
+                  />
+                </MDBNavbarBrand>
+              </MDBCol>
+              <MDBCol className="col-6">
+                <MDBRow className="row-cols-2">
+                  <MDBCol className="col-6">
+                    <Link
+                      to={publication.attributes.journal[0]?.url}
+                      target="_blank"
+                      style={{ color: "black" }}
+                    >
+                      <MDBBtn
+                        outline
+                        style={{
+                          borderColor: "#EB562E",
+                          color: "white",
+                          backgroundColor: "#EB562E",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                          width: "100%", // Set the width to 100%
+                        }}
+                        className="me-3 text-sm px-3 capitalize font-bold rounded-0"
+                        size="sm"
+                      >
+                        {selectedLanguage === "en"
+                          ? "Read more"
+                          : "อ่านเพิ่มเติม"}
+                      </MDBBtn>
+                    </Link>
+                  </MDBCol>
+                  <MDBCol className="col-6">
+                    <a
+                      href="https://ripo.kmutt.ac.th/publication/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-white"
+                    >
+                      <MDBBtn
+                        outline
+                        style={{
+                          borderColor: "white",
+                          color: "#EB562E",
+                          backgroundColor: "white",
+                          fontFamily:
+                            selectedLanguage === "en"
+                              ? "FontMedium"
+                              : "FontThaiMedium",
+                          width: "100%", // Set the width to 100%
+                        }}
+                        className="text-sm py-1 px-2 capitalize font-bold rounded-0"
+                        size="sm"
+                      >
+                        {selectedLanguage === "en"
+                          ? "Explore All"
+                          : "ค้นหาทั้งหมด"}
+                      </MDBBtn>
+                    </a>
+                  </MDBCol>
+                </MDBRow>
+              </MDBCol>
+            </MDBContainer>
+          </MDBNavbar>
+        ))}
 
         <MDBNavbar style={menuStyle}>
           <MDBContainer className={`fluid p-0 px-2 ${containerStyle["6xl"]}`}>
@@ -361,7 +567,6 @@ export default function Navbar(props) {
       </div>
     );
   };
-
   const RenderNavbar3 = () => {
     const { selectedLanguage, handleLanguageSwitch } =
       useContext(LanguageContext);
@@ -375,19 +580,7 @@ export default function Navbar(props) {
     return (
       <React.Fragment>
         <CssBaseline />
-        {/* <MDBNavbar
-          className="justify-content-center text-xs p-2"
-          style={{
-            backgroundColor: "#EB562E",
-            fontFamily:
-              selectedLanguage === "en" ? "FontSemiBold" : "FontThaiSemiBold",
-            color: "white",
-            textAlign: "center",
-            fontSize: "0.6rem",
-          }}
-        >
-          King Mongkut’s University of Technology Thonburi (KMUTT)
-        </MDBNavbar> */}
+
         <HideOnScroll {...props}>
           <AppBar
             className="px-1"
@@ -552,18 +745,7 @@ export default function Navbar(props) {
     return (
       <React.Fragment>
         <CssBaseline />
-        {/* <MDBNavbar
-          className="justify-content-center text-xs p-2"
-          style={{
-            backgroundColor: "#EB562E",
-            fontFamily: "FontSemiBold",
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          {" "}
-          King Mongkut’s University of Technology Thonburi (KMUTT)
-        </MDBNavbar> */}
+
         <HideOnScroll {...props}>
           <AppBar
             className="px-1"
