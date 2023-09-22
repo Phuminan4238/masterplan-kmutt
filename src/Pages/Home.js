@@ -11,25 +11,26 @@ import {
   MDBCardImage,
 } from "mdb-react-ui-kit";
 import { useMediaQuery } from "react-responsive";
-import journalimage from "../Images/journal-image.png";
 import welcomecover from "../Images/welcome-cover.png";
-import { text } from "@fortawesome/fontawesome-svg-core";
 import { LanguageContext } from "../Components/LanguageContext";
-import Container from "@mui/material/Container";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import EastIcon from "@mui/icons-material/East";
-import plan from "../Images/plan.png";
+// Plan
+import buildingplan from "../Images/building-plan.png";
+import facilityplan from "../Images/facility-plan.png";
+import parkingplan from "../Images/parking-plan2.png";
 
 // Component
 import PublicationComponent from "../Components/Publication";
 
 function HomeDesktop() {
+  // South building
   const [error, setError] = useState(null);
-  const [publications, setPublications] = useState([]);
+  const [southbuildings, setSouthBuildings] = useState([]);
   useEffect(() => {
     let isMounted = true;
     const instance = axios.create({
-      baseURL: "http://10.35.29.179:1337/api/",
+      baseURL: "http://localhost:1337/api/", // Update with your API URL.
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -38,29 +39,30 @@ function HomeDesktop() {
     async function fetchData() {
       try {
         const response = await instance.get(
-          "publications?populate=journal.uploadfiles.fileupload,journal.year,journal.months"
+          "buildings?populate=uploadfiles.fileupload&filters[zone][$eq]=south"
         );
         if (isMounted) {
-          setPublications(response.data.data);
+          setSouthBuildings(response.data.data);
         }
       } catch (error) {
         console.error(error);
+        setError(error);
       }
     }
-    if (publications.length === 0) {
+    if (southbuildings.length === 0) {
       fetchData();
     }
     return () => {
       isMounted = false;
     };
-  }, [publications]);
-  console.log(publications);
+  }, [southbuildings]);
 
-  const [uploadfiles, setUploadfiles] = useState([]);
+  // North building
+  const [northbuildings, setNorthBuildings] = useState([]);
   useEffect(() => {
     let isMounted = true;
     const instance = axios.create({
-      baseURL: "http://10.35.29.179:1337/api/",
+      baseURL: "http://localhost:1337/api/", // Update with your API URL.
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -69,928 +71,633 @@ function HomeDesktop() {
     async function fetchData() {
       try {
         const response = await instance.get(
-          "uploadfiles/?populate=*&filters[filetype][$eq]=image"
+          "buildings?populate=*populate=*&filters[zone][$eq]=north"
         );
         if (isMounted) {
-          setUploadfiles(response.data.data);
+          setNorthBuildings(response.data.data);
         }
       } catch (error) {
         console.error(error);
+        setError(error);
       }
     }
-    if (uploadfiles.length === 0) {
+    if (northbuildings.length === 0) {
       fetchData();
     }
     return () => {
       isMounted = false;
     };
-  }, [uploadfiles]);
+  }, [northbuildings]);
 
-  // Policy
-  const [policy, setPolicies] = useState([]);
+  // buildingplan
+  const [buildingPlanImages, setBuildingplanimages] = useState([]);
   useEffect(() => {
-    axios
-      .get(
-        "http://10.35.29.179:1337/api/policies/?populate=*&filters[topic][$eq]=policy"
-      )
-      .then(({ data }) => setPolicies(data.data))
-      .catch((error) => setError(error));
-  }, []);
-
-  // About
-  const [aboutData, setAboutData] = useState(null);
-  const [officeData, setOfficeData] = useState(null);
-  const [locationData, setLocationData] = useState(null);
-  const [hasDataFetched, setHasDataFetched] = useState(false);
-  useEffect(() => {
-    if (!hasDataFetched) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            "http://10.35.29.179:1337/api/contacts/?populate=*"
-          );
-          const data = response.data.data;
-          if (data && data.length > 0) {
-            // Filter data for each type based on the ID
-            const aboutInfo = data.find((item) => item.id === 1);
-            const officeInfo = data.find((item) => item.id === 2);
-            const locationInfo = data.find((item) => item.id === 3);
-
-            setAboutData(aboutInfo ? aboutInfo.attributes : null);
-            setOfficeData(officeInfo ? officeInfo.attributes : null);
-            setLocationData(locationInfo ? locationInfo.attributes : null);
-          }
-          setHasDataFetched(true);
-        } catch (error) {
-          console.log(error);
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://localhost:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "masterplan-images?populate=*&filters[title][$eq]=buildingplan"
+        );
+        if (isMounted) {
+          setBuildingplanimages(response.data.data);
         }
-      };
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (buildingPlanImages.length === 0) {
       fetchData();
     }
-  }, [hasDataFetched]);
+    return () => {
+      isMounted = false;
+    };
+  }, [buildingPlanImages]);
 
+  // parkingplan
+  const [parkingPlanImages, setParkingPlanImages] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://localhost:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "masterplan-images?populate=*&filters[title][$eq]=parkingplan"
+        );
+        if (isMounted) {
+          setParkingPlanImages(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (parkingPlanImages.length === 0) {
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [parkingPlanImages]);
+
+  // facilitiesplan
+  const [facilitiesPlanImages, setFacilitiesPlanImages] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://localhost:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "masterplan-images?populate=*&filters[title][$eq]=facilityplan"
+        );
+        if (isMounted) {
+          setFacilitiesPlanImages(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (facilitiesPlanImages.length === 0) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [facilitiesPlanImages]);
+
+  // officeplan
+  const [officePlanImages, setOfficePlanImages] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://localhost:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "masterplan-images?populate=*&filters[title][$eq]=office"
+        );
+        if (isMounted) {
+          setOfficePlanImages(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (officePlanImages.length === 0) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [officePlanImages]);
+
+  // Building type
+  const [buildingTypes, setBuildingtypes] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "  http://localhost:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "masterplan-types?populate=*populate=*&filters[name_en][$eq]=building"
+        );
+        if (isMounted) {
+          setBuildingtypes(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (buildingTypes.length === 0) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [buildingTypes]);
+
+  // Parking type
+  const [parkingTypes, setParkingTypes] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://localhost:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "masterplan-types?populate=*&filters[name_en][$eq]=parking"
+        );
+        if (isMounted) {
+          setParkingTypes(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (parkingTypes.length === 0) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [parkingTypes]);
+
+  // Office type
+  const [officeTypes, setOfficeTypes] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://localhost:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "masterplan-types?populate=*&filters[name_en][$eq]=office"
+        );
+        if (isMounted) {
+          setOfficeTypes(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (officeTypes.length === 0) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [officeTypes]);
+
+  // Facilities type
+  const [facilitiesTypes, setFacilitiesTypes] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    const instance = axios.create({
+      baseURL: "http://localhost:1337/api/",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    async function fetchData() {
+      try {
+        const response = await instance.get(
+          "masterplan-types?populate=*&filters[name_en][$eq]=facilities"
+        );
+        if (isMounted) {
+          setFacilitiesTypes(response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (facilitiesTypes.length === 0) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [facilitiesTypes]);
+
+  // ******************** //
+
+  // layout
   const isDesktop = useMediaQuery({ minWidth: 940 });
-
   const containerStyle = {
     maxWidth: isDesktop ? "5xl" : "fit",
     "2xl": "max-w-2xl",
     "6xl": "max-w-6xl",
   };
-
-  const textStyle = {
-    color: "#AE023E",
-  };
-
-  const btnStyle = {
-    borderColor: "#EB562E !important",
-  };
-
   const secondContainerStyle = {
     // zIndex: 1,
-    padding: "4rem",
-  };
-
-  const rowStyle = {
-    display: "inline-flex",
-    alignItems: "center",
+    // padding: "4rem",
+    paddingBottom: "0rem",
   };
 
   const { selectedLanguage, handleLanguageSwitch } =
     useContext(LanguageContext);
 
+  // Function to toggle between building and parking types
+  const handleTypeToggle = (type) => {
+    setSelectedType(type);
+  };
+
+  const [selectedType, setSelectedType] = useState("building"); // Default to building type
+
   return (
     <div className="App">
       <section>
-        <MDBContainer
-          id="cluster-container"
-          style={{
-            background: "#474747",
-            // height: "460px",
-          }}
-        >
-          <MDBContainer
-            style={secondContainerStyle}
-            // className={`max-w-${containerStyle.maxWidth}`}
-            // className={`max-w-${containerStyle["6xl"]}`}
+        <MDBContainer className={`fluid py-5 px-4 ${containerStyle["6xl"]}`}>
+          <MDBRow
+            style={{
+              color: "black",
+              fontSize: "1.2rem",
+              fontFamily:
+                selectedLanguage === "en" ? "FontThaiBold" : "FontThaiBold",
+            }}
           >
+            {buildingTypes.map((buildingType) => (
+              <MDBCol
+                md="3"
+                style={{
+                  borderLeft: "0.5rem solid #EB562E",
+                  display: "flex", // Enable Flexbox
+                  flexDirection: "column", // Stack elements vertically
+                  justifyContent: "center", // Vertically center text
+                  textAlign: "left",
+                }}
+                onClick={() => handleTypeToggle("building")}
+              >
+                <p className="mb-0">{buildingType.attributes.name_en}</p>
+                <p className="mb-0">{buildingType.attributes.name_th}</p>
+              </MDBCol>
+            ))}
+            {parkingTypes.map((parkingType) => (
+              <MDBCol
+                md="3"
+                style={{
+                  borderLeft: "0.5rem solid #608DD4",
+                  display: "flex", // Enable Flexbox
+                  flexDirection: "column", // Stack elements vertically
+                  justifyContent: "center", // Vertically center text
+                  textAlign: "left",
+                }}
+                onClick={() => handleTypeToggle("parking")}
+              >
+                <p className="mb-0">{parkingType.attributes.name_en}</p>
+                <p className="mb-0">{parkingType.attributes.name_th}</p>
+              </MDBCol>
+            ))}
+            {facilitiesTypes.map((facilitiesType) => (
+              <MDBCol
+                md="3"
+                style={{
+                  borderLeft: "0.5rem solid #1DB528",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  textAlign: "left",
+                }}
+                onClick={() => handleTypeToggle("facilities")}
+                key={facilitiesType.id}
+              >
+                <p className="mb-0">{facilitiesType.attributes.name_en}</p>
+                <p className="mb-0">{facilitiesType.attributes.name_th}</p>
+              </MDBCol>
+            ))}
+
+            {officeTypes.map((officeType) => (
+              <MDBCol
+                md="3"
+                style={{
+                  borderLeft: "0.5rem solid #FEB832",
+                  display: "flex", // Enable Flexbox
+                  flexDirection: "column", // Stack elements vertically
+                  justifyContent: "center", // Vertically center text
+                  textAlign: "left",
+                }}
+                onClick={() => handleTypeToggle("office")}
+                key={officeType.id} // Add a unique key for each item in the array
+              >
+                <p className="mb-0">{officeType.attributes.name_en}</p>
+                <p className="mb-0">{officeType.attributes.name_th}</p>
+              </MDBCol>
+            ))}
+          </MDBRow>
+        </MDBContainer>
+      </section>
+      <section>
+        <MDBContainer id="cluster-container">
+          <MDBContainer style={secondContainerStyle}>
             <MDBRow
-              // className="justify-content-center"
+              className="justify-content-center"
               style={{
                 display: "flex",
                 alignItems: "center",
                 flexWrap: "wrap",
               }}
             >
-              {publications.map((publication) => (
-                <MDBCol md="3" className="ms-4 me-4 px-0" key={publication.id}>
-                  <img
-                    // src={journalimage}
-                    src={
-                      "http://10.35.29.179:1337" +
-                      publication.attributes.journal[0]?.uploadfiles.data[0]
-                        ?.attributes.fileupload?.data[1]?.attributes.url
-                    }
-                    style={{
-                      width: "100%",
-                      height: "",
-                      maxHeight: "528px",
-                    }}
-                  />
-                  {/* <h2>{pu blication.attributes.journal[0]?.title}</h2> */}
-                </MDBCol>
-              ))}
-              {publications.map((publication) => (
-                <MDBCol md="6" className="md:ms-4 pb-5" key={publication.id}>
-                  <div className="d-flex flex-column w-100">
-                    <p
-                      className="font-bold mb-0 px-2 py-1 xs:text-sm md:text-sm w-fit uppercase"
-                      style={{
-                        fontFamily: "FontMediumTH",
-                        backgroundColor: "#fce2db",
-                        color: "#EB562E",
-                      }}
-                    >
-                      {selectedLanguage === "en"
-                        ? "Latest Journal"
-                        : "วารสารล่าสุด"}
-                    </p>
-                    <div className="d-flex flex-column mt-auto">
-                      {/* <p
-                        className="pb-2 text-white"
+              {/* Render images based on the selected type */}
+              <MDBCol md="10" className="ms-4 me-4 px-0">
+                {selectedType === "building"
+                  ? buildingPlanImages.map((buildingPlan) => (
+                      <img
+                        className="shadow-md"
+                        key={buildingPlan.id}
+                        src={
+                          "http://localhost:1337" +
+                          buildingPlan.attributes.image?.data[0]?.attributes
+                            ?.url
+                        }
                         style={{
-                          fontSize: "0.5rem",
-                          fontFamily: "FontMediumTH",
+                          width: "100%",
                         }}
-                      >
-                        KMUTT Research
-                      </p> */}
-                      <p
-                        className="m-0 pt-3 pb-2 text-white"
+                      />
+                    ))
+                  : selectedType === "parking"
+                  ? parkingPlanImages.map((parkingPlan) => (
+                      <img
+                        className="shadow-md"
+                        key={parkingPlan.id}
+                        src={
+                          "http://localhost:1337" +
+                          parkingPlan.attributes.image?.data[0]?.attributes?.url
+                        }
                         style={{
-                          fontSize: "2rem",
-                          fontFamily: "FontMediumTH",
-                          maxWidth: "80%", // Set a maximum width for the title
-                          overflowWrap: "break-word", // Allow word wrapping within the title
+                          width: "100%",
                         }}
-                      >
-                        {selectedLanguage === "en"
-                          ? `${publication.attributes.journal[0]?.title}`
-                          : `${publication.attributes.journal[0]?.title_th}`}
-                      </p>
-                      {/* <p
-                        className="pb-2 text-white"
-                        style={{ fontSize: "2rem", fontFamily: "FontMediumTH" }}
-                      >
-                        and Development Journal
-                      </p> */}
-                      <p
-                        className="text-white mb-0"
+                      />
+                    ))
+                  : selectedType === "facilities"
+                  ? facilitiesPlanImages.map((facilitiesPlan) => (
+                      <img
+                        className="shadow-md"
+                        key={facilitiesPlan.id}
+                        src={
+                          "http://localhost:1337" +
+                          facilitiesPlan.attributes.image?.data[0]?.attributes
+                            ?.url
+                        }
                         style={{
-                          fontSize: "1.5rem",
-                          fontFamily:
-                            selectedLanguage === "en"
-                              ? "FontMedium"
-                              : "FontThaiMedium",
+                          width: "100%",
                         }}
-                      >
-                        {/* Volumn 46 No. 2 */}
-                        {selectedLanguage === "en"
-                          ? `Volumn ${publication.attributes.journal[0]?.volumn} No. ${publication.attributes.journal[0]?.number}`
-                          : `ปีที่ ${publication.attributes.journal[0]?.volumn} ฉบับที่ ${publication.attributes.journal[0]?.number}`}{" "}
-                        {""}
-                        {selectedLanguage === "en"
-                          ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
-                          : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
-                        {selectedLanguage === "en"
-                          ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
-                          : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
-                        {""}
-                      </p>
-                      <p
-                        className="text-white mb-0"
+                      />
+                    ))
+                  : selectedType === "office"
+                  ? officePlanImages.map((officePlan) => (
+                      <img
+                        className="shadow-md"
+                        key={officePlan.id}
+                        src={
+                          "http://localhost:1337" +
+                          officePlan.attributes.image?.data[0]?.attributes?.url
+                        }
                         style={{
-                          fontSize: "1.5rem",
-                          fontFamily:
-                            selectedLanguage === "en"
-                              ? "FontMedium"
-                              : "FontThaiMedium",
+                          width: "100%",
                         }}
-                      >
-                        {selectedLanguage === "en"
-                          ? `${publication.attributes.journal[0]?.isn}`
-                          : `${publication.attributes.journal[0]?.isn}`}
-                      </p>
-                      {/* <p
-                        className="text-white mb-0"
-                        style={{
-                          fontSize: "1.5rem",
-                          fontFamily:
-                            selectedLanguage === "en"
-                              ? "FontMedium"
-                              : "FontThaiMedium",
-                        }}
-                      >
-                        <p>
-                          {selectedLanguage === "en"
-                            ? `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_en}`
-                            : `${publication.attributes.journal[0]?.months?.data[0]?.attributes.name_th}`}{" "}
-                          {selectedLanguage === "en"
-                            ? `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_en}`
-                            : `${publication.attributes.journal[0]?.year?.data[0]?.attributes.name_th}`}
-                        </p>
-                      </p> */}
-                    </div>
-                    <div className="d-flex pt-4">
-                      <Link
-                        to={publication.attributes.journal[0]?.url}
-                        target="_blank"
-                        style={{ color: "black" }}
-                      >
-                        <MDBBtn
-                          outline
-                          style={{
-                            borderColor: "#EB562E",
-                            color: "white",
-                            backgroundColor: "#EB562E",
-                            fontFamily:
-                              selectedLanguage === "en"
-                                ? "FontMedium"
-                                : "FontThaiMedium",
-                          }}
-                          className="me-3 text-sm px-3 py-2 capitalize font-bold rounded-0"
-                          size="sm"
-                        >
-                          {selectedLanguage === "en"
-                            ? "Read more"
-                            : "อ่านเพิ่มเติม"}
-                        </MDBBtn>
-                      </Link>
-                      <a
-                        href="https://ripo.kmutt.ac.th/publication/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center text-white"
-                      >
-                        <MDBBtn
-                          outline
-                          style={{
-                            borderColor: "white",
-                            color: "#EB562E",
-                            backgroundColor: "white",
-                            fontFamily:
-                              selectedLanguage === "en"
-                                ? "FontMedium"
-                                : "FontThaiMedium",
-                          }}
-                          className="text-sm py-1 px-2 py-2 capitalize font-bold rounded-0"
-                          size="sm"
-                        >
-                          {selectedLanguage === "en"
-                            ? "Explore All"
-                            : "ค้นหาทั้งหมด"}
-                        </MDBBtn>
-                      </a>
-                    </div>
-                  </div>
-                </MDBCol>
-              ))}
+                      />
+                    ))
+                  : null}
+              </MDBCol>
             </MDBRow>
           </MDBContainer>
         </MDBContainer>
       </section>
 
-      {/* Middle  */}
       <section>
-        <MDBContainer>
-          <MDBRow style={{ height: "10vh" }}></MDBRow>
+        <MDBContainer className={`fluid p-5 ${containerStyle["6xl"]}`}>
           <MDBRow
             style={{
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-              justifyContent: "center",
+              color: "black",
+              fontFamily:
+                selectedLanguage === "en" ? "FontThaiBold" : "FontThaiBold",
             }}
           >
-            {uploadfiles.map((uploadfile) => (
-              <MDBCol md="3" className="px-0" key={uploadfile.id}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center", // Horizontally center the image
-                    alignItems: "center", // Vertically center the image
-                  }}
-                >
-                  {uploadfile.attributes.image_square?.data?.attributes
-                    ?.url && (
-                    <img
-                      src={`http://10.35.29.179:1337${uploadfile.attributes.image_square.data.attributes.url}`}
-                      style={{
-                        width: "60%",
-                        height: "auto",
-                        // maxHeight: "528px",
-                      }}
-                    />
-                  )}
-                </div>
-              </MDBCol>
-            ))}
-          </MDBRow>
-          <MDBRow style={{ height: "8vh" }}></MDBRow>
-        </MDBContainer>
-      </section>
-      <section>
-        <MDBContainer className={`fluid px-5  ${containerStyle["6xl"]}`}>
-          <MDBRow className="d-flex justify-content-between pt-2 pb-3 fluid gx-6">
-            <MDBCol
-              className="text-3xl w-fit ps-0 text-center"
-              style={{
-                color: "#EB562E",
-                fontFamily:
-                  selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-              }}
-            >
-              {selectedLanguage === "en"
-                ? `${aboutData?.header_en}`
-                : `${aboutData?.header_th}`}
-            </MDBCol>
-          </MDBRow>
-          <MDBRow className="justify-content-center ">
-            <p
-              className="text-md px-0 text-black"
-              style={{
-                fontFamily:
-                  selectedLanguage === "en" ? "FontRegular" : "FontThaiRegular",
-              }}
-              dangerouslySetInnerHTML={{
-                __html:
-                  selectedLanguage === "en"
-                    ? aboutData?.content_markdown
-                    : aboutData?.content_markdown_th,
-              }}
-            />
-          </MDBRow>
-
-          {/* Policy  */}
-          {policy[0] && (
-            <div>
-              <MDBRow className="d-flex justify-content-between fluid pb-3">
-                <MDBCol
-                  md="6"
-                  className="text-2xl w-fit px-0 pe-4"
-                  style={{
-                    color: "#EB562E",
-                    fontFamily:
-                      selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-                    fontSize: "1.75rem",
-                  }}
-                >
-                  {selectedLanguage === "en"
-                    ? `${policy[0].attributes.header_en} `
-                    : `${policy[0].attributes.header_th}`}
-                </MDBCol>
-                <MDBCol
-                  className=""
-                  style={{
-                    borderTop: "1px solid #474747 ",
-                    marginTop: "1rem",
-                  }}
-                ></MDBCol>
-              </MDBRow>
-              <MDBRow className="justify-content-center ">
-                <p
-                  className="text-md px-0"
-                  style={{
-                    color: "black",
-                    fontFamily:
-                      selectedLanguage === "en"
-                        ? "FontRegular"
-                        : "FontThaiRegular",
-                  }}
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      selectedLanguage === "en"
-                        ? policy[0].attributes.markdown_en
-                        : policy[0].attributes.markdown_th,
-                  }}
-                />
-              </MDBRow>
-              <MDBRow style={{ height: "10vh" }}></MDBRow>
-            </div>
-          )}
-        </MDBContainer>
-      </section>
-      {/* ******************* */}
-
-      {/* Publication Hide */}
-      {/* <PublicationComponent></PublicationComponent> */}
-
-      {/* 
-        <MDBContainer
-          className="fluid p-0 px-0"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            height: "828px",
-            width: "-webkit-fill-available",
-            justifyContent: "center",
-          }}
-        >
-          <MDBContainer className={`fluid px-2 ${containerStyle["6xl"]}`}>
-            <MDBRow
-              className="justify-content-center"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "#EB562E",
-                width: "inherit",
-                margin: "0", // Add this to remove default margin
-                overflow: "hidden",
-              }}
-              id="cluster-gutter"
-            >
+            <MDBRow className="d-flex ">
               <MDBCol
-                md="8"
-                className="d-flex p-6"
-                style={{
-                  display: "flex",
-                  padding: "48px 250px 48px 48px",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                  gap: "20px",
-                }}
+                md="6"
+                className="p-5 shadow-md"
+                // style={{ border: "1px solid black" }}
               >
-                <div className="d-flex flex-column w-100">
-                  <p
-                    className="font-bold mb-3 xs:pt-0 md:pt-0 xs:text-md md:text-lg"
-                    style={{
-                      fontFamily:
-                        selectedLanguage === "en"
-                          ? "FontMedium"
-                          : "FontThaiMedium",
-                      color: "white",
-                      fontSize: "1.4rem",
-                    }}
-                  >
-                    {selectedLanguage === "en"
-                      ? "Welcome to"
-                      : "ยินดีต้อนรับสู่"}
-                  </p>
-                  <div
-                    className="d-flex justify-content-between flex-col mt-auto xs:text-base text-sm py-4 text-white"
-                    id="news-underline"
-                  >
-                    <p
-                      className="pb-2"
-                      style={{
-                        fontSize: "2.8rem",
-                        fontFamily: "FontMediumTH",
-                      }}
-                    >
-                      KMUTT Research
-                    </p>
-                    <p
-                      className="pb-2"
-                      style={{
-                        fontSize: "2.8rem",
-                        fontFamily: "FontMediumTH",
-                      }}
-                    >
-                      and Development
-                    </p>
-                    <p
-                      className=""
-                      style={{
-                        fontSize: "2.8rem",
-                        fontFamily: "FontMediumTH",
-                      }}
-                    >
-                      Journal
-                    </p>
-                  </div>
-                  <div className="d-flex  mt-1 text-red">
+                <p className="text-center text-3xl pb-4"> South Zone </p>
+                {selectedType === "building" &&
+                  southbuildings.map((building) => (
                     <Link
-                      to={`/about-us`}
+                      to={`/BuildingDetail/${building.id}`}
                       onClick={() => {
                         window.scrollTo(0, 0);
-                        window.location.replace(`about-us`);
+                        window.location.replace(
+                          `/BuildingDetail/${building.id}`
+                        );
                       }}
-                      className="flex items-center text-white"
                     >
-                      <MDBBtn
-                        outline
-                        style={{
-                          borderColor: "white",
-                          color: "#EB562E",
-                          backgroundColor: "white",
-                          fontFamily:
-                            selectedLanguage === "en"
-                              ? "FontMedium"
-                              : "FontThaiMedium",
-                        }}
-                        className=" text-sm px-btn capitalize font-extrabold rounded-0"
-                        size="lg"
+                      <MDBRow
+                        className="text-white"
+                        style={{ borderRadius: "0.4rem", marginBlock: "1rem" }}
+                        key={building.id}
                       >
-                        {selectedLanguage === "en" ? "Contact us" : "ติดต่อเรา"}
-                      </MDBBtn>
+                        <MDBCol
+                          md="2"
+                          className="p-3 text-center"
+                          style={{
+                            backgroundColor: "#ff4612",
+                            borderTopLeftRadius: "0.4rem",
+                            borderBottomLeftRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <span className="text-2xl">
+                            {building.attributes.buildingNumber}
+                          </span>
+                        </MDBCol>
+                        <MDBCol
+                          className="text-center p-3"
+                          style={{
+                            backgroundColor: "#717171",
+                            borderTopRightRadius: "0.4rem",
+                            borderBottomRightRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <p className="mb-0 text-lg">
+                            {building.attributes.buildingName}
+                          </p>
+                        </MDBCol>
+                      </MDBRow>
                     </Link>
-                  </div>
-                </div>
+                  ))}
+
+                {selectedType === "parking" &&
+                  parkingPlanImages.map((parkingPlan) => (
+                    <Link
+                      to={`/BuildingDetail/${parkingPlan.id}`}
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                        window.location.replace(
+                          `/BuildingDetail/${parkingPlan.id}`
+                        );
+                      }}
+                    >
+                      <MDBRow
+                        className="text-white"
+                        style={{ borderRadius: "0.4rem", marginBlock: "1rem" }}
+                        key={parkingPlan.id}
+                      >
+                        <MDBCol
+                          md="2"
+                          className="p-3 text-center"
+                          style={{
+                            backgroundColor: "#ff4612",
+                            borderTopLeftRadius: "0.4rem",
+                            borderBottomLeftRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <span className="text-2xl">
+                            {parkingPlan.attributes.parkingNumber}
+                          </span>
+                        </MDBCol>
+                        <MDBCol
+                          className="text-center p-3"
+                          style={{
+                            backgroundColor: "#474747",
+                            borderTopRightRadius: "0.4rem",
+                            borderBottomRightRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <p className="mb-0 text-xl">
+                            {parkingPlan.attributes.parkingName}
+                          </p>
+                        </MDBCol>
+                      </MDBRow>
+                    </Link>
+                  ))}
               </MDBCol>
-              <MDBCol
-                md="4"
-                className="d-flex p-0"
-                style={{ overflow: "hidden" }}
-              >
-                <img
-                  src={welcomecover}
-                  alt="Your image"
-                  className="image-fluid"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
+              <MDBCol md="6" className="p-5 shadow-md">
+                <p className="text-center text-3xl pb-4"> North Zone </p>
+                {selectedType === "building" &&
+                  northbuildings.map((building) => (
+                    <Link
+                      to={`/BuildingDetail/${building.id}`}
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                        window.location.replace(
+                          `/BuildingDetail/${building.id}`
+                        );
+                      }}
+                    >
+                      <MDBRow
+                        className="text-white"
+                        style={{ borderRadius: "0.4rem", marginBlock: "1rem" }}
+                        key={building.id}
+                      >
+                        <MDBCol
+                          md="2"
+                          className="p-3 text-center"
+                          style={{
+                            backgroundColor: "#FEB832",
+                            borderTopLeftRadius: "0.4rem",
+                            borderBottomLeftRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <span className="text-2xl">
+                            {building.attributes.buildingNumber}
+                          </span>
+                        </MDBCol>
+                        <MDBCol
+                          className="text-center p-3"
+                          style={{
+                            backgroundColor: "#717171",
+                            borderTopRightRadius: "0.4rem",
+                            borderBottomRightRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <p className="mb-0 text-lg">
+                            {building.attributes.buildingName}
+                          </p>
+                        </MDBCol>
+                      </MDBRow>
+                    </Link>
+                  ))}
               </MDBCol>
             </MDBRow>
-          </MDBContainer> */}
-      {/* </MDBContainer> */}
-
-      {/* About Hide  */}
-      {/* <section>
-        <MDBContainer className={`fluid px-2 pb-5 ${containerStyle["6xl"]}`}>
-          <MDBRow className="d-flex justify-content-between fluid pt-0 pb-3">
-            <MDBCol
-              md="6"
-              className="text-2xl w-fit px-0 pe-4"
-              style={{
-                color: "#EB562E",
-                fontSize: "1.75rem",
-                fontFamily:
-                  selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-              }}
-            >
-              {selectedLanguage === "en"
-                ? `${officeData?.header_en}`
-                : `${officeData?.header_th}`}
-            </MDBCol>
-            <MDBCol
-              className=""
-              style={{
-                borderTop: "1px solid black ",
-                marginTop: "1rem",
-              }}
-            ></MDBCol>
-          </MDBRow>
-          <MDBRow className="justify-content-center">
-            <p
-              className="text-md px-0"
-              style={{
-                fontFamily:
-                  selectedLanguage === "en" ? "FontRegular" : "FontThaiRegular",
-              }}
-              dangerouslySetInnerHTML={{
-                __html:
-                  selectedLanguage === "en"
-                    ? officeData?.content_markdown
-                    : officeData?.content_markdown_th,
-              }}
-            />
-          </MDBRow>
-          <MDBRow>
-            <p
-              className="text-lg px-0 mb-0  text-black"
-              style={{
-                fontFamily:
-                  selectedLanguage === "en" ? "FontBold" : "FontThaiBold",
-              }}
-            >
-              {selectedLanguage === "en"
-                ? `${locationData?.header_en}`
-                : `${locationData?.header_th}`}
-            </p>
-            <p
-              className="text-md px-0 "
-              style={{
-                fontFamily:
-                  selectedLanguage === "en" ? "FontRegular" : "FontThaiRegular",
-              }}
-              dangerouslySetInnerHTML={{
-                __html:
-                  selectedLanguage === "en"
-                    ? locationData?.content_markdown
-                    : locationData?.content_markdown_th,
-              }}
-            />
-          </MDBRow>
-        </MDBContainer>
-      </section> */}
-      {/* Welcome hide  */}
-      <section>
-        <MDBContainer
-          className="fluid p-0 px-0"
-          id="cluster-container"
-          style={{ height: "60vh" }}
-        >
-          {" "}
-          <MDBRow
-            className="p-0"
-            id="cluster-gutter"
-            style={{ height: "inherit" }}
-          >
-            {/* <MDBCol
-              md="6"
-              order="1"
-              className="d-flex flex-col justify-content-center"
-              style={{ height: "inherit" }}
-            >
-              <div
-                className="d-flex flex-col  w-100 gap-4 p-6"
-                style={{ backgroundColor: "#EB562E", height: "100%" }}
-              >
-                <div
-                  className="d-flex justify-content-between flex-col mt-auto xs:text-base text-sm py-4 text-white"
-                  id="news-underline"
-                  style={{ backgroundColor: "#EB562E" }}
-                >
-                  <p
-                    className="font-bold mb-3 xs:pt-0 md:pt-0 xs:text-md md:text-lg"
-                    style={{
-                      fontFamily:
-                        selectedLanguage === "en"
-                          ? "FontMedium"
-                          : "FontThaiMedium",
-                      color: "white",
-                      fontSize: "1.4rem",
-                    }}
-                  >
-                    {selectedLanguage === "en"
-                      ? "Welcome to"
-                      : "ยินดีต้อนรับสู่"}
-                  </p>
-                  <p
-                    className="pb-2"
-                    style={{
-                      fontSize: "2.8rem",
-                      fontFamily: "FontMediumTH",
-                    }}
-                  >
-                    KMUTT Research
-                  </p>
-                  <p
-                    className="pb-2"
-                    style={{
-                      fontSize: "2.8rem",
-                      fontFamily: "FontMediumTH",
-                    }}
-                  >
-                    and Development
-                  </p>
-                  <p
-                    className=""
-                    style={{
-                      fontSize: "2.8rem",
-                      fontFamily: "FontMediumTH",
-                    }}
-                  >
-                    Journal
-                  </p>
-                </div>
-                <div className="d-flex  mt-1 text-red">
-                  <Link
-                    to={`/about-us`}
-                    onClick={() => {
-                      window.scrollTo(0, 0);
-                      window.location.replace(`about-us`);
-                    }}
-                    className="flex items-center text-white"
-                  >
-                    <MDBBtn
-                      outline
-                      style={{
-                        borderColor: "white",
-                        color: "#EB562E",
-                        backgroundColor: "white",
-                        fontFamily:
-                          selectedLanguage === "en"
-                            ? "FontMedium"
-                            : "FontThaiMedium",
-                      }}
-                      className=" text-sm px-btn capitalize font-extrabold rounded-0"
-                      size="lg"
-                    >
-                      {selectedLanguage === "en" ? "Contact us" : "ติดต่อเรา"}
-                    </MDBBtn>
-                  </Link>
-                </div>
-              </div>
-            </MDBCol> */}
-            <MDBCol
-              md="6"
-              order="1"
-              className="d-flex flex-col"
-              style={{ height: "inherit" }}
-            >
-              <div
-                className="d-flex flex-row justify-content-between align-items-center w-100 gap-4 p-6"
-                style={{ backgroundColor: "#EB562E", height: "100%" }}
-              >
-                <div
-                  className="d-flex flex-col xs:text-base text-sm py-4 text-white"
-                  id="news-underline"
-                  style={{ backgroundColor: "#EB562E" }}
-                >
-                  <p
-                    className="font-bold xs:pt-0 md:pt-0 xs:text-md md:text-lg"
-                    style={{
-                      fontFamily:
-                        selectedLanguage === "en"
-                          ? "FontMedium"
-                          : "FontThaiMedium",
-                      color: "white",
-                      fontSize: "1.4rem",
-                    }}
-                  >
-                    {selectedLanguage === "en"
-                      ? "Welcome to"
-                      : "ยินดีต้อนรับสู่"}
-                  </p>
-                  <div className="py-4">
-                    <p
-                      className="pb-3"
-                      style={{
-                        fontSize: "2.8rem",
-                        fontFamily: "FontMediumTH",
-                      }}
-                    >
-                      KMUTT Research
-                    </p>
-                    <p
-                      className="pb-3"
-                      style={{
-                        fontSize: "2.8rem",
-                        fontFamily: "FontMediumTH",
-                      }}
-                    >
-                      and Development
-                    </p>
-                    <p
-                      className=""
-                      style={{
-                        fontSize: "2.8rem",
-                        fontFamily: "FontMediumTH",
-                      }}
-                    >
-                      Journal
-                    </p>
-                  </div>
-                  <Link
-                    to={`/about-us`}
-                    onClick={() => {
-                      window.scrollTo(0, 0);
-                      window.location.replace(`about-us`);
-                    }}
-                    className="flex items-center text-white "
-                  >
-                    <MDBBtn
-                      outline
-                      style={{
-                        borderColor: "white",
-                        color: "#EB562E",
-                        backgroundColor: "white",
-                        fontFamily:
-                          selectedLanguage === "en"
-                            ? "FontBold"
-                            : "FontThaiBold",
-                      }}
-                      className="text-lg px-btn capitalize rounded-0"
-                      size="lg"
-                    >
-                      {selectedLanguage === "en" ? "Contact us" : "ติดต่อเรา"}
-                    </MDBBtn>
-                  </Link>
-                </div>
-                {/* <div className="d-flex mt-1 text-red">
-                  <Link
-                    to={`/about-us`}
-                    onClick={() => {
-                      window.scrollTo(0, 0);
-                      window.location.replace(`about-us`);
-                    }}
-                    className="flex items-center text-white"
-                  >
-                    <MDBBtn
-                      outline
-                      style={{
-                        borderColor: "white",
-                        color: "#EB562E",
-                        backgroundColor: "white",
-                        fontFamily:
-                          selectedLanguage === "en"
-                            ? "FontMedium"
-                            : "FontThaiMedium",
-                      }}
-                      className=" text-sm px-btn capitalize font-extrabold rounded-0"
-                      size="lg"
-                    >
-                      {selectedLanguage === "en" ? "Contact us" : "ติดต่อเรา"}
-                    </MDBBtn>
-                  </Link>
-                </div> */}
-              </div>
-            </MDBCol>
-            <MDBCol
-              md="6"
-              order="1"
-              className="d-flex flex-col"
-              style={{ height: "inherit" }}
-            >
-              <div
-                className="d-flex flex-row justify-content-between align-items-end w-100 gap-4 p-6"
-                style={{ backgroundColor: "#000", height: "100%" }}
-              >
-                <Link
-                  to={`/guidelines`}
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    window.location.replace(`guidelines`);
-                  }}
-                  className="flex items-center text-white"
-                >
-                  <p
-                    className="text-white mb-0 xs:text-xl md:text-5xl"
-                    style={{
-                      fontFamily:
-                        selectedLanguage === "en"
-                          ? "FontSemiBold"
-                          : "FontThaiSemiBold",
-                    }}
-                  >
-                    {selectedLanguage === "en"
-                      ? "Our Guidelines"
-                      : "คู่มือการใช้งาน"}
-                  </p>
-                </Link>
-                <Link
-                  to={`/guidelines`}
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    window.location.replace(`guidelines`);
-                  }}
-                  className="flex items-center text-white"
-                >
-                  <span>
-                    <ArrowForwardIcon
-                      style={{ color: "white", fontSize: "4rem" }}
-                    ></ArrowForwardIcon>
-                  </span>
-                </Link>
-              </div>
-              <div
-                className="d-flex flex-row flex-wrap justify-content-between align-items-center w-100 gap-4 p-6 py-4"
-                style={{ backgroundColor: "#474747" }}
-                // minHeight: "10vh"
-              >
-                <Link
-                  to={`/journal`}
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    window.location.replace(`journal`);
-                  }}
-                  className="flex items-center text-white"
-                  style={{ flex: "1" }}
-                >
-                  <p
-                    className="text-white mb-0 xs:text-xl md:text-2xl"
-                    style={{
-                      fontFamily:
-                        selectedLanguage === "en"
-                          ? "FontSemiBold"
-                          : "FontThaiSemiBold",
-                    }}
-                  >
-                    {selectedLanguage === "en"
-                      ? "Read KMUTT R&D Journal Online"
-                      : "วารสารเพิ่มเติม"}
-                  </p>
-                </Link>
-                <Link
-                  to={`/journal`}
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                    window.location.replace(`journal`);
-                  }}
-                  className=" items-center text-white"
-                >
-                  <span>
-                    <ArrowForwardIcon
-                      style={{ color: "white", fontSize: "4rem" }}
-                    ></ArrowForwardIcon>
-                  </span>
-                </Link>
-              </div>
-            </MDBCol>
+            <MDBRow style={{ height: "20vh" }}></MDBRow>
           </MDBRow>
         </MDBContainer>
       </section>
@@ -1000,15 +707,6 @@ function HomeDesktop() {
           <MDBRow style={{ height: "1vh" }}></MDBRow>
         </MDBContainer>
       </section>
-      {/* <ul>
-        {publications.map(({ id, attributes }) => (
-          <>
-            <li key={id}>{attributes.createdAt}</li>
-            <li key={id}>{attributes.journal[0]?.title}</li>
-          </>
-        ))}
-      </ul> */}
-      {/* </Container> */}
     </div>
   );
 }

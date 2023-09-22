@@ -249,10 +249,6 @@ function FooterDesktop() {
               >
                 {selectedLanguage === "en" ? "Contact us" : " ติดต่อเรา"}
               </p>
-              <div className="text-md px-0 ">
-                KMUTT Research & Development Journal Research, Innovation and
-                Partnerships Office
-              </div>
               <div className="text-md px-0 underline">
                 King Mongkut’s University of Technology Thonburi
               </div>
@@ -260,11 +256,9 @@ function FooterDesktop() {
                 126 Pracha Uthit Rd., Bang Mod, Thung Khru, Bangkok 10140,
                 Thailand
               </div>
-              <div className="text-md px-0">
-                Tel. +66-2470-9652 Fax. +66-2872-9083
-              </div>
+
               <p className="text-md pt-2 mb-0 text-white">
-                Copyright 2023 RIPO, All rights reserved
+                Copyright 2023 kmutt-masterplan, All rights reserved
               </p>
             </MDBCol>
           </MDBRow>

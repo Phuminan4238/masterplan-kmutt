@@ -12,6 +12,7 @@ import AboutUs from "./Pages/Contact us";
 // Components
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer.jsx";
+import BuildingDetail from "./Pages/BuildingDetail";
 
 function App() {
   const location = useLocation();
@@ -26,6 +27,10 @@ function App() {
           <Route path="/Guidelines" element={<Guidelines />} />
           {/* <Route path="/Journal" element={<Journal />} />  */}
           <Route path="/Contact-us" element={<AboutUs />} />
+          <Route
+            path="/BuildingDetail/:id"
+            element={<BuildingDetail title="TEAM MEMBER" />}
+          />
         </Routes>
         <Footer />
       </div>
