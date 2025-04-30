@@ -37,10 +37,10 @@ import { LanguageContext } from "./LanguageContext";
 import NorthEastIcon from "@mui/icons-material/NorthEast";
 import masterlogo from "../Images/logo.png";
 
-const pages = ["Home", "Guidelines", "Contact us"];
+const pages = ["Home", "Contact us"];
 const pages_th = [
   "หน้าแรก",
-  "ข้อแนะนำ",
+  // "ข้อแนะนำ",
   // "วารสาร",
   "ติดต่อเรา",
 ];
@@ -109,11 +109,10 @@ export default function Navbar(props) {
     // width: "1440px",
     height: "60px",
     flexShrink: 0,
-    background: "#FFF",
+    background: "#EDEDED",
   };
 
   const logoStyle = {
-    height: "80px",
     padding: "0.5rem",
     margin: "0px",
   };
@@ -247,7 +246,7 @@ export default function Navbar(props) {
             </MDBCol>
             <MDBCol className="col-6 pt-2">
               <MDBRow className="row-cols-2 justify-content-end">
-                <MDBCol className="col-6 d-flex justify-content-end align-items-center w-fit pe-0">
+                {/* <MDBCol className="col-6 d-flex justify-content-end align-items-center w-fit pe-0">
                   <a
                     href="https://digital.lib.kmutt.ac.th/journal/brows1.php"
                     target="_blank"
@@ -323,7 +322,7 @@ export default function Navbar(props) {
                       </span>
                     </MDBBtn>
                   </a>
-                </MDBCol>
+                </MDBCol> */}
               </MDBRow>
             </MDBCol>
           </MDBContainer>

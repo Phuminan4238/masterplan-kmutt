@@ -292,6 +292,10 @@ function BuildingDetailDesktop() {
           <MDBRow style={{ height: "1vh" }}></MDBRow>
         </MDBContainer>
       </section>
+
+      <section>
+        
+      </section>
     </div>
   );
 }

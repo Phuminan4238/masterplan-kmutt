@@ -247,7 +247,7 @@ function FooterDesktop() {
                       : "FontThaiSemiBold",
                 }}
               >
-                {selectedLanguage === "en" ? "Contact us" : " ติดต่อเรา"}
+                {selectedLanguage === "en" ? "Contact" : " ติดต่อเรา"}
               </p>
               <div className="text-md px-0 underline">
                 King Mongkut’s University of Technology Thonburi

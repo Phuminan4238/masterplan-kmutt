@@ -535,16 +535,14 @@ function HomeDesktop() {
             }}
           >
             <MDBRow className="d-flex ">
-              <MDBCol
-                md="6"
-                className="p-5 shadow-md"
-                // style={{ border: "1px solid black" }}
-              >
+              <MDBCol md="6" className="p-5 shadow-md">
                 <p className="text-center text-3xl pb-4"> South Zone </p>
+
                 {selectedType === "building" &&
                   southbuildings.map((building) => (
                     <Link
                       to={`/BuildingDetail/${building.id}`}
+                      target="_blank"
                       onClick={() => {
                         window.scrollTo(0, 0);
                         window.location.replace(
@@ -592,10 +590,12 @@ function HomeDesktop() {
                     </Link>
                   ))}
 
+                {/* Parking  */}
                 {selectedType === "parking" &&
                   parkingPlanImages.map((parkingPlan) => (
                     <Link
                       to={`/BuildingDetail/${parkingPlan.id}`}
+                      target="_blank"
                       onClick={() => {
                         window.scrollTo(0, 0);
                         window.location.replace(
@@ -621,7 +621,8 @@ function HomeDesktop() {
                           }}
                         >
                           <span className="text-2xl">
-                            {parkingPlan.attributes.parkingNumber}
+                            {/* {parkingPlan.attributes.parkingNumber} */}
+                            S2
                           </span>
                         </MDBCol>
                         <MDBCol
@@ -637,14 +638,57 @@ function HomeDesktop() {
                         >
                           <p className="mb-0 text-xl">
                             {parkingPlan.attributes.parkingName}
+                            อาคารจอดรถ
+                          </p>
+                        </MDBCol>
+                      </MDBRow>
+
+                      <MDBRow
+                        className="text-white"
+                        style={{ borderRadius: "0.4rem", marginBlock: "1rem" }}
+                        key={parkingPlan.id}
+                      >
+                        <MDBCol
+                          md="2"
+                          className="p-3 text-center"
+                          style={{
+                            backgroundColor: "#ff4612",
+                            borderTopLeftRadius: "0.4rem",
+                            borderBottomLeftRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <span className="text-2xl">
+                            {/* {parkingPlan.attributes.parkingNumber} */}
+                            S14
+                          </span>
+                        </MDBCol>
+                        <MDBCol
+                          className="text-center p-3"
+                          style={{
+                            backgroundColor: "#474747",
+                            borderTopRightRadius: "0.4rem",
+                            borderBottomRightRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <p className="mb-0 text-xl">
+                            {parkingPlan.attributes.parkingName}
+                            อาคารพระจอมเกล้าราชานุสรณ์ 190 ปี
                           </p>
                         </MDBCol>
                       </MDBRow>
                     </Link>
                   ))}
               </MDBCol>
+
               <MDBCol md="6" className="p-5 shadow-md">
                 <p className="text-center text-3xl pb-4"> North Zone </p>
+
                 {selectedType === "building" &&
                   northbuildings.map((building) => (
                     <Link
@@ -695,6 +739,60 @@ function HomeDesktop() {
                       </MDBRow>
                     </Link>
                   ))}
+
+                {selectedType === "parking" &&
+                  parkingPlanImages.map((parkingPlan) => (
+                    <Link
+                      to={`/BuildingDetail/${parkingPlan.id}`}
+                      target="_blank"
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                        window.location.replace(
+                          `/BuildingDetail/${parkingPlan.id}`
+                        );
+                      }}
+                    >
+                      <MDBRow
+                        className="text-white"
+                        style={{ borderRadius: "0.4rem", marginBlock: "1rem" }}
+                        key={parkingPlan.id}
+                      >
+                        <MDBCol
+                          md="2"
+                          className="p-3 text-center"
+                          style={{
+                            backgroundColor: "#FEB832",
+                            borderTopLeftRadius: "0.4rem",
+                            borderBottomLeftRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <span className="text-2xl">
+                            {/* {parkingPlan.attributes.parkingNumber} */}
+                            N9
+                          </span>
+                        </MDBCol>
+                        <MDBCol
+                          className="text-center p-3"
+                          style={{
+                            backgroundColor: "#474747",
+                            borderTopRightRadius: "0.4rem",
+                            borderBottomRightRadius: "0.4rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <p className="mb-0 text-xl">
+                            {parkingPlan.attributes.parkingName}
+                            อาคารสถาบันวิทยาการหุ่นยนต์ภาคสนาม
+                          </p>
+                        </MDBCol>
+                      </MDBRow>
+                    </Link>
+                  ))}
               </MDBCol>
             </MDBRow>
             <MDBRow style={{ height: "20vh" }}></MDBRow>
@@ -707,6 +805,178 @@ function HomeDesktop() {
           <MDBRow style={{ height: "1vh" }}></MDBRow>
         </MDBContainer>
       </section>
+      {/* 
+      <section>
+        <MDBContainer className={`fluid px-3 ${containerStyle["7xl"]}`}>
+          <MDBRow className="d-flex justify-content-between py-6 fluid gx-6 w-fit">
+            <MDBCol md="3">
+              <p className="text-center text-3xl pb-4"> South Zone </p>
+              {selectedType === "building" &&
+                southbuildings.map((building) => (
+                  <Link
+                    to={`/BuildingDetail/${building.id}`}
+                    target="_blank"
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                      window.location.replace(`/BuildingDetail/${building.id}`);
+                    }}
+                  >
+                    <MDBRow
+                      className="text-white"
+                      style={{ borderRadius: "0.4rem", marginBlock: "1rem" }}
+                      key={building.id}
+                    >
+                      <MDBCol
+                        md="2"
+                        className="p-3 text-center"
+                        style={{
+                          backgroundColor: "#ff4612",
+                          borderTopLeftRadius: "0.4rem",
+                          borderBottomLeftRadius: "0.4rem",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <span className="text-2xl">
+                          {building.attributes.buildingNumber}
+                        </span>
+                      </MDBCol>
+                      <MDBCol
+                        className="text-center p-3"
+                        style={{
+                          backgroundColor: "#717171",
+                          borderTopRightRadius: "0.4rem",
+                          borderBottomRightRadius: "0.4rem",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <p className="mb-0 text-lg">
+                          {building.attributes.buildingName}
+                        </p>
+                      </MDBCol>
+                    </MDBRow>
+                  </Link>
+                ))}
+            </MDBCol>
+            <MDBCol md="6">
+              {" "}
+              {selectedType === "building"
+                ? buildingPlanImages.map((buildingPlan) => (
+                    <img
+                      className="shadow-md"
+                      key={buildingPlan.id}
+                      src={
+                        "http://localhost:1337" +
+                        buildingPlan.attributes.image?.data[0]?.attributes?.url
+                      }
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  ))
+                : selectedType === "parking"
+                ? parkingPlanImages.map((parkingPlan) => (
+                    <img
+                      className="shadow-md"
+                      key={parkingPlan.id}
+                      src={
+                        "http://localhost:1337" +
+                        parkingPlan.attributes.image?.data[0]?.attributes?.url
+                      }
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  ))
+                : selectedType === "facilities"
+                ? facilitiesPlanImages.map((facilitiesPlan) => (
+                    <img
+                      className="shadow-md"
+                      key={facilitiesPlan.id}
+                      src={
+                        "http://localhost:1337" +
+                        facilitiesPlan.attributes.image?.data[0]?.attributes
+                          ?.url
+                      }
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  ))
+                : selectedType === "office"
+                ? officePlanImages.map((officePlan) => (
+                    <img
+                      className="shadow-md"
+                      key={officePlan.id}
+                      src={
+                        "http://localhost:1337" +
+                        officePlan.attributes.image?.data[0]?.attributes?.url
+                      }
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  ))
+                : null}
+            </MDBCol>
+            <MDBCol md="3">
+              {" "}
+              <p className="text-center text-3xl pb-4"> North Zone </p>
+              {selectedType === "building" &&
+                northbuildings.map((building) => (
+                  <Link
+                    to={`/BuildingDetail/${building.id}`}
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                      window.location.replace(`/BuildingDetail/${building.id}`);
+                    }}
+                  >
+                    <MDBRow
+                      className="text-white"
+                      style={{ borderRadius: "0.4rem", marginBlock: "1rem" }}
+                      key={building.id}
+                    >
+                      <MDBCol
+                        md="2"
+                        className="p-3 text-center"
+                        style={{
+                          backgroundColor: "#FEB832",
+                          borderTopLeftRadius: "0.4rem",
+                          borderBottomLeftRadius: "0.4rem",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <span className="text-2xl">
+                          {building.attributes.buildingNumber}
+                        </span>
+                      </MDBCol>
+                      <MDBCol
+                        className="text-center p-3"
+                        style={{
+                          backgroundColor: "#717171",
+                          borderTopRightRadius: "0.4rem",
+                          borderBottomRightRadius: "0.4rem",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <p className="mb-0 text-lg">
+                          {building.attributes.buildingName}
+                        </p>
+                      </MDBCol>
+                    </MDBRow>
+                  </Link>
+                ))}
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
+      </section> */}
     </div>
   );
 }
